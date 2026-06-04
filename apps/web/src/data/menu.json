@@ -1,0 +1,1155 @@
+{
+  "categories": [
+    {
+      "id": "6",
+      "name": "BIERE",
+      "icon": "🍽️",
+      "items": [
+        {
+          "id": "357",
+          "name": "Carib 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/357.jpg",
+          "active": true
+        },
+        {
+          "id": "359",
+          "name": "Corona 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/corona.jpg",
+          "active": true
+        },
+        {
+          "id": "360",
+          "name": "Desperados Classic 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/360.jpg",
+          "active": true
+        },
+        {
+          "id": "362",
+          "name": "Desperados Lime 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/362.jpg",
+          "active": true
+        },
+        {
+          "id": "363",
+          "name": "Desperados Mojito 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/363.png",
+          "active": true
+        },
+        {
+          "id": "361",
+          "name": "Desperados Red 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/361.jpeg",
+          "active": true
+        },
+        {
+          "id": "487",
+          "name": "Desperados Red Boite",
+          "desc": "",
+          "price": 8,
+          "img": "/menu/487.jpeg",
+          "active": true
+        },
+        {
+          "id": "488",
+          "name": "Desperados original boite",
+          "desc": "",
+          "price": 8,
+          "img": "/menu/488.jpg",
+          "active": true
+        },
+        {
+          "id": "358",
+          "name": "Gwada 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/358.png",
+          "active": true
+        },
+        {
+          "id": "356",
+          "name": "Heineken 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/356.png",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "BOUTEILLE HARD",
+      "icon": "🍽️",
+      "items": [
+        {
+          "id": "418",
+          "name": "Absolut 70cl",
+          "desc": "",
+          "price": 140,
+          "img": "/menu/418.jpg",
+          "active": true
+        },
+        {
+          "id": "419",
+          "name": "Belvédère 70cl",
+          "desc": "",
+          "price": 140,
+          "img": "/menu/419.jpeg",
+          "active": true
+        },
+        {
+          "id": "426",
+          "name": "Cognac Gauthier 70cl",
+          "desc": "",
+          "price": 140,
+          "img": "/menu/426.jpg",
+          "active": true
+        },
+        {
+          "id": "427",
+          "name": "Cognac Hennessy 70cl",
+          "desc": "",
+          "price": 140,
+          "img": "/menu/427.jpeg",
+          "active": true
+        },
+        {
+          "id": "425",
+          "name": "J&B 70cl",
+          "desc": "",
+          "price": 120,
+          "img": "/menu/425.jpg",
+          "active": true
+        },
+        {
+          "id": "422",
+          "name": "Jack Daniel's 70cl",
+          "desc": "",
+          "price": 120,
+          "img": "/menu/jack-daniels.jpg",
+          "active": true
+        },
+        {
+          "id": "423",
+          "name": "Jack Daniel's Honey 70cl",
+          "desc": "",
+          "price": 110,
+          "img": "/menu/jack-daniels.jpg",
+          "active": true
+        },
+        {
+          "id": "428",
+          "name": "Rhum Vieux Clément 70cl",
+          "desc": "",
+          "price": 100,
+          "img": "/menu/rhum.jpg",
+          "active": true
+        },
+        {
+          "id": "417",
+          "name": "Smirnoff 70cl",
+          "desc": "",
+          "price": 140,
+          "img": "/menu/417.jpg",
+          "active": true
+        },
+        {
+          "id": "424",
+          "name": "William Lawson 70cl",
+          "desc": "",
+          "price": 80,
+          "img": "/menu/424.jpg",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "CHAMPAGNE",
+      "icon": "🍽️",
+      "items": [
+        {
+          "id": "408",
+          "name": "Chandon 75cl",
+          "desc": "",
+          "price": 80,
+          "img": "/menu/408.jpg",
+          "active": true
+        },
+        {
+          "id": "414",
+          "name": "Deutz 75cl",
+          "desc": "",
+          "price": 130,
+          "img": "/menu/414.png",
+          "active": true
+        },
+        {
+          "id": "416",
+          "name": "Dom Pérignon 75cl",
+          "desc": "",
+          "price": 350,
+          "img": "/menu/416.jpg",
+          "active": true
+        },
+        {
+          "id": "409",
+          "name": "Mercier 75cl",
+          "desc": "",
+          "price": 90,
+          "img": "/menu/409.webp",
+          "active": true
+        },
+        {
+          "id": "489",
+          "name": "Moet et Chandon Nectar Impérial",
+          "desc": "",
+          "price": 130,
+          "img": "/menu/489.jpg",
+          "active": true
+        },
+        {
+          "id": "410",
+          "name": "Moët Brut 75cl",
+          "desc": "",
+          "price": 120,
+          "img": "/menu/410.webp",
+          "active": true
+        },
+        {
+          "id": "407",
+          "name": "Nicolas Feuillatte 75cl",
+          "desc": "",
+          "price": 90,
+          "img": "/menu/407.jpg",
+          "active": true
+        },
+        {
+          "id": "415",
+          "name": "Ruinart Blanc de Blanc 75cl",
+          "desc": "",
+          "price": 160,
+          "img": "/menu/415.jpg",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "name": "CHICHA",
+      "icon": "🍽️",
+      "items": [
+        {
+          "id": "469",
+          "name": "CHICHA",
+          "desc": "",
+          "price": 30,
+          "img": "/menu/chicha.jpg",
+          "active": true
+        },
+        {
+          "id": "470",
+          "name": "RECHARGE CHICHA",
+          "desc": "",
+          "price": 20,
+          "img": "/menu/chicha.jpg",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "COCKTAIL CREATION",
+      "icon": "🍽️",
+      "items": [
+        {
+          "id": "391",
+          "name": "Balthazar",
+          "desc": "",
+          "price": 15,
+          "img": "/menu/cocktail-creation.jpg",
+          "active": true
+        },
+        {
+          "id": "471",
+          "name": "Cocktail lady alcool",
+          "desc": "",
+          "price": 15,
+          "img": "/menu/cocktail-creation.jpg",
+          "active": true
+        },
+        {
+          "id": "390",
+          "name": "Double G",
+          "desc": "",
+          "price": 14,
+          "img": "/menu/cocktail-creation.jpg",
+          "active": true
+        },
+        {
+          "id": "384",
+          "name": "Le Smile",
+          "desc": "",
+          "price": 15,
+          "img": "/menu/cocktail-creation.jpg",
+          "active": true
+        },
+        {
+          "id": "385",
+          "name": "Maya L'abeille",
+          "desc": "",
+          "price": 14,
+          "img": "/menu/cocktail-creation.jpg",
+          "active": true
+        },
+        {
+          "id": "388",
+          "name": "Peachy",
+          "desc": "",
+          "price": 15,
+          "img": "/menu/cocktail-creation.jpg",
+          "active": true
+        },
+        {
+          "id": "389",
+          "name": "PiweeZ",
+          "desc": "",
+          "price": 14,
+          "img": "/menu/cocktail-creation.jpg",
+          "active": true
+        },
+        {
+          "id": "386",
+          "name": "PopStar",
+          "desc": "",
+          "price": 14,
+          "img": "/menu/cocktail-creation.jpg",
+          "active": true
+        },
+        {
+          "id": "387",
+          "name": "Tropi'Kal",
+          "desc": "",
+          "price": 14,
+          "img": "/menu/cocktail-creation.jpg",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "name": "ENTRER",
+      "icon": "🍽️",
+      "items": [
+        {
+          "id": "434",
+          "name": "Entrée Carré VIP",
+          "desc": "",
+          "price": 50,
+          "img": "/menu/434.jpg",
+          "active": true
+        },
+        {
+          "id": "479",
+          "name": "Entrée Simple 20€",
+          "desc": "",
+          "price": 20,
+          "img": "/menu/479.jpeg",
+          "active": true
+        },
+        {
+          "id": "433",
+          "name": "Entrée Soirée  avec artiste",
+          "desc": "",
+          "price": 25,
+          "img": "/menu/433.jpeg",
+          "active": true
+        },
+        {
+          "id": "431",
+          "name": "Entrée Standard",
+          "desc": "",
+          "price": 15,
+          "img": "/menu/431.jpeg",
+          "active": true
+        },
+        {
+          "id": "432",
+          "name": "Entrée avec Conso",
+          "desc": "",
+          "price": 20,
+          "img": "/menu/432.jpeg",
+          "active": true
+        },
+        {
+          "id": "480",
+          "name": "Entrée bouteille",
+          "desc": "",
+          "price": 10,
+          "img": "/menu/480.jpeg",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "name": "Events",
+      "icon": "🍽️",
+      "items": [
+        {
+          "id": "459",
+          "name": "Event Registration",
+          "desc": "",
+          "price": 30,
+          "img": "/menu/entrance.jpg",
+          "active": false
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "name": "MOCKTAIL",
+      "icon": "🍽️",
+      "items": [
+        {
+          "id": "472",
+          "name": "Coktail lady sans alcool",
+          "desc": "",
+          "price": 10,
+          "img": "/menu/mocktail.jpg",
+          "active": true
+        },
+        {
+          "id": "383",
+          "name": "Exotik (sans alcool)",
+          "desc": "",
+          "price": 10,
+          "img": "/menu/mocktail.jpg",
+          "active": true
+        },
+        {
+          "id": "382",
+          "name": "Kiweez (sans alcool)",
+          "desc": "",
+          "price": 10,
+          "img": "/menu/mocktail.jpg",
+          "active": true
+        },
+        {
+          "id": "381",
+          "name": "Sweety (sans alcool)",
+          "desc": "",
+          "price": 10,
+          "img": "/menu/mocktail.jpg",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "name": "TAPAS",
+      "icon": "🍢",
+      "items": [
+        {
+          "id": "477",
+          "name": "Burger + Frites",
+          "desc": "",
+          "price": 15,
+          "img": "/menu/burger-frites.jpg",
+          "active": true
+        },
+        {
+          "id": "481",
+          "name": "Burger+ frite",
+          "desc": "",
+          "price": 15,
+          "img": "/menu/burger-frites.jpg",
+          "active": true
+        },
+        {
+          "id": "473",
+          "name": "Croustille de poulet",
+          "desc": "",
+          "price": 7,
+          "img": "/menu/croustilles.jpg",
+          "active": true
+        },
+        {
+          "id": "482",
+          "name": "Frite",
+          "desc": "",
+          "price": 4,
+          "img": "/menu/frites.jpg",
+          "active": true
+        },
+        {
+          "id": "474",
+          "name": "Part de frite",
+          "desc": "",
+          "price": 4,
+          "img": "/menu/frites.jpg",
+          "active": true
+        },
+        {
+          "id": "484",
+          "name": "Tenders de poulet",
+          "desc": "",
+          "price": 8,
+          "img": "/menu/tenders-poulet.jpg",
+          "active": true
+        },
+        {
+          "id": "483",
+          "name": "Tenders de poulet",
+          "desc": "",
+          "price": 8,
+          "img": "/menu/tenders-poulet.jpg",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "name": "VERSSE",
+      "icon": "🍽️",
+      "items": [
+        {
+          "id": "376",
+          "name": "Cognac Hennessy (verre)",
+          "desc": "",
+          "price": 15,
+          "img": "/menu/cognac.jpg",
+          "active": true
+        },
+        {
+          "id": "370",
+          "name": "Get 27",
+          "desc": "",
+          "price": 8,
+          "img": "/menu/glass-spirits.jpg",
+          "active": true
+        },
+        {
+          "id": "371",
+          "name": "Get 31",
+          "desc": "",
+          "price": 10,
+          "img": "/menu/glass-spirits.jpg",
+          "active": true
+        },
+        {
+          "id": "378",
+          "name": "Gin (verre)",
+          "desc": "",
+          "price": 12,
+          "img": "/menu/vodka.jpg",
+          "active": true
+        },
+        {
+          "id": "367",
+          "name": "Martini Blanc",
+          "desc": "",
+          "price": 7,
+          "img": "/menu/glass-spirits.jpg",
+          "active": true
+        },
+        {
+          "id": "368",
+          "name": "Martini Rouge",
+          "desc": "",
+          "price": 9,
+          "img": "/menu/glass-spirits.jpg",
+          "active": true
+        },
+        {
+          "id": "380",
+          "name": "Rhum Vieux (verre)",
+          "desc": "",
+          "price": 15,
+          "img": "/menu/rhum.jpg",
+          "active": true
+        },
+        {
+          "id": "369",
+          "name": "Ricard / Pastis",
+          "desc": "",
+          "price": 7,
+          "img": "/menu/glass-spirits.jpg",
+          "active": true
+        },
+        {
+          "id": "379",
+          "name": "Tequila (verre)",
+          "desc": "",
+          "price": 12,
+          "img": "/menu/vodka.jpg",
+          "active": true
+        },
+        {
+          "id": "364",
+          "name": "Ti Punch Blanc",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/rhum.jpg",
+          "active": true
+        },
+        {
+          "id": "365",
+          "name": "Ti Punch Vieux",
+          "desc": "",
+          "price": 7,
+          "img": "/menu/rhum.jpg",
+          "active": true
+        },
+        {
+          "id": "485",
+          "name": "Ti punch Boite de nuit",
+          "desc": "",
+          "price": 8,
+          "img": "/menu/rhum.jpg",
+          "active": true
+        },
+        {
+          "id": "486",
+          "name": "Ti punch blanc Boite",
+          "desc": "",
+          "price": 8,
+          "img": "/menu/rhum.jpg",
+          "active": true
+        },
+        {
+          "id": "377",
+          "name": "Vodka (verre)",
+          "desc": "",
+          "price": 10,
+          "img": "/menu/vodka.jpg",
+          "active": true
+        },
+        {
+          "id": "375",
+          "name": "Whisky JB (verre)",
+          "desc": "",
+          "price": 8,
+          "img": "/menu/whisky.jpg",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "name": "VIN",
+      "icon": "🍽️",
+      "items": [
+        {
+          "id": "429",
+          "name": "Vin Rosé Minuty 75cl",
+          "desc": "",
+          "price": 40,
+          "img": "/menu/wine.jpg",
+          "active": true
+        },
+        {
+          "id": "430",
+          "name": "Vin Rosé Minuty Magnum 1.5L",
+          "desc": "",
+          "price": 80,
+          "img": "/menu/wine.jpg",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "name": "Cocktails",
+      "icon": "🍽️",
+      "items": [
+        {
+          "id": "372",
+          "name": "Amaretto",
+          "desc": "",
+          "price": 10,
+          "img": "/menu/glass-spirits.jpg",
+          "active": true
+        },
+        {
+          "id": "405",
+          "name": "Amaretto Sour",
+          "desc": "",
+          "price": 12,
+          "img": "/menu/glass-spirits.jpg",
+          "active": true
+        },
+        {
+          "id": "402",
+          "name": "Aperol Spritz",
+          "desc": "",
+          "price": 15,
+          "img": "/menu/aperol.jpg",
+          "active": true
+        },
+        {
+          "id": "445",
+          "name": "Aperol Spritz",
+          "desc": "Prosecco, aperol, soda",
+          "price": 9,
+          "img": "/menu/aperol.jpg",
+          "active": true
+        },
+        {
+          "id": "374",
+          "name": "Bailey's",
+          "desc": "",
+          "price": 10,
+          "img": "/menu/glass-spirits.jpg",
+          "active": true
+        },
+        {
+          "id": "396",
+          "name": "Caipirinha",
+          "desc": "",
+          "price": 13,
+          "img": "/menu/mojito.jpg",
+          "active": true
+        },
+        {
+          "id": "397",
+          "name": "Caipiroska",
+          "desc": "",
+          "price": 12,
+          "img": "/menu/mojito.jpg",
+          "active": true
+        },
+        {
+          "id": "373",
+          "name": "Campari",
+          "desc": "",
+          "price": 10,
+          "img": "/menu/glass-spirits.jpg",
+          "active": true
+        },
+        {
+          "id": "441",
+          "name": "Cosmopolitan",
+          "desc": "Cranberry Jus, lime jus, vodka and Cointreau",
+          "price": 12,
+          "img": "/menu/cosmopolitan.jpg",
+          "active": true
+        },
+        {
+          "id": "398",
+          "name": "Daiquiri",
+          "desc": "",
+          "price": 13,
+          "img": "/menu/daiquiri.jpg",
+          "active": true
+        },
+        {
+          "id": "403",
+          "name": "Expresso Martini",
+          "desc": "",
+          "price": 13,
+          "img": "/menu/glass-spirits.jpg",
+          "active": true
+        },
+        {
+          "id": "406",
+          "name": "Long Island",
+          "desc": "",
+          "price": 13,
+          "img": "/menu/long-island.jpg",
+          "active": true
+        },
+        {
+          "id": "448",
+          "name": "Mai Tai",
+          "desc": "Rum, lime juice, orgeat syrup, and orange liqueur.",
+          "price": 13,
+          "img": "/menu/cocktail.jpg",
+          "active": true
+        },
+        {
+          "id": "401",
+          "name": "Mai-Tai",
+          "desc": "",
+          "price": 13,
+          "img": "/menu/cocktail.jpg",
+          "active": true
+        },
+        {
+          "id": "399",
+          "name": "Margarita",
+          "desc": "",
+          "price": 13,
+          "img": "/menu/margarita.jpg",
+          "active": true
+        },
+        {
+          "id": "442",
+          "name": "Margarita",
+          "desc": "Tequila Jose Cuervo, lime jus, sugar cane Cointreau",
+          "price": 12,
+          "img": "/menu/margarita.jpg",
+          "active": true
+        },
+        {
+          "id": "392",
+          "name": "Mojito",
+          "desc": "",
+          "price": 12,
+          "img": "/menu/mojito.jpg",
+          "active": true
+        },
+        {
+          "id": "447",
+          "name": "Mojito",
+          "desc": "White rum, sugar, lime juice, soda water, and mint.",
+          "price": 11,
+          "img": "/menu/mojito.jpg",
+          "active": true
+        },
+        {
+          "id": "393",
+          "name": "Mojitoska (vodka)",
+          "desc": "",
+          "price": 12,
+          "img": "/menu/mojito.jpg",
+          "active": true
+        },
+        {
+          "id": "394",
+          "name": "Mojitosky (whisky)",
+          "desc": "",
+          "price": 13,
+          "img": "/menu/whisky.jpg",
+          "active": true
+        },
+        {
+          "id": "443",
+          "name": "Moscow Mule",
+          "desc": "Vodka 42 Below, lime, sugar, ginger beer",
+          "price": 10,
+          "img": "/menu/cocktail.jpg",
+          "active": true
+        },
+        {
+          "id": "404",
+          "name": "Moscow Mule",
+          "desc": "",
+          "price": 13,
+          "img": "/menu/cocktail.jpg",
+          "active": true
+        },
+        {
+          "id": "450",
+          "name": "Negroni",
+          "desc": "Gin, vermouth rosso, Campari, and an orange peel.",
+          "price": 12,
+          "img": "/menu/cocktail.jpg",
+          "active": true
+        },
+        {
+          "id": "446",
+          "name": "Old Fashioned",
+          "desc": "Bourbon, bitters, sugar, and a twist of citrus zest.",
+          "price": 14,
+          "img": "/menu/whisky.jpg",
+          "active": true
+        },
+        {
+          "id": "444",
+          "name": "Pina colada",
+          "desc": "White rhum, Malibu, Batida de coco, coconut liqueur, pineapple juice",
+          "price": 13,
+          "img": "/menu/pina-colada.jpg",
+          "active": true
+        },
+        {
+          "id": "395",
+          "name": "Royal Mojito",
+          "desc": "",
+          "price": 15,
+          "img": "/menu/mojito.jpg",
+          "active": true
+        },
+        {
+          "id": "400",
+          "name": "Tequila Sunrise",
+          "desc": "",
+          "price": 13,
+          "img": "/menu/cocktail.jpg",
+          "active": true
+        },
+        {
+          "id": "449",
+          "name": "Whiskey Sour",
+          "desc": "Whiskey, lemon juice, sugar, and a dash of egg white.",
+          "price": 12,
+          "img": "/menu/whisky.jpg",
+          "active": true
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Soft drinks",
+      "icon": "🍽️",
+      "items": [
+        {
+          "id": "334",
+          "name": "Coca Zéro 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "451",
+          "name": "Coca-Cola",
+          "desc": "",
+          "price": 2.2,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "333",
+          "name": "Coca-Cola 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "349",
+          "name": "Eau 1L Gazeuse",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "348",
+          "name": "Eau 1L Plate",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "347",
+          "name": "Eau gazeuse 50cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "346",
+          "name": "Eau plate 50cl",
+          "desc": "",
+          "price": 3,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "457",
+          "name": "Fanta",
+          "desc": "",
+          "price": 2.2,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "336",
+          "name": "Fanta Exotique 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "337",
+          "name": "Fanta Orange 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "339",
+          "name": "Fuze Tea 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "454",
+          "name": "Green Tea",
+          "desc": "",
+          "price": 4.7,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "455",
+          "name": "Ice Tea",
+          "desc": "",
+          "price": 2.2,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "350",
+          "name": "Jus Ananas",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "354",
+          "name": "Jus Goyave",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "355",
+          "name": "Jus Mangue",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "351",
+          "name": "Jus Orange",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "353",
+          "name": "Jus Passion",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "352",
+          "name": "Jus Pomme",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "343",
+          "name": "Long Horn 25cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "453",
+          "name": "Minute Maid",
+          "desc": "",
+          "price": 2.2,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "338",
+          "name": "Orangina 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "340",
+          "name": "Ordinaire 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "344",
+          "name": "Perrier 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "342",
+          "name": "Red Bull 25cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "456",
+          "name": "Schweppes",
+          "desc": "",
+          "price": 2.2,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "345",
+          "name": "Schweppes 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "335",
+          "name": "Sprite 33cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "452",
+          "name": "Water",
+          "desc": "",
+          "price": 2.2,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        },
+        {
+          "id": "341",
+          "name": "XL Energy 25cl",
+          "desc": "",
+          "price": 5,
+          "img": "/menu/soft-drink.jpg",
+          "active": true
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "service": "18H — 23H",
+    "lastUpdated": "2026-06-04"
+  }
+}
