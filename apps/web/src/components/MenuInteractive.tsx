@@ -11,29 +11,54 @@ function MenuSection({ section }: { section: MenuCategory }) {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {section.items.map(item => {
+      {section.items.map((item, idx) => {
         const line = lines.find(l => l.id === item.id)
         const qty = line?.qty ?? 0
+        const cutout = item.img.endsWith('-cut.png')
         return (
-          <div key={item.id} className={`glass-card card-glow rounded-2xl p-3 flex flex-col ${qty > 0 ? '!border-braise/40' : ''}`}>
-            {/* Tuile spotlight dorée : mix-blend-multiply fond les fonds blancs des photos produits */}
-            <div
-              className="relative h-40 rounded-xl overflow-hidden flex items-center justify-center ring-1 ring-inset ring-or/20"
-              style={{ background: 'radial-gradient(ellipse 90% 75% at 50% 38%, #FDF9F0 0%, #F0E5CB 55%, #D9C69C 100%)' }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={item.img}
-                alt={item.name}
-                loading="lazy"
-                className="h-full w-full object-contain p-3 mix-blend-multiply"
-              />
-              {qty > 0 && (
-                <span className="absolute top-2 right-2 bg-braise text-white text-xs font-bold rounded-full min-w-[22px] h-[22px] px-1.5 flex items-center justify-center shadow-lg">
-                  {qty}
-                </span>
-              )}
-            </div>
+          <div key={item.id} className={`group glass-card card-glow rounded-2xl p-3 flex flex-col ${qty > 0 ? '!border-braise/40' : ''}`}>
+            {cutout ? (
+              /* Tuile sombre ambiance bar : produit détouré en lévitation, lueur chaude au survol */
+              <div className="menu-tile relative h-44 rounded-xl overflow-hidden flex items-center justify-center">
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-600 pointer-events-none"
+                  style={{ background: 'radial-gradient(ellipse 120% 90% at 50% 112%, rgba(232,130,58,0.38), transparent 62%)' }}
+                />
+                {/* ombre au sol */}
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-3/5 h-3 rounded-full bg-black/60 blur-md transition-transform duration-400 group-hover:scale-110 pointer-events-none" />
+                <div className="product-float relative" style={{ animationDelay: `${(idx % 6) * 0.7}s` }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={item.img}
+                    alt={item.name}
+                    loading="lazy"
+                    className="h-32 max-w-[210px] w-auto object-contain transition-transform duration-400 group-hover:scale-110 group-hover:-rotate-2"
+                  />
+                </div>
+                {qty > 0 && (
+                  <span className="absolute top-2 right-2 bg-braise text-white text-xs font-bold rounded-full min-w-[22px] h-[22px] px-1.5 flex items-center justify-center shadow-lg">
+                    {qty}
+                  </span>
+                )}
+              </div>
+            ) : (
+              /* Fallback photo entière : tuile plein cadre avec zoom au survol */
+              <div className="relative h-44 rounded-xl overflow-hidden bg-charbon">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={item.img}
+                  alt={item.name}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-600 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-noir/50 to-transparent pointer-events-none" />
+                {qty > 0 && (
+                  <span className="absolute top-2 right-2 bg-braise text-white text-xs font-bold rounded-full min-w-[22px] h-[22px] px-1.5 flex items-center justify-center shadow-lg">
+                    {qty}
+                  </span>
+                )}
+              </div>
+            )}
             <div className="flex flex-col flex-1 px-2 pt-3 pb-1">
               <h3 className="font-semibold text-creme leading-snug">{item.name}</h3>
               {item.desc && <p className="text-white/35 text-sm mt-0.5">{item.desc}</p>}

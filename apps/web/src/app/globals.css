@@ -68,6 +68,23 @@ body { background: #080808; color: #F5EDD8; }
   animation: bounceSlowY 2.5s ease-in-out infinite;
 }
 
+/* Tuile produit menu : ambiance bar, lueur dorée chaude en contre-jour */
+.menu-tile {
+  background:
+    radial-gradient(ellipse 130% 80% at 50% 108%, rgba(212, 168, 83, 0.30), transparent 62%),
+    linear-gradient(165deg, #1D1A15, #0B0B0A);
+}
+
+/* Lévitation douce des produits détourés */
+@keyframes floatProduct {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.product-float {
+  animation: floatProduct 4.5s ease-in-out infinite;
+  filter: drop-shadow(0 18px 16px rgba(0, 0, 0, 0.55));
+}
+
 /* Ken Burns lent pour les slides du hero */
 @keyframes kenburns {
   from { transform: scale(1.05) translateY(0); }
