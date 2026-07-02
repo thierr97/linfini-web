@@ -5,8 +5,8 @@ import MenuInteractive from '@/components/MenuInteractive'
 import { dataService } from '@/lib/data'
 
 export const metadata: Metadata = {
-  title: 'Menu — Le District',
-  description: 'Tapas, Les Box, Desserts — commandez et payez directement en ligne.',
+  title: 'Menu — Restaurant & Bar',
+  description: 'Tapas, plats franco-créoles, desserts, cocktails — commandez et payez directement en ligne.',
 }
 
 // Pas de cache → données toujours fraîches après modification admin
@@ -18,7 +18,7 @@ export default async function MenuPage() {
   return (
     <div className="min-h-screen bg-noir text-creme">
       <Header />
-      <div className="max-w-4xl mx-auto px-4 pt-32 pb-12">
+      <div className="max-w-6xl mx-auto px-4 pt-32 pb-12">
         <h1 className="font-display text-5xl font-bold text-center mb-2 text-creme">
           Notre <span className="text-gradient">Menu</span>
         </h1>

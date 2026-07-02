@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useMenuCart } from '@/stores/menuCart'
 import type { MenuCategory } from '@/lib/data'
+import { IconX } from '@/components/icons'
 
 // ── Menu Section ──────────────────────────────────────────────────────────────
 
@@ -9,33 +10,53 @@ function MenuSection({ section }: { section: MenuCategory }) {
   const { lines, addLine, updateQty } = useMenuCart()
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {section.items.map(item => {
         const line = lines.find(l => l.id === item.id)
         const qty = line?.qty ?? 0
         return (
-          <div key={item.id} className={`bg-charbon rounded-2xl overflow-hidden border transition-all ${qty > 0 ? 'border-braise/40' : 'border-white/5 hover:border-white/10'}`}>
-            <div className="relative h-40 bg-noir flex items-center justify-center">
-              <img src={item.img} alt={item.name} className="w-full h-full object-contain p-2" />
-              <div className="absolute inset-0 bg-gradient-to-t from-noir/80 to-transparent" />
+          <div key={item.id} className={`glass-card card-glow rounded-2xl p-3 flex flex-col ${qty > 0 ? '!border-braise/40' : ''}`}>
+            {/* Tuile image crème : mix-blend-multiply fond les fonds blancs des photos produits */}
+            <div className="relative h-40 rounded-xl overflow-hidden bg-gradient-to-b from-[#F7F3EB] to-[#E9E3D5] flex items-center justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={item.img}
+                alt={item.name}
+                loading="lazy"
+                className="h-full w-full object-contain p-3 mix-blend-multiply"
+              />
+              {qty > 0 && (
+                <span className="absolute top-2 right-2 bg-braise text-white text-xs font-bold rounded-full min-w-[22px] h-[22px] px-1.5 flex items-center justify-center shadow-lg">
+                  {qty}
+                </span>
+              )}
             </div>
-            <div className="p-4">
-              <h3 className="font-bold text-creme">{item.name}</h3>
-              {item.desc && <p className="text-white/40 text-sm mt-0.5 mb-3">{item.desc}</p>}
-              <div className={`flex items-center justify-between ${item.desc ? '' : 'mt-3'}`}>
-                <span className="text-ambre font-bold text-lg">{item.price.toFixed(2)} €</span>
+            <div className="flex flex-col flex-1 px-2 pt-3 pb-1">
+              <h3 className="font-semibold text-creme leading-snug">{item.name}</h3>
+              {item.desc && <p className="text-white/35 text-sm mt-0.5">{item.desc}</p>}
+              <div className="flex items-center justify-between mt-auto pt-3">
+                <span className="text-or font-bold text-lg">{item.price.toFixed(2)} €</span>
                 {qty === 0 ? (
-                  <button onClick={() => addLine({ id: item.id, name: item.name, price: item.price })}
-                    className="bg-braise hover:bg-ambre text-white px-4 py-2 rounded-full text-sm font-bold transition-colors">
+                  <button
+                    onClick={() => addLine({ id: item.id, name: item.name, price: item.price })}
+                    aria-label={`Ajouter ${item.name} au panier`}
+                    className="bg-braise hover:bg-ambre text-white px-4 py-2 rounded-full text-sm font-bold transition-colors duration-200 cursor-pointer"
+                  >
                     + Ajouter
                   </button>
                 ) : (
                   <div className="flex items-center gap-2">
-                    <button onClick={() => updateQty(item.id, qty - 1)}
-                      className="w-8 h-8 rounded-full border border-braise text-braise hover:bg-braise hover:text-white font-bold flex items-center justify-center transition-all">−</button>
+                    <button
+                      onClick={() => updateQty(item.id, qty - 1)}
+                      aria-label={`Retirer un ${item.name}`}
+                      className="w-9 h-9 rounded-full border border-braise/60 text-braise hover:bg-braise hover:text-white font-bold flex items-center justify-center transition-colors duration-200 cursor-pointer"
+                    >−</button>
                     <span className="w-5 text-center font-bold text-creme">{qty}</span>
-                    <button onClick={() => updateQty(item.id, qty + 1)}
-                      className="w-8 h-8 rounded-full bg-braise hover:bg-ambre text-white font-bold flex items-center justify-center transition-colors">+</button>
+                    <button
+                      onClick={() => updateQty(item.id, qty + 1)}
+                      aria-label={`Ajouter un ${item.name}`}
+                      className="w-9 h-9 rounded-full bg-braise hover:bg-ambre text-white font-bold flex items-center justify-center transition-colors duration-200 cursor-pointer"
+                    >+</button>
                   </div>
                 )}
               </div>
@@ -74,9 +95,9 @@ function CartBar() {
 
   return (
     <>
-      <div className="fixed bottom-0 left-0 right-0 z-50 p-4">
+      <div className="fixed bottom-0 left-0 right-0 z-50 p-4 pointer-events-none">
         <button onClick={() => setOpen(true)}
-          className="w-full max-w-2xl mx-auto flex items-center justify-between bg-braise hover:bg-ambre text-white px-6 py-4 rounded-2xl font-bold shadow-2xl transition-colors">
+          className="pointer-events-auto w-full max-w-2xl mx-auto flex items-center justify-between bg-braise hover:bg-ambre text-white px-6 py-4 rounded-full font-bold shadow-2xl shadow-braise/30 transition-colors duration-200 cursor-pointer">
           <span className="bg-white/20 rounded-full px-3 py-0.5 text-sm">{n} article{n > 1 ? 's' : ''}</span>
           <span>Voir mon panier</span>
           <span>{total().toFixed(2)} €</span>
@@ -84,11 +105,14 @@ function CartBar() {
       </div>
       {open && (
         <div className="fixed inset-0 z-50 flex">
-          <div className="flex-1 bg-noir/60 backdrop-blur" onClick={() => setOpen(false)} />
-          <div className="w-full max-w-md bg-charbon flex flex-col h-full overflow-hidden shadow-2xl">
+          <div className="flex-1 bg-noir/70 backdrop-blur-sm" onClick={() => setOpen(false)} />
+          <div className="w-full max-w-md glass border-l border-white/10 flex flex-col h-full overflow-hidden shadow-2xl">
             <div className="flex items-center justify-between p-5 border-b border-white/10">
               <h2 className="font-bold text-lg text-creme">Mon panier</h2>
-              <button onClick={() => setOpen(false)} className="text-white/40 hover:text-white text-2xl leading-none">×</button>
+              <button onClick={() => setOpen(false)} aria-label="Fermer le panier"
+                className="w-9 h-9 rounded-full text-white/40 hover:text-white hover:bg-white/5 flex items-center justify-center transition-colors cursor-pointer">
+                <IconX className="w-5 h-5" />
+              </button>
             </div>
             <div className="flex-1 overflow-y-auto p-5 space-y-3">
               {lines.map(line => (
@@ -98,13 +122,18 @@ function CartBar() {
                       <p className="font-medium text-creme text-sm">{line.name}</p>
                       {line.details && <p className="text-xs text-white/30 mt-0.5 leading-relaxed">{line.details}</p>}
                     </div>
-                    <button onClick={() => removeLine(line.id)} className="text-white/20 hover:text-red-400 text-sm shrink-0">✕</button>
+                    <button onClick={() => removeLine(line.id)} aria-label={`Retirer ${line.name}`}
+                      className="text-white/20 hover:text-red-400 shrink-0 cursor-pointer transition-colors">
+                      <IconX className="w-4 h-4" />
+                    </button>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <button onClick={() => updateQty(line.id, line.qty - 1)} className="w-7 h-7 rounded-full border border-white/20 text-white/50 hover:border-braise hover:text-braise flex items-center justify-center text-sm font-bold transition-all">−</button>
+                      <button onClick={() => updateQty(line.id, line.qty - 1)} aria-label="Diminuer la quantité"
+                        className="w-7 h-7 rounded-full border border-white/20 text-white/50 hover:border-braise hover:text-braise flex items-center justify-center text-sm font-bold transition-colors duration-200 cursor-pointer">−</button>
                       <span className="text-sm font-bold text-creme w-4 text-center">{line.qty}</span>
-                      <button onClick={() => updateQty(line.id, line.qty + 1)} className="w-7 h-7 rounded-full bg-braise hover:bg-ambre text-white flex items-center justify-center text-sm font-bold transition-colors">+</button>
+                      <button onClick={() => updateQty(line.id, line.qty + 1)} aria-label="Augmenter la quantité"
+                        className="w-7 h-7 rounded-full bg-braise hover:bg-ambre text-white flex items-center justify-center text-sm font-bold transition-colors duration-200 cursor-pointer">+</button>
                     </div>
                     <span className="text-ambre font-bold text-sm">{(line.price * line.qty).toFixed(2)} €</span>
                   </div>
@@ -121,10 +150,10 @@ function CartBar() {
                 <span className="text-or font-bold text-2xl">{total().toFixed(2)} €</span>
               </div>
               <button onClick={checkout} disabled={loading || !name}
-                className={`w-full py-4 rounded-xl font-bold text-white transition-all ${loading || !name ? 'bg-white/10 text-white/30 cursor-not-allowed' : 'bg-braise hover:bg-ambre'}`}>
+                className={`w-full py-4 rounded-xl font-bold text-white transition-colors duration-200 ${loading || !name ? 'bg-white/10 text-white/30 cursor-not-allowed' : 'bg-braise hover:bg-ambre cursor-pointer'}`}>
                 {loading ? 'Redirection...' : `Payer ${total().toFixed(2)} €`}
               </button>
-              <button onClick={clear} className="w-full text-xs text-white/20 hover:text-white/40 transition-colors py-1">Vider le panier</button>
+              <button onClick={clear} className="w-full text-xs text-white/20 hover:text-white/40 transition-colors py-1 cursor-pointer">Vider le panier</button>
             </div>
           </div>
         </div>
@@ -137,7 +166,6 @@ function CartBar() {
 
 export default function MenuInteractive({ categories }: { categories: MenuCategory[] }) {
   const [activeTab, setActiveTab] = useState(categories[0]?.id ?? 'tapas')
-  const activeSection = categories.find(s => s.id === activeTab)
 
   // Filtre les articles inactifs
   const visibleCategories = categories.map(cat => ({
@@ -149,15 +177,20 @@ export default function MenuInteractive({ categories }: { categories: MenuCatego
 
   return (
     <div className="pb-28">
-      {/* Tabs */}
-      <div className="flex gap-2 overflow-x-auto pb-2 mb-8 scrollbar-hide">
-        {visibleCategories.map(tab => (
-          <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-full font-semibold text-sm whitespace-nowrap transition-all shrink-0 ${activeTab === tab.id ? 'bg-braise text-white' : 'bg-charbon border border-white/10 text-white/60 hover:border-white/30'}`}>
-            <span>{tab.icon}</span>
-            <span>{tab.name}</span>
-          </button>
-        ))}
+      {/* Tabs — sticky sous le header flottant */}
+      <div className="sticky top-[68px] md:top-[76px] z-30 -mx-4 px-4 py-3 mb-8 bg-noir/85 backdrop-blur-lg">
+        <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+          {visibleCategories.map(tab => (
+            <button key={tab.id} onClick={() => setActiveTab(tab.id)}
+              className={`px-5 py-2.5 rounded-full font-semibold text-sm whitespace-nowrap transition-colors duration-200 shrink-0 cursor-pointer capitalize ${
+                activeTab === tab.id
+                  ? 'bg-braise text-white shadow-lg shadow-braise/25'
+                  : 'glass-card text-white/60 hover:text-white hover:border-white/25'
+              }`}>
+              {tab.name.toLowerCase()}
+            </button>
+          ))}
+        </div>
       </div>
 
       {activeVisible && <MenuSection section={activeVisible} />}
