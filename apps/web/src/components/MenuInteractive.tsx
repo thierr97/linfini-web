@@ -16,8 +16,11 @@ function MenuSection({ section }: { section: MenuCategory }) {
         const qty = line?.qty ?? 0
         return (
           <div key={item.id} className={`glass-card card-glow rounded-2xl p-3 flex flex-col ${qty > 0 ? '!border-braise/40' : ''}`}>
-            {/* Tuile image crème : mix-blend-multiply fond les fonds blancs des photos produits */}
-            <div className="relative h-40 rounded-xl overflow-hidden bg-gradient-to-b from-[#F7F3EB] to-[#E9E3D5] flex items-center justify-center">
+            {/* Tuile spotlight dorée : mix-blend-multiply fond les fonds blancs des photos produits */}
+            <div
+              className="relative h-40 rounded-xl overflow-hidden flex items-center justify-center ring-1 ring-inset ring-or/20"
+              style={{ background: 'radial-gradient(ellipse 90% 75% at 50% 38%, #FDF9F0 0%, #F0E5CB 55%, #D9C69C 100%)' }}
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={item.img}
