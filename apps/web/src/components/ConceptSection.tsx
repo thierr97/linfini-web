@@ -144,7 +144,7 @@ export default function ConceptSection() {
           className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4"
         >
           {STATS.map(s => (
-            <div key={s.label} className="text-center py-6 rounded-xl border border-white/5 bg-noir/40">
+            <div key={s.label} className="text-center py-6 rounded-xl glass-card card-glow">
               <p className="font-display text-4xl font-bold text-gradient mb-1">{s.value}</p>
               <p className="text-white/40 text-sm tracking-wide uppercase">{s.label}</p>
             </div>

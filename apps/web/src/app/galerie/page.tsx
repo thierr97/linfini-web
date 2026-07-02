@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import GalerieGrid from '@/components/GalerieGrid'
+import { IconInstagram } from '@/components/icons'
 
 export const metadata: Metadata = {
   title: 'Galerie',
@@ -15,6 +17,7 @@ const PHOTOS = [
   { id: 4,  src: '/galerie/g4.jpg',  label: 'Soirée Mousse' },
   { id: 5,  src: '/galerie/g5.jpg',  label: 'DJ Set Terrasse' },
   { id: 6,  src: '/galerie/g6.jpg',  label: 'La Nocturna — Smile Bar' },
+  { id: 11, src: '/galerie/g7.jpg',  label: 'Ambiance L\'Infini' },
   { id: 7,  src: '/galerie/g8.jpg',  label: 'Paradise — St Valentin' },
   { id: 8,  src: '/galerie/g9.jpg',  label: 'KaraomiX — Smile Bar' },
   { id: 9,  src: '/galerie/g10.jpg', label: 'Carte Tapas & Burgers' },
@@ -39,25 +42,7 @@ export default function GaleriePage() {
 
       {/* Grid masonry */}
       <div className="max-w-6xl mx-auto px-4 pb-24">
-        <div className="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
-          {PHOTOS.map(photo => (
-            <a
-              key={photo.id}
-              href="https://www.instagram.com/infinievents.gp/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block break-inside-avoid rounded-xl overflow-hidden border border-white/5 hover:border-braise/30 transition-all group cursor-pointer"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={photo.src}
-                alt={photo.label}
-                className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
-                loading="lazy"
-              />
-            </a>
-          ))}
-        </div>
+        <GalerieGrid photos={PHOTOS} />
 
         {/* CTA Instagram */}
         <div className="mt-16 text-center">
@@ -66,9 +51,9 @@ export default function GaleriePage() {
             href="https://www.instagram.com/infinievents.gp/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-full font-bold hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2.5 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-full font-bold hover:opacity-90 transition-opacity duration-200"
           >
-            <span>📸</span>
+            <IconInstagram className="w-5 h-5" />
             <span>@infinievents.gp</span>
           </a>
         </div>

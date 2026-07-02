@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { IconCheck, IconAlert } from '@/components/icons'
 
 const TYPES_EVENEMENT = [
   'Mariage', 'Anniversaire', 'Soirée d\'entreprise', 'Baptême / Communion',
@@ -56,7 +57,9 @@ export default function DevisForm() {
   if (status === 'success') {
     return (
       <div className="text-center py-16">
-        <div className="text-6xl mb-4">✉️</div>
+        <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-or/10 border border-or/30 flex items-center justify-center">
+          <IconCheck className="w-8 h-8 text-or" />
+        </div>
         <h3 className="text-2xl font-bold text-or mb-3">Demande envoyée !</h3>
         <p className="text-white/50 max-w-sm mx-auto">
           Notre équipe vous contacte sous 24h pour affiner votre projet et établir un devis personnalisé.
@@ -82,8 +85,8 @@ export default function DevisForm() {
               className="w-full bg-noir border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-braise" />
           </div>
           <div>
-            <label className="block text-sm text-white/50 mb-1">Téléphone *</label>
-            <input required type="tel" value={form.telephone} onChange={e => set('telephone', e.target.value)}
+            <label className="block text-sm text-white/50 mb-1">Téléphone <span className="text-white/25">(facultatif)</span></label>
+            <input type="tel" value={form.telephone} onChange={e => set('telephone', e.target.value)}
               placeholder="+590 6XX XX XX XX"
               className="w-full bg-noir border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-braise" />
           </div>
@@ -109,8 +112,8 @@ export default function DevisForm() {
               className="w-full bg-noir border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-braise" />
           </div>
           <div>
-            <label className="block text-sm text-white/50 mb-1">Nombre d'invités *</label>
-            <input required type="number" min="10" max="500" value={form.nb_invites}
+            <label className="block text-sm text-white/50 mb-1">Nombre d'invités <span className="text-white/25">(estimation)</span></label>
+            <input type="number" min="10" max="600" value={form.nb_invites}
               onChange={e => set('nb_invites', e.target.value)}
               placeholder="Ex : 80"
               className="w-full bg-noir border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-braise" />
@@ -129,7 +132,10 @@ export default function DevisForm() {
                   ? 'border-braise bg-braise/20 text-white'
                   : 'border-white/10 bg-noir text-white/50 hover:border-white/30'
               }`}>
-              {form.services.includes(s.id) ? '✓ ' : ''}{s.label}
+              <span className="inline-flex items-center gap-2">
+                {form.services.includes(s.id) && <IconCheck className="w-3.5 h-3.5 shrink-0" />}
+                {s.label}
+              </span>
             </button>
           ))}
         </div>
@@ -162,7 +168,9 @@ export default function DevisForm() {
 
       {/* Notice personnel */}
       <div className="bg-ambre/5 border border-ambre/20 rounded-xl p-4">
-        <p className="text-ambre text-xs font-semibold uppercase tracking-wider mb-1">⚠️ Personnel de service</p>
+        <p className="text-ambre text-xs font-semibold uppercase tracking-wider mb-1 inline-flex items-center gap-1.5">
+          <IconAlert className="w-3.5 h-3.5" /> Personnel de service
+        </p>
         <p className="text-white/50 text-sm leading-relaxed">
           Le personnel de service (serveurs, sécurité, hôtesses) est <strong className="text-white/70">obligatoirement fourni par L&apos;Infini</strong>.
           Si vous souhaitez faire intervenir votre propre personnel, vous devrez fournir pour chaque intervenant :

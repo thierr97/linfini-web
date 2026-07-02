@@ -6,6 +6,20 @@
 html { scroll-behavior: smooth; }
 body { background: #080808; color: #F5EDD8; }
 
+::selection { background: rgba(212, 168, 83, 0.35); color: #F5EDD8; }
+
+:focus-visible {
+  outline: 2px solid #D4A853;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Scrollbar fine et discrète */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #080808; }
+::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); border-radius: 5px; border: 2px solid #080808; }
+::-webkit-scrollbar-thumb:hover { background: rgba(212, 168, 83, 0.4); }
+
 .text-gradient {
   background: linear-gradient(135deg, #D4A853, #C84B1F);
   -webkit-background-clip: text;
@@ -14,9 +28,26 @@ body { background: #080808; color: #F5EDD8; }
 }
 
 .glass {
-  background: rgba(17, 17, 17, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(12, 12, 12, 0.72);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+}
+
+.glass-card {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Lueur dorée au survol des cartes */
+.card-glow {
+  transition: border-color 300ms ease, box-shadow 400ms ease, transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-glow:hover {
+  border-color: rgba(212, 168, 83, 0.35);
+  box-shadow: 0 8px 40px rgba(212, 168, 83, 0.1), 0 2px 12px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
 }
 
 .scrollbar-hide::-webkit-scrollbar { display: none; }
@@ -35,4 +66,22 @@ body { background: #080808; color: #F5EDD8; }
 }
 .animate-bounce-slow {
   animation: bounceSlowY 2.5s ease-in-out infinite;
+}
+
+/* Ken Burns lent pour les slides du hero */
+@keyframes kenburns {
+  from { transform: scale(1.05) translateY(0); }
+  to { transform: scale(1.15) translateY(-1.5%); }
+}
+.animate-kenburns {
+  animation: kenburns 9s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

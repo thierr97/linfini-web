@@ -26,14 +26,16 @@ export default function Hero() {
       {SLIDES.map((slide, i) => (
         <div
           key={slide.src}
-          className="absolute inset-0 transition-opacity duration-1500"
-          style={{ opacity: i === current ? 1 : 0 }}
+          className="absolute inset-0"
+          style={{ opacity: i === current ? 1 : 0, transition: 'opacity 1.5s ease' }}
         >
-          <img
+          <Image
             src={slide.src}
             alt={slide.label}
-            className="w-full h-full object-cover scale-105"
-            style={{ transition: 'opacity 1.5s ease' }}
+            fill
+            sizes="100vw"
+            priority={i === 0}
+            className={`object-cover ${i === current ? 'animate-kenburns' : 'scale-105'}`}
           />
           <div className="absolute inset-0 bg-noir/70" />
         </div>
@@ -67,12 +69,11 @@ export default function Hero() {
               className="mb-6 flex justify-center"
             >
               <Image
-                src="/logos/infini-guadeloupe.jpg"
+                src="/logos/infini-blanc.png"
                 alt="L'Infini Guadeloupe"
                 width={400}
                 height={160}
-                className="w-64 md:w-96 h-auto object-contain"
-                style={{ mixBlendMode: 'screen' }}
+                className="w-64 md:w-96 h-auto object-contain drop-shadow-[0_4px_30px_rgba(0,0,0,0.6)]"
                 priority
               />
             </motion.div>
@@ -127,7 +128,8 @@ export default function Hero() {
                 <button
                   key={i}
                   onClick={() => setCurrent(i)}
-                  className={`rounded-full transition-all duration-300 ${i === current ? 'w-6 h-2 bg-braise' : 'w-2 h-2 bg-white/20 hover:bg-white/40'}`}
+                  aria-label={`Voir : ${SLIDES[i].label}`}
+                  className={`rounded-full transition-all duration-300 cursor-pointer ${i === current ? 'w-6 h-2 bg-braise' : 'w-2 h-2 bg-white/20 hover:bg-white/40'}`}
                 />
               ))}
             </motion.div>
