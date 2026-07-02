@@ -2,10 +2,29 @@
 import { motion } from 'framer-motion'
 
 const HORAIRES = [
-  { jour: 'Lundi', heure: 'Fermé', closed: true },
-  { jour: 'Mardi – Jeudi', heure: '18h – 23h', closed: false },
-  { jour: 'Vendredi – Samedi', heure: '18h – 01h', closed: false },
-  { jour: 'Dimanche', heure: 'Fermé', closed: true },
+  {
+    section: '🍽️ Restaurant',
+    lignes: [
+      { jour: 'Lun – Mar', heure: 'Fermé', closed: true },
+      { jour: 'Mer – Sam', heure: '19h – 23h', closed: false },
+      { jour: 'Dimanche', heure: 'Fermé', closed: true },
+    ],
+  },
+  {
+    section: '🍹 Bar Lounge',
+    lignes: [
+      { jour: 'Lun – Mar', heure: 'Fermé', closed: true },
+      { jour: 'Mer – Jeu', heure: '19h – 01h', closed: false },
+      { jour: 'Ven – Sam', heure: '19h – 02h', closed: false },
+      { jour: 'Dimanche', heure: 'Fermé', closed: true },
+    ],
+  },
+  {
+    section: '🎉 Salle Événementielle',
+    lignes: [
+      { jour: 'Tous les jours', heure: '8h – 5h (selon événement)', closed: false },
+    ],
+  },
 ]
 
 const CONTACTS = [
@@ -16,8 +35,8 @@ const CONTACTS = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     ),
-    label: 'Le District, Baie-Mahault, 97122 Guadeloupe',
-    href: 'https://maps.google.com/?q=Le+District+Baie-Mahault+Guadeloupe',
+    label: '99 Route de Montauban, Le Gosier 97190 Guadeloupe',
+    href: 'https://maps.app.goo.gl/4V1HKmPLJtwYNFxU7',
   },
   {
     icon: (
@@ -34,8 +53,8 @@ const CONTACTS = [
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
       </svg>
     ),
-    label: 'contact@linfini.gp',
-    href: 'mailto:contact@linfini.gp',
+    label: 'direction.infini971@gmail.com',
+    href: 'mailto:direction.infini971@gmail.com',
   },
   {
     icon: (
@@ -75,18 +94,18 @@ export default function LocationSection() {
             className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/40 aspect-video relative"
           >
             <iframe
-              src="https://maps.google.com/maps?q=Le+District+Baie-Mahault+Guadeloupe&output=embed&hl=fr&z=15"
+              src="https://maps.google.com/maps?q=16.2152119,-61.5028187&output=embed&hl=fr&z=17"
               width="100%"
               height="100%"
               style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) saturate(0.9) brightness(0.85)' }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="L'Infini — Le District, Baie-Mahault"
+              title="L'Infini — 99 Route de Montauban, Le Gosier"
             />
             <div className="absolute bottom-3 left-3">
               <a
-                href="https://maps.google.com/?q=Le+District+Baie-Mahault+Guadeloupe"
+                href="https://maps.app.goo.gl/4V1HKmPLJtwYNFxU7"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-braise text-white text-sm px-4 py-2 rounded-full hover:bg-ambre transition-colors shadow-lg font-semibold"
@@ -115,11 +134,16 @@ export default function LocationSection() {
                 </svg>
                 Horaires d&apos;ouverture
               </h3>
-              <div className="space-y-3">
-                {HORAIRES.map(h => (
-                  <div key={h.jour} className={`flex justify-between py-2 border-b border-white/5 last:border-0 ${h.closed ? 'opacity-30' : ''}`}>
-                    <span className="text-white/70 text-sm">{h.jour}</span>
-                    <span className={`font-semibold text-sm ${h.closed ? 'text-white/40' : 'text-creme'}`}>{h.heure}</span>
+              <div className="space-y-4">
+                {HORAIRES.map(section => (
+                  <div key={section.section}>
+                    <p className="text-xs font-semibold text-or/70 uppercase tracking-wider mb-2">{section.section}</p>
+                    {section.lignes.map(h => (
+                      <div key={h.jour} className={`flex justify-between py-1.5 border-b border-white/5 last:border-0 ${h.closed ? 'opacity-30' : ''}`}>
+                        <span className="text-white/60 text-sm">{h.jour}</span>
+                        <span className={`font-semibold text-sm ${h.closed ? 'text-white/30' : 'text-creme'}`}>{h.heure}</span>
+                      </div>
+                    ))}
                   </div>
                 ))}
               </div>
@@ -153,8 +177,8 @@ export default function LocationSection() {
                 Accès & Parking
               </h3>
               <p className="text-white/50 text-sm leading-relaxed">
-                Zone commerciale du District, Baie-Mahault.
-                Parking privé disponible sur place. Accessible depuis la RN1 et la rocade de Jarry.
+                99 Route de Montauban, Le Gosier 97190 Guadeloupe.
+                Parking disponible sur place.
               </p>
             </div>
           </motion.div>

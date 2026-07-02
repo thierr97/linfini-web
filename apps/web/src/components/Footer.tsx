@@ -34,6 +34,7 @@ const LINKS = [
   { href: '/menu', label: 'Menu' },
   { href: '/evenements', label: 'Événements' },
   { href: '/bar', label: 'Bar & Cocktails' },
+  { href: '/tarifs', label: 'Tarifs location' },
   { href: '/club', label: 'Le Club' },
   { href: '/galerie', label: 'Galerie' },
   { href: '/#reservation', label: 'Réserver' },
@@ -50,7 +51,7 @@ export default function Footer() {
             <p className="text-white/40 text-sm">Anniversaire, soirée d&apos;entreprise, mariage — nous mettons L&apos;Infini à votre disposition.</p>
           </div>
           <a
-            href="mailto:contact@linfini.gp"
+            href="mailto:direction.infini971@gmail.com"
             className="flex-none bg-braise hover:bg-ambre text-white px-7 py-3 rounded-full font-bold transition-all hover:scale-105 whitespace-nowrap shadow-lg shadow-braise/20"
           >
             Demander un devis →
@@ -103,15 +104,19 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-white/60 uppercase tracking-wider mb-5">Horaires</h4>
             <div className="space-y-2 text-sm text-white/40 mb-6">
-              <div className="flex justify-between"><span>Mar – Jeu</span><span className="text-creme/70">18h – 23h</span></div>
-              <div className="flex justify-between"><span>Ven – Sam</span><span className="text-creme/70">18h – 01h</span></div>
-              <div className="flex justify-between opacity-40"><span>Dim – Lun</span><span>Fermé</span></div>
+              <p className="text-white/30 text-xs uppercase tracking-wider">Restaurant</p>
+              <div className="flex justify-between"><span>Mer – Sam</span><span className="text-creme/70">19h – 23h</span></div>
+              <p className="text-white/30 text-xs uppercase tracking-wider pt-1">Bar Lounge</p>
+              <div className="flex justify-between"><span>Mer – Jeu</span><span className="text-creme/70">19h – 01h</span></div>
+              <div className="flex justify-between"><span>Ven – Sam</span><span className="text-creme/70">19h – 02h</span></div>
+              <p className="text-white/30 text-xs uppercase tracking-wider pt-1">Salle événementielle</p>
+              <div className="flex justify-between"><span>Tous les jours</span><span className="text-creme/70">8h – 5h*</span></div>
             </div>
             <h4 className="text-sm font-semibold text-white/60 uppercase tracking-wider mb-3">Contact</h4>
             <div className="space-y-1.5 text-sm text-white/40">
-              <p>Le District, Baie-Mahault 97122</p>
+              <p>99 Route de Montauban, Le Gosier 97190</p>
               <a href="tel:+590690272875" className="block hover:text-white transition-colors">+590 690 27 28 75</a>
-              <a href="mailto:contact@linfini.gp" className="block hover:text-white transition-colors">contact@linfini.gp</a>
+              <a href="mailto:direction.infini971@gmail.com" className="block hover:text-white transition-colors">direction.infini971@gmail.com</a>
             </div>
           </div>
         </div>
@@ -121,6 +126,10 @@ export default function Footer() {
       <div className="border-t border-white/5 py-6 px-4">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-white/20 text-xs">
           <p>© 2026 L&apos;Infini — SAS LES 4 AS · Guadeloupe</p>
+          <div className="flex items-center gap-4">
+            <Link href="/mentions-legales" className="hover:text-white/50 transition-colors">Mentions légales</Link>
+            <Link href="/politique-confidentialite" className="hover:text-white/50 transition-colors">Confidentialité</Link>
+          </div>
           <p>TVA 8.5% · ERP type P · Licence IV</p>
         </div>
       </div>

@@ -1,23 +1,14 @@
-export const dynamic = 'force-dynamic'
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import type { BizoukEvent } from '@/app/api/bizouk/route'
+import { getAllEvents, type BizoukEvent } from '@/lib/bizouk'
 
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: 'Événements — L\'Infini Club',
+  title: "Événements — L'Infini Club",
   description: 'Soirées, concerts et événements privés à L\'Infini Guadeloupe.',
-}
-
-async function getBizoukEvents(period: 'upcoming' | 'past'): Promise<BizoukEvent[]> {
-  try {
-    const base = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
-    const res = await fetch(`${base}/api/bizouk?period=${period}`, { next: { revalidate: 3600 } })
-    if (!res.ok) return []
-    return res.json()
-  } catch { return [] }
 }
 
 function formatDate(d: string) {
@@ -30,10 +21,98 @@ function formatTime(d: string) {
   return new Date(d).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
 }
 
+function EventCard({ event, size = 'normal' }: { event: BizoukEvent; size?: 'normal' | 'small' }) {
+  const isExternal = event.source === 'bizouk'
+  const linkProps = isExternal
+    ? { href: event.url, target: '_blank', rel: 'noopener noreferrer' }
+    : { href: event.url }
+
+  if (size === 'small') {
+    const Wrapper = isExternal ? 'a' : Link
+    return (
+      <Wrapper
+        key={event.id}
+        {...(linkProps as any)}
+        className="group rounded-xl overflow-hidden border border-white/5 hover:border-white/10 transition-all opacity-60 hover:opacity-100 block"
+      >
+        <div className="aspect-video bg-charbon relative">
+          {event.image_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={event.image_url} alt={event.title}
+              className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-3xl">🎵</div>
+          )}
+        </div>
+        <div className="p-3 bg-charbon">
+          <p className="text-creme/60 text-xs font-semibold truncate">{event.title}</p>
+          <p className="text-white/30 text-xs">{formatDate(event.start_date)}</p>
+        </div>
+      </Wrapper>
+    )
+  }
+
+  const Wrapper = isExternal ? 'a' : Link
+  return (
+    <Wrapper
+      key={event.id}
+      {...(linkProps as any)}
+      className="group bg-charbon rounded-2xl border border-white/5 hover:border-braise/40 overflow-hidden transition-all hover:scale-[1.01] hover:shadow-2xl block"
+    >
+      {/* Flyer */}
+      <div className="aspect-video bg-gradient-to-br from-braise/20 to-charbon relative overflow-hidden">
+        {event.image_url ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={event.image_url}
+            alt={event.title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center text-6xl">🎵</div>
+        )}
+        {event.price_min != null && (
+          <div className="absolute top-3 right-3 bg-braise text-white text-xs font-bold px-3 py-1 rounded-full">
+            À partir de {event.price_min} €
+          </div>
+        )}
+        {event.source === 'local' && (
+          <div className="absolute top-3 left-3 bg-or/20 border border-or/40 text-or text-xs font-bold px-3 py-1 rounded-full">
+            Billetterie L&apos;Infini
+          </div>
+        )}
+      </div>
+
+      <div className="p-6">
+        <p className="text-braise text-xs font-semibold uppercase tracking-wider mb-1">
+          {formatDate(event.start_date)} · {formatTime(event.start_date)}
+        </p>
+        <h3 className="font-display text-xl font-bold text-creme mb-1">{event.title}</h3>
+        {event.subtitle && (
+          <p className="text-white/50 text-sm mb-1">{event.subtitle}</p>
+        )}
+        <p className="text-white/30 text-xs mb-3">📍 {event.venue_name} · {event.venue_city}</p>
+        {event.description && (
+          <p
+            className="text-white/40 text-sm line-clamp-2 mb-4"
+            dangerouslySetInnerHTML={{ __html: event.description.replace(/&amp;/g, '&') }}
+          />
+        )}
+        <div className="flex items-center justify-between">
+          <span className="text-xs text-white/20 uppercase tracking-wide">{event.event_type}</span>
+          <span className="text-braise text-sm font-bold group-hover:text-ambre transition-colors">
+            {event.source === 'local' ? 'Voir & acheter →' : 'Acheter mes billets →'}
+          </span>
+        </div>
+      </div>
+    </Wrapper>
+  )
+}
+
 export default async function EvenementsPage() {
   const [upcoming, past] = await Promise.all([
-    getBizoukEvents('upcoming'),
-    getBizoukEvents('past'),
+    getAllEvents('upcoming'),
+    getAllEvents('past'),
   ])
 
   return (
@@ -59,55 +138,7 @@ export default async function EvenementsPage() {
             <h2 className="font-display text-2xl font-bold text-or mb-8">Prochaines soirées</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {upcoming.map(event => (
-                <a
-                  key={event.id}
-                  href={event.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group bg-charbon rounded-2xl border border-white/5 hover:border-braise/40 overflow-hidden transition-all hover:scale-[1.01] hover:shadow-2xl block"
-                >
-                  {/* Flyer */}
-                  <div className="aspect-video bg-gradient-to-br from-braise/20 to-charbon relative overflow-hidden">
-                    {event.image_url ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={event.image_url}
-                        alt={event.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-6xl">🎵</div>
-                    )}
-                    {event.price_min != null && (
-                      <div className="absolute top-3 right-3 bg-braise text-white text-xs font-bold px-3 py-1 rounded-full">
-                        À partir de {event.price_min} €
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="p-6">
-                    <p className="text-braise text-xs font-semibold uppercase tracking-wider mb-1">
-                      {formatDate(event.start_date)} · {formatTime(event.start_date)}
-                    </p>
-                    <h3 className="font-display text-xl font-bold text-creme mb-1">{event.title}</h3>
-                    {event.subtitle && (
-                      <p className="text-white/50 text-sm mb-1">{event.subtitle}</p>
-                    )}
-                    <p className="text-white/30 text-xs mb-3">📍 {event.venue_name} · {event.venue_city}</p>
-                    {event.description && (
-                      <p
-                        className="text-white/40 text-sm line-clamp-2 mb-4"
-                        dangerouslySetInnerHTML={{ __html: event.description.replace(/&amp;/g, '&') }}
-                      />
-                    )}
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs text-white/20 uppercase tracking-wide">{event.event_type}</span>
-                      <span className="text-braise text-sm font-bold group-hover:text-ambre transition-colors">
-                        Acheter mes billets →
-                      </span>
-                    </div>
-                  </div>
-                </a>
+                <EventCard key={event.id} event={event} />
               ))}
             </div>
           </div>
@@ -129,22 +160,7 @@ export default async function EvenementsPage() {
             <h2 className="font-display text-xl font-bold text-white/30 mb-6">Soirées passées</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {past.slice(0, 6).map(event => (
-                <a key={event.id} href={event.url} target="_blank" rel="noopener noreferrer"
-                  className="group rounded-xl overflow-hidden border border-white/5 hover:border-white/10 transition-all opacity-60 hover:opacity-100">
-                  <div className="aspect-video bg-charbon relative">
-                    {event.image_url ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={event.image_url} alt={event.title}
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all" />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-3xl">🎵</div>
-                    )}
-                  </div>
-                  <div className="p-3 bg-charbon">
-                    <p className="text-creme/60 text-xs font-semibold truncate">{event.title}</p>
-                    <p className="text-white/30 text-xs">{formatDate(event.start_date)}</p>
-                  </div>
-                </a>
+                <EventCard key={event.id} event={event} size="small" />
               ))}
             </div>
           </div>
@@ -156,7 +172,7 @@ export default async function EvenementsPage() {
           <p className="text-white/50 mb-6 max-w-md mx-auto">
             Anniversaire, soirée d&apos;entreprise, mariage — nous mettons notre espace à votre disposition.
           </p>
-          <a href="mailto:evenements@linfini.gp"
+          <a href="mailto:direction.infini971@gmail.com"
             className="bg-braise hover:bg-ambre text-white px-8 py-3 rounded-full font-bold transition-colors inline-block">
             Demander un devis →
           </a>

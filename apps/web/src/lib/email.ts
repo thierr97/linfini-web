@@ -2,7 +2,7 @@ import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-const FROM = 'L\'Infini Guadeloupe <billets@linfini.gp>'
+const FROM = 'L\'Infini Guadeloupe <direction.infini971@gmail.com>'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://linfini.gp'
 
 function formatDate(d: Date | string) {

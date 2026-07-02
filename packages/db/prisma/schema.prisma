@@ -293,3 +293,16 @@ model User {
   role     String  @default("ADMIN")
   name     String?
 }
+
+model Client {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  telephone String?
+  password  String
+  discount  Int      @default(0)
+  notes     String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

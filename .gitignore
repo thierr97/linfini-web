@@ -13,3 +13,6 @@ build
 Thumbs.db
 prisma/migrations/dev
 .vercel
+add-odoo-env.sh
+update-gmail-env.sh
+*.tsbuildinfo

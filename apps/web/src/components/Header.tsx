@@ -7,6 +7,7 @@ const NAV = [
   { href: '/menu', label: 'Menu' },
   { href: '/evenements', label: 'Événements' },
   { href: '/bar', label: 'Bar' },
+  { href: '/tarifs', label: 'Tarifs' },
   { href: '/galerie', label: 'Galerie' },
   { href: '/#reservation', label: 'Réserver' },
 ]
@@ -49,6 +50,9 @@ export default function Header() {
 
           {/* CTA */}
           <div className="hidden md:flex items-center gap-3">
+            <Link href="/connexion" className="text-sm text-white/50 hover:text-white transition-colors">
+              Mon compte
+            </Link>
             <Link href="/#reservation" className="bg-braise hover:bg-ambre text-white px-5 py-2 rounded-full text-sm font-semibold transition-colors">
               Réserver
             </Link>

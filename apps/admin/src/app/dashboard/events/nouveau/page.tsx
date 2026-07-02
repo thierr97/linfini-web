@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import ImageUpload from '@/components/ImageUpload'
 
 interface TicketTypeInput {
   name: string
@@ -259,14 +260,11 @@ export default function NouvelEvenementPage() {
                 className={inputClass}
               />
             </div>
-            <div>
-              <label className={labelClass}>Image (URL)</label>
-              <input
-                type="url"
+            <div className="sm:col-span-2">
+              <ImageUpload
+                label="Image de l'événement (flyer)"
                 value={imageUrl}
-                onChange={e => setImageUrl(e.target.value)}
-                placeholder="https://..."
-                className={inputClass}
+                onChange={setImageUrl}
               />
             </div>
             <div>

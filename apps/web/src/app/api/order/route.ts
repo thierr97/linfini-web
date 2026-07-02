@@ -28,6 +28,7 @@ export async function POST(req: NextRequest) {
       payment_method_types: ['card'],
       line_items: lineItems,
       customer_email: customerEmail || undefined,
+      locale: 'fr',
       metadata: {
         type: 'food_order',
         customerName: customerName || '',
@@ -35,8 +36,8 @@ export async function POST(req: NextRequest) {
         note: note || '',
         lines: JSON.stringify(lines),
       },
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/menu/confirmation?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/menu`,
+      success_url: `https://infinigp.fr/menu/confirmation?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `https://infinigp.fr/menu`,
     })
 
     return NextResponse.json({ url: session.url })

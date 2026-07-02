@@ -119,8 +119,8 @@ export async function POST(req: NextRequest) {
     // Créer la session Stripe Checkout
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
-      customer_email: buyerEmail,
       payment_method_types: ['card'],
+      customer_email: buyerEmail,
       line_items: [
         {
           price_data: {
@@ -128,18 +128,21 @@ export async function POST(req: NextRequest) {
             product_data: {
               name: `${ticketType.name} — ${ticketType.event.title}`,
               description: ticketType.description || undefined,
+              images: ticketType.event.imageUrl ? [ticketType.event.imageUrl] : [],
             },
             unit_amount: Math.round(unitPrice * 100),
           },
           quantity,
         },
       ],
+      phone_number_collection: { enabled: true },
       metadata: {
         ticketId: ticket.id,
         eventSlug,
       },
-      success_url: `${appUrl}/evenements/confirmation?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${appUrl}/evenements/${eventSlug}`,
+      locale: 'fr',
+      success_url: `https://infinigp.fr/evenements/confirmation?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `https://infinigp.fr/evenements/${eventSlug}`,
     })
 
     // Mettre à jour le ticket avec la session Stripe

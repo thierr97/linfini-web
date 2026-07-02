@@ -1,5 +1,11 @@
 export const dynamic = 'force-dynamic'
+import type { Metadata } from 'next'
 import Image from 'next/image'
+
+export const metadata: Metadata = {
+  title: 'Le Club — Soirées & Billetterie',
+  description: "Les soirées de L'Infini Club au Gosier : programmation, billetterie en ligne et réservation de bouteilles. L'expérience nocturne premium en Guadeloupe.",
+}
 import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
