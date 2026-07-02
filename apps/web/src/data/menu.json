@@ -910,7 +910,7 @@
           "name": "Coca Zéro 33cl",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-coca-zero-cut.png",
           "active": true
         },
         {
@@ -918,7 +918,7 @@
           "name": "Coca-Cola",
           "desc": "",
           "price": 2.2,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/coca-cola-cut.png",
           "active": true
         },
         {
@@ -926,7 +926,7 @@
           "name": "Coca-Cola 33cl",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/coca-cola-cut.png",
           "active": true
         },
         {
@@ -934,7 +934,7 @@
           "name": "Eau 1L Gazeuse",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/water.jpg",
           "active": true
         },
         {
@@ -942,7 +942,7 @@
           "name": "Eau 1L Plate",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/water.jpg",
           "active": true
         },
         {
@@ -950,7 +950,7 @@
           "name": "Eau gazeuse 50cl",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/water.jpg",
           "active": true
         },
         {
@@ -958,7 +958,7 @@
           "name": "Eau plate 50cl",
           "desc": "",
           "price": 3,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/water.jpg",
           "active": true
         },
         {
@@ -966,7 +966,7 @@
           "name": "Fanta",
           "desc": "",
           "price": 2.2,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-fanta-orange-cut.png",
           "active": true
         },
         {
@@ -974,7 +974,7 @@
           "name": "Fanta Exotique 33cl",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-fanta-exotique-cut.png",
           "active": true
         },
         {
@@ -982,7 +982,7 @@
           "name": "Fanta Orange 33cl",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-fanta-orange-cut.png",
           "active": true
         },
         {
@@ -990,7 +990,7 @@
           "name": "Fuze Tea 33cl",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-fuze-tea-cut.png",
           "active": true
         },
         {
@@ -998,7 +998,7 @@
           "name": "Green Tea",
           "desc": "",
           "price": 4.7,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-fuze-tea-cut.png",
           "active": true
         },
         {
@@ -1006,7 +1006,7 @@
           "name": "Ice Tea",
           "desc": "",
           "price": 2.2,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-fuze-tea-cut.png",
           "active": true
         },
         {
@@ -1014,7 +1014,7 @@
           "name": "Jus Ananas",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-jus-d-ananas-caraibos-cut.png",
           "active": true
         },
         {
@@ -1022,7 +1022,7 @@
           "name": "Jus Goyave",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-jus-goyave-cut.png",
           "active": true
         },
         {
@@ -1030,7 +1030,7 @@
           "name": "Jus Mangue",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-jus-mangue-cut.png",
           "active": true
         },
         {
@@ -1038,7 +1038,7 @@
           "name": "Jus Orange",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/jus-orange.jpg",
           "active": true
         },
         {
@@ -1046,7 +1046,7 @@
           "name": "Jus Passion",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-jus-fruit-de-la-passion-cut.png",
           "active": true
         },
         {
@@ -1054,7 +1054,7 @@
           "name": "Jus Pomme",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-jus-de-pomme-cut.png",
           "active": true
         },
         {
@@ -1062,7 +1062,7 @@
           "name": "Long Horn 25cl",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-long-horn-energy-drink-cut.png",
           "active": true
         },
         {
@@ -1070,7 +1070,7 @@
           "name": "Minute Maid",
           "desc": "",
           "price": 2.2,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-minute-maid-orange-cut.png",
           "active": true
         },
         {
@@ -1078,7 +1078,7 @@
           "name": "Orangina 33cl",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-orangina-cut.png",
           "active": true
         },
         {
@@ -1086,7 +1086,7 @@
           "name": "Ordinaire 33cl",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/soft2.jpg",
           "active": true
         },
         {
@@ -1094,7 +1094,7 @@
           "name": "Perrier 33cl",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-perrier-cut.png",
           "active": true
         },
         {
@@ -1102,7 +1102,7 @@
           "name": "Red Bull 25cl",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/red-bull-cut.png",
           "active": true
         },
         {
@@ -1110,7 +1110,7 @@
           "name": "Schweppes",
           "desc": "",
           "price": 2.2,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-schweppes-cut.png",
           "active": true
         },
         {
@@ -1118,7 +1118,7 @@
           "name": "Schweppes 33cl",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-schweppes-cut.png",
           "active": true
         },
         {
@@ -1126,7 +1126,7 @@
           "name": "Sprite 33cl",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-sprite-cut.png",
           "active": true
         },
         {
@@ -1134,7 +1134,7 @@
           "name": "Water",
           "desc": "",
           "price": 2.2,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/water.jpg",
           "active": true
         },
         {
@@ -1142,7 +1142,7 @@
           "name": "XL Energy 25cl",
           "desc": "",
           "price": 5,
-          "img": "/menu/soft-drink-cut.png",
+          "img": "/menu/off-xl-energy-cut.png",
           "active": true
         }
       ]
