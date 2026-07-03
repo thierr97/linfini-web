@@ -13,16 +13,17 @@ function qrUrl(code: string) {
 export default async function OrderConfirmationPage({
   searchParams,
 }: {
-  searchParams: { session_id?: string }
+  searchParams: Promise<{ session_id?: string }>
 }) {
+  const { session_id } = await searchParams
   let order: PickupOrderView | null = null
   let error: string | null = null
 
-  if (!searchParams.session_id) {
+  if (!session_id) {
     error = 'Session de paiement introuvable.'
   } else {
     try {
-      order = await ensurePickupOrder(searchParams.session_id)
+      order = await ensurePickupOrder(session_id)
     } catch (e: any) {
       console.error('[confirmation]', e)
       error = 'Impossible de confirmer le paiement. Si vous avez été débité, présentez votre email de confirmation au bar.'
