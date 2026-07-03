@@ -300,6 +300,49 @@ model PickupOrder {
   updatedAt       DateTime    @updatedAt
 }
 
+// ── Emailing / Newsletter clients ──────────────────────────────────────────────
+// Liste opt-in des clients L'Infini (RGPD : désinscription + suppression bounces)
+model EmailContact {
+  id               String    @id @default(cuid())
+  email            String    @unique
+  name             String?
+  source           String?   // reservation | ticket | pickup | client | import
+  subscribed       Boolean   @default(true)
+  unsubscribeToken String    @unique @default(cuid())
+  unsubscribedAt   DateTime?
+  bounced          Boolean   @default(false)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model EmailCampaign {
+  id          String      @id @default(cuid())
+  subject     String
+  preheader   String?
+  body        String      @db.Text
+  status      String      @default("DRAFT") // DRAFT | SENDING | SENT
+  totalCount  Int         @default(0)
+  sentCount   Int         @default(0)
+  failedCount Int         @default(0)
+  openCount   Int         @default(0)
+  createdAt   DateTime    @default(now())
+  sentAt      DateTime?
+  sends       EmailSend[]
+}
+
+model EmailSend {
+  id         String        @id @default(cuid())
+  campaignId String
+  campaign   EmailCampaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  email      String
+  status     String        @default("PENDING") // SENT | FAILED
+  error      String?
+  sentAt     DateTime?
+  openedAt   DateTime?
+
+  @@unique([campaignId, email])
+}
+
 model Setting {
   key   String @id
   value String
