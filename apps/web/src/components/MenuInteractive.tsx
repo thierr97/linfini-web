@@ -32,6 +32,7 @@ function MenuSection({ section }: { section: MenuCategory }) {
                     src={item.img}
                     alt={item.name}
                     loading="lazy"
+                    onError={e => { if (item.fallbackImg && !e.currentTarget.src.endsWith(item.fallbackImg)) e.currentTarget.src = item.fallbackImg }}
                     className="h-32 max-w-[210px] w-auto object-contain transition-transform duration-400 group-hover:scale-110 group-hover:-rotate-2"
                   />
                 </div>
@@ -49,6 +50,7 @@ function MenuSection({ section }: { section: MenuCategory }) {
                   src={item.img}
                   alt={item.name}
                   loading="lazy"
+                  onError={e => { if (item.fallbackImg && !e.currentTarget.src.endsWith(item.fallbackImg)) e.currentTarget.src = item.fallbackImg }}
                   className="h-full w-full object-cover transition-transform duration-600 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-noir/50 to-transparent pointer-events-none" />

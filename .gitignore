@@ -16,3 +16,4 @@ prisma/migrations/dev
 add-odoo-env.sh
 update-gmail-env.sh
 *.tsbuildinfo
+update-odoo-env.sh

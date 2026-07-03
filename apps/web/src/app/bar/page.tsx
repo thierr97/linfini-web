@@ -3,13 +3,18 @@ import Image from 'next/image'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import BarInteractive from '@/components/BarInteractive'
+import { getPosMenu, barSections } from '@/lib/odoo/posMenu'
 
 export const metadata: Metadata = {
   title: 'Bar & Cocktails — Le Smile Bar',
   description: 'Carte complète du Smile Bar : cocktails créations, cocktails classiques, softs, bières, champagnes et bouteilles.',
 }
 
-export default function BarPage() {
+// ISR 15 min : la carte vient de la caisse Odoo (spec §3)
+export const revalidate = 900
+
+export default async function BarPage() {
+  const menu = await getPosMenu()
   return (
     <div className="min-h-screen bg-noir">
       <Header />
@@ -52,7 +57,7 @@ export default function BarPage() {
 
       {/* Carte interactive avec panier */}
       <div className="max-w-4xl mx-auto px-4 pb-8">
-        <BarInteractive />
+        <BarInteractive categories={barSections(menu)} />
       </div>
 
       <Footer />

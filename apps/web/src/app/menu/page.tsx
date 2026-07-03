@@ -2,18 +2,18 @@ import type { Metadata } from 'next'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import MenuInteractive from '@/components/MenuInteractive'
-import { dataService } from '@/lib/data'
+import { getPosMenu, menuSections } from '@/lib/odoo/posMenu'
 
 export const metadata: Metadata = {
   title: 'Menu — Restaurant & Bar',
   description: 'Tapas, plats franco-créoles, desserts, cocktails — commandez et payez directement en ligne.',
 }
 
-// Pas de cache → données toujours fraîches après modification admin
-export const dynamic = 'force-dynamic'
+// ISR 15 min : les prix viennent de la caisse Odoo (spec §3)
+export const revalidate = 900
 
 export default async function MenuPage() {
-  const menu = await dataService.getMenu()
+  const menu = await getPosMenu()
 
   return (
     <div className="min-h-screen bg-noir text-creme">
@@ -25,7 +25,7 @@ export default async function MenuPage() {
         <p className="text-center text-white/40 mb-12">
           Service {menu.settings.service} · Sélectionnez et payez directement en ligne
         </p>
-        <MenuInteractive categories={menu.categories} />
+        <MenuInteractive categories={menuSections(menu)} />
       </div>
       <Footer />
     </div>

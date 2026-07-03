@@ -11,6 +11,14 @@ import ReservationForm from '@/components/ReservationForm'
 import DevisForm from '@/components/DevisForm'
 import Footer from '@/components/Footer'
 import { getAllEvents } from '@/lib/bizouk'
+import { getPosMenu, pickItems } from '@/lib/odoo/posMenu'
+
+// ISR 15 min : prix du teaser bar synchronisés avec la caisse Odoo
+export const revalidate = 900
+
+// IDs Odoo des produits mis en avant sur l'accueil
+const TEASER_APERITIFS = [364, 365, 367, 370, 372, 374] // Ti Punch B/V, Martini Blanc, Get 27, Amaretto, Bailey's
+const TEASER_COCKTAILS = [384, 385, 391]                // Le Smile, Maya L'abeille, Balthazar
 
 async function getMenuItems() {
   try {
@@ -24,9 +32,10 @@ async function getMenuItems() {
 }
 
 export default async function HomePage() {
-  const [featured, upcomingEvents] = await Promise.all([
+  const [featured, upcomingEvents, posMenu] = await Promise.all([
     getMenuItems(),
     getAllEvents('upcoming'),
+    getPosMenu(),
   ])
 
   return (
@@ -37,7 +46,7 @@ export default async function HomePage() {
       <ConceptSection />
       <MenuSection items={featured} />
       <PizzaTeaser />
-      <BarSection />
+      <BarSection aperitifs={pickItems(posMenu, TEASER_APERITIFS)} cocktails={pickItems(posMenu, TEASER_COCKTAILS)} />
       <GaleriePreview />
       <section id="reservation" className="py-24 px-4 bg-charbon">
         <div className="max-w-2xl mx-auto">

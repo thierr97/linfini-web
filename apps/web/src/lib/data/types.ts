@@ -4,6 +4,7 @@ export interface MenuItem {
   desc: string
   price: number
   img: string
+  fallbackImg?: string
   active: boolean
 }
 
