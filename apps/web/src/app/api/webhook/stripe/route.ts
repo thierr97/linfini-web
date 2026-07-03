@@ -39,6 +39,18 @@ export async function POST(req: NextRequest) {
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session
 
+    // Commande click & collect (menu / bar) → code de retrait + caisse Odoo
+    if (session.metadata?.type === 'food_order') {
+      try {
+        const { ensurePickupOrder } = await import('@/lib/pickup')
+        const order = await ensurePickupOrder(session.id)
+        console.log(`[webhook/stripe] Commande retrait #${order.code} créée`)
+      } catch (err) {
+        console.error('[webhook/stripe] Erreur commande retrait:', err)
+      }
+      return NextResponse.json({ received: true })
+    }
+
     const ticketId = session.metadata?.ticketId
     if (!ticketId) {
       console.error('[webhook/stripe] ticketId manquant dans les metadata')

@@ -281,6 +281,25 @@ enum TicketStatus {
   REFUNDED
 }
 
+// Commande click & collect payée en ligne sur infinigp.fr
+// code = code de retrait 6 chiffres (affiché au client, scanné au bar)
+model PickupOrder {
+  id              String      @id @default(cuid())
+  code            String      @unique
+  stripeSessionId String      @unique
+  customerName    String
+  customerEmail   String?
+  note            String?
+  lines           Json
+  total           Float
+  status          OrderStatus @default(NEW)
+  odooOrderId     Int?
+  odooRef         String?
+  odooError       String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
 model Setting {
   key   String @id
   value String

@@ -237,3 +237,53 @@ export async function sendTicketConfirmationEmail(ticket: {
     console.error('[email] Erreur envoi:', err)
   }
 }
+
+// ── Commande click & collect : envoi du code de retrait ────────────────────────
+export async function sendPickupCodeEmail(order: {
+  code: string
+  customerName: string
+  customerEmail: string | null
+  lines: { name: string; price: number; qty: number }[]
+  total: number
+}) {
+  if (!order.customerEmail) return
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(order.code)}&qzone=2`
+  const rows = order.lines.map(l =>
+    `<tr><td style="padding:4px 0;color:#555;">${l.qty} × ${l.name}</td><td align="right" style="padding:4px 0;color:#111;font-weight:bold;">${(l.price * l.qty).toFixed(2)} €</td></tr>`
+  ).join('')
+
+  const html = `
+<!DOCTYPE html>
+<html lang="fr">
+<body style="margin:0;padding:24px;background:#111;font-family:Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;">
+    <tr><td style="background:#1a1a1a;padding:20px;text-align:center;">
+      <p style="color:#E8823A;font-size:13px;letter-spacing:3px;margin:0;">L'INFINI — SMILE BAR</p>
+      <h1 style="color:#F5EDD8;font-size:22px;margin:8px 0 0;">Commande confirmée ✅</h1>
+    </td></tr>
+    <tr><td style="padding:24px;text-align:center;">
+      <p style="color:#555;margin:0 0 6px;">Bonjour ${order.customerName}, voici votre code de retrait :</p>
+      <p style="font-size:44px;font-weight:bold;letter-spacing:10px;margin:8px 0 16px;color:#111;">${order.code}</p>
+      <img src="${qrUrl}" alt="QR ${order.code}" width="180" height="180" style="display:block;margin:0 auto 16px;border-radius:8px;" />
+      <p style="color:#888;font-size:12px;margin:0 0 20px;">Présentez ce code au bar (scan ou saisie) pour récupérer votre commande.</p>
+      <table width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #eee;padding-top:12px;">
+        ${rows}
+        <tr><td style="padding:10px 0 0;color:#111;font-weight:bold;">Total payé en ligne</td><td align="right" style="padding:10px 0 0;color:#E8823A;font-weight:bold;">${order.total.toFixed(2)} €</td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
+
+  try {
+    await resend.emails.send({
+      from: FROM,
+      to: order.customerEmail,
+      subject: `🍹 Votre commande — code de retrait ${order.code}`,
+      html,
+    })
+    console.log(`[email] Code retrait envoyé à ${order.customerEmail}`)
+  } catch (err) {
+    console.error('[email] Erreur envoi code retrait:', err)
+  }
+}
