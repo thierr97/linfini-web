@@ -3,7 +3,9 @@
 
 import { getTransporter, MAIL_FROM } from '@/lib/mailer'
 
-const SITE = (process.env.NEXT_PUBLIC_SITE_URL || 'https://infinigp.fr').replace(/\/+$/, '')
+// on nettoie les \n/espaces parasites hérités des env Vercel (printf "...\n")
+const SITE = (process.env.NEWSLETTER_SITE_URL || process.env.NEXT_PUBLIC_SITE_URL || 'https://infinigp.fr')
+  .replace(/\\n/g, '').trim().replace(/\/+$/, '')
 const DAILY_CAP = Number(process.env.NEWSLETTER_DAILY_CAP ?? 450)  // marge sous le plafond Gmail
 const BATCH_DELAY_MS = 1200                                        // throttle anti-spam
 
