@@ -44,7 +44,8 @@ export const POS_SECTIONS: PosSection[] = [
 const BAD_ODOO_IMAGE = /ricard|pastis|carbonara/i
 
 // ── Cache mémoire ─────────────────────────────────────────────────────────────
-const TTL_MS = 15 * 60 * 1000
+// 3 min : les modifs Odoo (prix, nouvelles photos produit) apparaissent vite.
+const TTL_MS = 3 * 60 * 1000
 
 let cache: { data: MenuData; at: number } | null = null
 let lastSync: string | null = null
