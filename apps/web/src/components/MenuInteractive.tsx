@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { useMenuCart } from '@/stores/menuCart'
+import { useClientDiscount } from '@/hooks/useClientDiscount'
 import type { MenuCategory } from '@/lib/data'
 import { IconX } from '@/components/icons'
 
@@ -102,11 +103,14 @@ function MenuSection({ section }: { section: MenuCategory }) {
 
 function CartBar() {
   const { lines, updateQty, removeLine, total, count, clear } = useMenuCart()
+  const discount = useClientDiscount()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const n = count()
+  const gross = total()
+  const net = discount > 0 ? gross * (1 - discount / 100) : gross
   if (n === 0) return null
 
   const checkout = async () => {
@@ -130,7 +134,7 @@ function CartBar() {
           className="pointer-events-auto w-full max-w-2xl mx-auto flex items-center justify-between bg-braise hover:bg-ambre text-white px-6 py-4 rounded-full font-bold shadow-2xl shadow-braise/30 transition-colors duration-200 cursor-pointer">
           <span className="bg-white/20 rounded-full px-3 py-0.5 text-sm">{n} article{n > 1 ? 's' : ''}</span>
           <span>Voir mon panier</span>
-          <span>{total().toFixed(2)} €</span>
+          <span>{net.toFixed(2)} €</span>
         </button>
       </div>
       {open && (
@@ -175,13 +179,25 @@ function CartBar() {
                 className="w-full bg-noir/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-braise/50" />
               <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email (pour confirmation)" type="email"
                 className="w-full bg-noir/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-braise/50" />
+              {discount > 0 && (
+                <>
+                  <div className="flex justify-between items-center text-sm text-white/50">
+                    <span>Sous-total</span>
+                    <span>{gross.toFixed(2)} €</span>
+                  </div>
+                  <div className="flex justify-between items-center text-sm text-green-400">
+                    <span>Remise fidélité −{discount}%</span>
+                    <span>−{(gross - net).toFixed(2)} €</span>
+                  </div>
+                </>
+              )}
               <div className="flex justify-between items-center pt-1">
                 <span className="text-sm text-white/50">Total</span>
-                <span className="text-or font-bold text-2xl">{total().toFixed(2)} €</span>
+                <span className="text-or font-bold text-2xl">{net.toFixed(2)} €</span>
               </div>
               <button onClick={checkout} disabled={loading || !name}
                 className={`w-full py-4 rounded-xl font-bold text-white transition-colors duration-200 ${loading || !name ? 'bg-white/10 text-white/30 cursor-not-allowed' : 'bg-braise hover:bg-ambre cursor-pointer'}`}>
-                {loading ? 'Redirection...' : `Payer ${total().toFixed(2)} €`}
+                {loading ? 'Redirection...' : `Payer ${net.toFixed(2)} €`}
               </button>
               <button onClick={clear} className="w-full text-xs text-white/20 hover:text-white/40 transition-colors py-1 cursor-pointer">Vider le panier</button>
             </div>

@@ -67,8 +67,16 @@ export async function ensurePickupOrder(sessionId: string): Promise<PickupOrderV
   if (session.payment_status !== 'paid') throw new Error('Paiement non confirmé')
   if (session.metadata?.type !== 'food_order') throw new Error('Session Stripe inattendue')
 
-  const lines: WebOrderLine[] = JSON.parse(session.metadata?.lines ?? '[]')
-  if (!lines.length) throw new Error('Commande vide')
+  const rawLines: WebOrderLine[] = JSON.parse(session.metadata?.lines ?? '[]')
+  if (!rawLines.length) throw new Error('Commande vide')
+
+  // Remise fidélité éventuelle (déjà appliquée au paiement via coupon Stripe) :
+  // on répercute le même % sur les lignes stockées pour rester cohérent avec le
+  // total réellement payé (confirmation, écran bar, caisse Odoo).
+  const discount = Number(session.metadata?.clientDiscount ?? 0) || 0
+  const lines: WebOrderLine[] = discount > 0
+    ? rawLines.map(l => ({ ...l, price: Math.round(l.price * (1 - discount / 100) * 100) / 100 }))
+    : rawLines
 
   const code = await generateUniqueCode(prisma)
   const total = (session.amount_total ?? 0) / 100
@@ -81,7 +89,8 @@ export async function ensurePickupOrder(sessionId: string): Promise<PickupOrderV
         stripeSessionId: sessionId,
         customerName: session.metadata?.customerName || 'Client',
         customerEmail: session.customer_email || session.customer_details?.email || null,
-        note: session.metadata?.note || null,
+        note: [session.metadata?.note, discount > 0 ? `Remise fidélité ${discount}%` : '']
+          .filter(Boolean).join(' · ') || null,
         lines: lines as any,
         total,
       },
