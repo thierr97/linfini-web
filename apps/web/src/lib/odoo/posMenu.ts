@@ -8,6 +8,11 @@ import { odooCall, imageUrl } from './client'
 import { curatedImage } from './menuImages'
 import type { MenuData, MenuCategory, MenuItem } from '@/lib/data/types'
 import snapshot from '@/data/menu.json'
+import odooCutouts from '@/data/odoo-cutouts.json'
+
+// IDs des produits dont la photo Odoo a été détourée (fond transparent) pour
+// l'effet 3D en lévitation → on sert le PNG local /menu/odoo-{id}-cut.png.
+const CUTOUT_IDS = new Set<number>(odooCutouts as number[])
 
 // ── Mapping catégories POS Odoo → sections du site (spec §5) ─────────────────
 export interface PosSection {
@@ -81,7 +86,11 @@ async function fetchFromOdoo(): Promise<MenuData> {
       .filter(p => !String(p.name).toUpperCase().includes('SERVICE'))
       .sort((a, b) => String(a.name).localeCompare(String(b.name), 'fr'))
       .map((p): MenuItem => {
-        const odoo = hasImage.has(p.id) && !BAD_ODOO_IMAGE.test(p.name) ? imageUrl(p.id) : null
+        const hasOdoo = hasImage.has(p.id) && !BAD_ODOO_IMAGE.test(p.name)
+        // Photo Odoo détourée (transparente, flotte en 3D) si dispo, sinon photo Odoo brute
+        const odoo = hasOdoo
+          ? (CUTOUT_IDS.has(p.id) ? `/menu/odoo-${p.id}-cut.png` : imageUrl(p.id))
+          : null
         const curated = curatedImage(p.name, sec.name)
         // Photo Odoo si dispo (source de vérité) ; sinon mapping curé ; sinon catégorie.
         const img = odoo ?? curated ?? sec.fallbackImg
