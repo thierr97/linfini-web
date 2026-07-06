@@ -16,7 +16,17 @@ const NAV = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
   const pathname = usePathname()
+
+  // Détecte si un client est connecté (re-vérifié à chaque navigation)
+  useEffect(() => {
+    let alive = true
+    fetch('/api/clients/me').then(r => { if (alive) setLoggedIn(r.ok) }).catch(() => { if (alive) setLoggedIn(false) })
+    return () => { alive = false }
+  }, [pathname])
+
+  const accountHref = loggedIn ? '/mon-compte' : '/connexion'
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -68,7 +78,7 @@ export default function Header() {
 
           {/* CTA */}
           <div className="hidden md:flex items-center gap-2">
-            <Link href="/connexion" className="px-3 py-2 rounded-full text-sm text-white/50 hover:text-white hover:bg-white/5 transition-colors duration-200">
+            <Link href={accountHref} className="px-3 py-2 rounded-full text-sm text-white/50 hover:text-white hover:bg-white/5 transition-colors duration-200">
               Mon compte
             </Link>
             <Link
@@ -114,7 +124,7 @@ export default function Header() {
           </Link>
         ))}
         <Link
-          href="/connexion"
+          href={accountHref}
           className={`text-sm text-white/40 hover:text-white transition-all duration-400 mt-4 ${
             open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
           }`}

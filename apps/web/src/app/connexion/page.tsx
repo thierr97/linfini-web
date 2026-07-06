@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import Header from '@/components/Header'
@@ -11,6 +11,11 @@ export default function ConnexionPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  // Déjà connecté ? → on va directement à l'espace client (pas de re-login)
+  useEffect(() => {
+    fetch('/api/clients/me').then(r => { if (r.ok) router.replace('/mon-compte') }).catch(() => {})
+  }, [router])
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
