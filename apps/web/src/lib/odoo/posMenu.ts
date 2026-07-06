@@ -34,6 +34,9 @@ export const POS_SECTIONS: PosSection[] = [
   { odooId: 8,  name: 'Entrées',              icon: '🎟️', fallbackImg: '/menu/entrance-cut.png', clubOnly: true },
 ]
 
+// Catégories où l'on préfère la photo de marque d'Odoo (bouteilles distinctes)
+const ODOO_IMAGE_SECTIONS = new Set(['Champagnes', 'Bouteilles', 'Au verre'])
+
 // ── Cache mémoire ─────────────────────────────────────────────────────────────
 const TTL_MS = 15 * 60 * 1000
 
@@ -70,18 +73,26 @@ async function fetchFromOdoo(): Promise<MenuData> {
       // bouteilles de service internes : jamais sur le site (spec §5)
       .filter(p => !String(p.name).toUpperCase().includes('SERVICE'))
       .sort((a, b) => String(a.name).localeCompare(String(b.name), 'fr'))
-      .map((p): MenuItem => ({
-        id: String(p.id),
-        name: p.name,
-        desc: p.description_sale || '',
-        price: p.list_price,
-        // 1) image curée par nom (distincte & appétissante) ; 2) image Odoo si présente ;
-        // 3) image de catégorie. Les images d'Odoo sont réutilisées/parfois fausses,
-        // d'où la priorité au mapping curé.
-        img: curatedImage(p.name, sec.name) ?? (hasImage.has(p.id) ? imageUrl(p.id) : sec.fallbackImg),
-        fallbackImg: sec.fallbackImg,
-        active: true,
-      })),
+      .map((p): MenuItem => {
+        const odoo = hasImage.has(p.id) ? imageUrl(p.id) : null
+        const curated = curatedImage(p.name, sec.name)
+        // Bouteilles/spiritueux : la MARQUE compte et Odoo a de vraies photos
+        // distinctes → on préfère Odoo. Ailleurs (cocktails, food, softs, bières)
+        // les images Odoo sont réutilisées/fausses → on préfère le mapping curé.
+        const odooFirst = ODOO_IMAGE_SECTIONS.has(sec.name)
+        const img = odooFirst
+          ? (odoo ?? curated ?? sec.fallbackImg)
+          : (curated ?? odoo ?? sec.fallbackImg)
+        return {
+          id: String(p.id),
+          name: p.name,
+          desc: p.description_sale || '',
+          price: p.list_price,
+          img,
+          fallbackImg: sec.fallbackImg,
+          active: true,
+        }
+      }),
   })).filter(c => c.items.length > 0)
 
   return {

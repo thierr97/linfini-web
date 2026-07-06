@@ -1,8 +1,10 @@
-// Image curée par produit, choisie par nom (les images d'Odoo sont réutilisées
-// et parfois fausses ; ce mapping garantit une image distincte et appétissante).
+// Image curée par produit, choisie par nom DANS le contexte de sa catégorie
+// (les images d'Odoo sont réutilisées/fausses ; ce mapping garantit une image
+// distincte et cohérente). Raisonnement par section d'abord pour éviter qu'un
+// mot-clé déborde (ex. "oran-GIN-a" ne doit pas devenir un verre de gin).
 // Retourne un chemin /menu/*.png|jpg local, ou null si aucun match.
 
-const IMG: Record<string, string> = {
+const IMG = {
   accras: '/menu/accras.jpg',
   carbonara: '/menu/spaghetti-carbonara.jpg',
   bolognaise: '/menu/spaghetti-bolognaise.jpg',
@@ -27,19 +29,22 @@ const IMG: Record<string, string> = {
   negroni: '/menu/negroni.jpg',
   amaretto: '/menu/amaretto.jpg',
   whiskeySour: '/menu/whiskey-sour.jpg',
-  whisky: '/menu/whisky-cut.png',
   aperol: '/menu/aperol-cut.png',
   tequilaSunrise: '/menu/tequila-sunrise.jpg',
   espressoMartini: '/menu/espresso-martini.jpg',
   baileys: '/menu/baileys.jpg',
   campari: '/menu/campari.jpg',
+  cosmoCut: '/menu/cosmopolitan-cut.png',
   mocktail: '/menu/mocktail-cut.png',
   cocktailCreation: '/menu/cocktail-creation-cut.png',
   cocktail: '/menu/cocktail-cut.png',
   rhum: '/menu/rhum-cut.png',
   vodka: '/menu/vodka-cut.png',
   cognac: '/menu/cognac-cut.png',
+  whisky: '/menu/whisky-cut.png',
+  jackDaniels: '/menu/jack-daniels-cut.png',
   glassSpirits: '/menu/glass-spirits-cut.png',
+  spiritsBottle: '/menu/spirits-bottle.jpg',
   coca: '/menu/coca-cola-cut.png',
   fantaExotique: '/menu/off-fanta-exotique-cut.png',
   fantaOrange: '/menu/off-fanta-orange-cut.png',
@@ -64,100 +69,126 @@ const IMG: Record<string, string> = {
   heineken: '/menu/heineken.jpg',
   beer: '/menu/beer.jpg',
   champagneIce: '/menu/champagne-ice.jpg',
+  champagne: '/menu/champagne.jpg',
   wine: '/menu/wine-cut.png',
-  jackDaniels: '/menu/jack-daniels-cut.png',
   chicha: '/menu/chicha-cut.png',
   entrance: '/menu/entrance-cut.png',
 }
 
 function norm(s: string): string {
-  return s.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ')
+  return s.normalize('NFKD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim()
 }
 
-/** Image curée pour un produit, par nom + section. null si aucun match. */
+/** Image curée pour un produit, selon sa catégorie puis son nom. null si aucun match. */
 export function curatedImage(name: string, section: string): string | null {
   const n = norm(name)
-  const has = (...k: string[]) => k.some(w => n.includes(w))
+  const words = n.split(' ')
+  const has = (...k: string[]) => k.some(w => n.includes(w))       // sous-chaîne
+  const word = (...k: string[]) => k.some(w => words.includes(w))  // mot entier (évite oran-gin-a)
 
-  // ── Plats / tapas ──
-  if (has('accras')) return IMG.accras
-  if (has('carbonara')) return IMG.carbonara
-  if (has('bolognaise', 'bolognese')) return IMG.bolognaise
-  if (has('burger') && has('frite')) return IMG.burgerFrites
-  if (has('burger')) return IMG.burger
-  if (has('travers')) return IMG.travers
-  if (has('tenders')) return IMG.tenders
-  if (has('tasty')) return IMG.tasty
-  if (has('croustille', 'crousty', 'croustill')) return IMG.croustilles
-  if (has('wrap')) return IMG.wrap
-  if (has('mix tapas')) return IMG.mixTapas
-  if (has('frite')) return IMG.frites
+  switch (section) {
+    // ── Plats / tapas ────────────────────────────────────────────────────────
+    case 'Tapas / Resto':
+      if (has('accras')) return IMG.accras
+      if (has('carbonara')) return IMG.carbonara
+      if (has('bolognaise', 'bolognese')) return IMG.bolognaise
+      if (has('burger') && has('frite')) return IMG.burgerFrites
+      if (has('burger')) return IMG.burger
+      if (has('travers')) return IMG.travers
+      if (has('tenders')) return IMG.tenders
+      if (has('tasty')) return IMG.tasty
+      if (has('croustille', 'crousty', 'croustill')) return IMG.croustilles
+      if (has('wrap')) return IMG.wrap
+      if (has('mix')) return IMG.mixTapas
+      if (has('frite')) return IMG.frites
+      return IMG.mixTapas
 
-  // ── Cocktails ──
-  if (has('mojito')) return IMG.mojito
-  if (has('caipi')) return IMG.caipirinha
-  if (has('daiquiri')) return IMG.daiquiri
-  if (has('margarita')) return IMG.margarita
-  if (has('cosmo')) return IMG.cosmopolitan
-  if (has('mai tai', 'maitai') || (has('mai') && has('tai'))) return IMG.maiTai
-  if (has('pina', 'colada')) return IMG.pinaColada
-  if (has('long island')) return IMG.longIsland
-  if (has('moscow')) return IMG.moscowMule
-  if (has('negroni')) return IMG.negroni
-  if (has('amaretto')) return IMG.amaretto
-  if (has('whiskey sour', 'whisky sour')) return IMG.whiskeySour
-  if (has('old fashioned')) return IMG.whisky
-  if (has('aperol')) return IMG.aperol
-  if (has('tequila sunrise')) return IMG.tequilaSunrise
-  if (has('espresso', 'expresso')) return IMG.espressoMartini
-  if (has('bailey')) return IMG.baileys
-  if (has('campari')) return IMG.campari
+    // ── Cocktails créations (signatures sans photo dédiée) ───────────────────
+    case 'Créations':
+      return IMG.cocktailCreation
 
-  // ── Sections cocktails sans match précis ──
-  if (section === 'Sans alcool') return IMG.mocktail
-  if (section === 'Créations') return IMG.cocktailCreation
-  if (has('happy hour', 'cocktail')) return IMG.cocktail
+    // ── Cocktails classiques + mocktails ─────────────────────────────────────
+    case 'Cocktails classiques':
+    case 'Sans alcool': {
+      if (has('mojito')) return IMG.mojito
+      if (has('caipi')) return IMG.caipirinha
+      if (has('daiquiri')) return IMG.daiquiri
+      if (has('margarita')) return IMG.margarita
+      if (has('cosmo')) return IMG.cosmopolitan
+      if (has('mai tai', 'maitai') || (has('mai') && has('tai'))) return IMG.maiTai
+      if (has('pina', 'colada')) return IMG.pinaColada
+      if (has('long island')) return IMG.longIsland
+      if (has('moscow')) return IMG.moscowMule
+      if (has('negroni')) return IMG.negroni
+      if (has('amaretto')) return IMG.amaretto
+      if (has('whiskey sour', 'whisky sour')) return IMG.whiskeySour
+      if (has('old fashioned')) return IMG.whisky
+      if (has('aperol')) return IMG.aperol
+      if (has('tequila sunrise')) return IMG.tequilaSunrise
+      if (has('espresso', 'expresso')) return IMG.espressoMartini
+      if (has('bailey')) return IMG.baileys
+      if (has('campari')) return IMG.campari
+      // pas de match précis : mocktail générique pour les sans-alcool, cocktail sinon
+      return section === 'Sans alcool' ? IMG.mocktail : IMG.cocktail
+    }
 
-  // ── Au verre (spiritueux) ──
-  if (has('ti punch', 'rhum', 'planteur', 'clement')) return IMG.rhum
-  if (has('whisky', 'jack daniel', 'william lawson', 'j b', ' jb')) return has('jack daniel') ? IMG.jackDaniels : IMG.whisky
-  if (has('vodka', 'absolut', 'smirnoff', 'eristoff', 'divine', 'ciroc', 'belvedere')) return IMG.vodka
-  if (has('hennessy', 'cognac', 'gauthier')) return IMG.cognac
-  if (has('get', 'ricard', 'pastis', 'gin', 'tequila', 'martini')) return IMG.glassSpirits
+    // ── Spiritueux au verre ──────────────────────────────────────────────────
+    case 'Au verre':
+      if (has('ti punch', 'punch', 'rhum', 'planteur')) return IMG.rhum
+      if (has('hennessy', 'cognac')) return IMG.cognac
+      if (has('whisky', 'jb')) return IMG.whisky
+      if (word('vodka')) return IMG.vodka
+      if (has('happy hour', 'cocktail')) return IMG.cocktail
+      // get, ricard, pastis, gin (mot entier), tequila, martini, campari…
+      return IMG.glassSpirits
 
-  // ── Softs & jus ──
-  if (has('coca', 'ordinaire')) return IMG.coca
-  if (has('fanta exotique')) return IMG.fantaExotique
-  if (has('fanta')) return IMG.fantaOrange
-  if (has('sprite')) return IMG.sprite
-  if (has('schweppes')) return IMG.schweppes
-  if (has('orangina')) return IMG.orangina
-  if (has('perrier')) return IMG.perrier
-  if (has('eau')) return IMG.water
-  if (has('red bull')) return IMG.redBull
-  if (has('long horn')) return IMG.longHorn
-  if (has('xl energy')) return IMG.xlEnergy
-  if (has('fuze', 'green tea', 'ginger')) return IMG.fuzeTea
-  if (has('jus ananas', 'ananas')) return IMG.jusAnanas
-  if (has('jus goyave', 'goyave')) return IMG.jusGoyave
-  if (has('jus mangue', 'mangue')) return IMG.jusMangue
-  if (has('jus orange')) return IMG.jusOrange
-  if (has('jus passion', 'passion')) return IMG.jusPassion
-  if (has('jus pomme', 'pomme')) return IMG.jusPomme
-  if (has('minute maid')) return IMG.minuteMaid
+    // ── Softs & jus ──────────────────────────────────────────────────────────
+    case 'Softs & Jus':
+      if (has('coca')) return IMG.coca
+      if (has('fanta exotique')) return IMG.fantaExotique
+      if (has('fanta')) return IMG.fantaOrange
+      if (has('sprite')) return IMG.sprite
+      if (has('schweppes')) return IMG.schweppes
+      if (has('orangina')) return IMG.orangina
+      if (has('perrier')) return IMG.perrier
+      if (has('eau')) return IMG.water
+      if (has('red bull')) return IMG.redBull
+      if (has('long horn')) return IMG.longHorn
+      if (has('xl energy')) return IMG.xlEnergy
+      if (has('fuze', 'green tea')) return IMG.fuzeTea
+      if (has('ananas')) return IMG.jusAnanas
+      if (has('goyave')) return IMG.jusGoyave
+      if (has('mangue')) return IMG.jusMangue
+      if (has('jus orange')) return IMG.jusOrange
+      if (has('passion')) return IMG.jusPassion
+      if (has('pomme')) return IMG.jusPomme
+      if (has('minute maid')) return IMG.minuteMaid
+      return IMG.softDrink   // Ginger Beer, Ordinaire, etc.
 
-  // ── Bières ──
-  if (has('corona', 'coronita')) return IMG.corona
-  if (has('heineken')) return IMG.heineken
-  if (has('carib', 'gwada', 'desperados')) return IMG.beer
+    // ── Bières (jamais une image de cocktail/spiritueux) ─────────────────────
+    case 'Bières':
+      if (has('corona')) return IMG.corona
+      if (has('heineken')) return IMG.heineken
+      return IMG.beer   // Carib, Gwada, tous les Desperados…
 
-  // ── Champagnes / vins ──
-  if (section === 'Champagnes' || has('champagne', 'moet', 'ruinart', 'perignon', 'veuve', 'deutz', 'mercier', 'chandon', 'feuillatte', 'coupe')) return IMG.champagneIce
-  if (section === 'Vins' || has('vin', 'rose', 'minuty', 'belrose')) return IMG.wine
+    case 'Champagnes':
+      return IMG.champagneIce
+    case 'Vins':
+      return IMG.wine
 
-  // ── Chicha / entrées ──
-  if (section === 'Chicha' || has('chicha', 'recharge')) return IMG.chicha
-  if (section === 'Entrées' || has('entree', 'conso', 'consommation')) return IMG.entrance
+    // ── Bouteilles (spiritueux) ──────────────────────────────────────────────
+    case 'Bouteilles':
+      if (has('jack daniel')) return IMG.jackDaniels
+      if (has('whisky', 'lawson', 'j b', 'jb')) return IMG.whisky
+      if (has('vodka', 'absolut', 'smirnoff', 'eristoff', 'divine', 'ciroc', 'belvedere')) return IMG.vodka
+      if (has('cognac', 'hennessy', 'gauthier')) return IMG.cognac
+      if (has('rhum', 'clement')) return IMG.rhum
+      return IMG.spiritsBottle
 
+    case 'Chicha':
+      return IMG.chicha
+    case 'Entrées':
+      return IMG.entrance
+  }
   return null
 }
