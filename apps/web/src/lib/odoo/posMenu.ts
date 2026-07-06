@@ -34,8 +34,16 @@ export const POS_SECTIONS: PosSection[] = [
   { odooId: 8,  name: 'Entrées',              icon: '🎟️', fallbackImg: '/menu/entrance-cut.png', clubOnly: true },
 ]
 
-// Catégories où l'on préfère la photo de marque d'Odoo (bouteilles distinctes)
-const ODOO_IMAGE_SECTIONS = new Set(['Champagnes', 'Bouteilles', 'Au verre'])
+// Catégories où l'on préfère la photo Odoo : bouteilles (marque distincte) ET
+// cocktails (Odoo a de vraies belles photos ; les assets curés cocktails sont
+// souvent des dessins de recette). Pour food/softs/bières, on garde le curé.
+const ODOO_IMAGE_SECTIONS = new Set([
+  'Champagnes', 'Bouteilles', 'Au verre',
+  'Cocktails classiques', 'Créations', 'Sans alcool',
+])
+
+// Produits dont l'image Odoo est aberrante (photo sans rapport) → forcer le curé
+const BAD_ODOO_IMAGE = /ricard|pastis/i
 
 // ── Cache mémoire ─────────────────────────────────────────────────────────────
 const TTL_MS = 15 * 60 * 1000
@@ -74,7 +82,7 @@ async function fetchFromOdoo(): Promise<MenuData> {
       .filter(p => !String(p.name).toUpperCase().includes('SERVICE'))
       .sort((a, b) => String(a.name).localeCompare(String(b.name), 'fr'))
       .map((p): MenuItem => {
-        const odoo = hasImage.has(p.id) ? imageUrl(p.id) : null
+        const odoo = hasImage.has(p.id) && !BAD_ODOO_IMAGE.test(p.name) ? imageUrl(p.id) : null
         const curated = curatedImage(p.name, sec.name)
         // Bouteilles/spiritueux : la MARQUE compte et Odoo a de vraies photos
         // distinctes → on préfère Odoo. Ailleurs (cocktails, food, softs, bières)

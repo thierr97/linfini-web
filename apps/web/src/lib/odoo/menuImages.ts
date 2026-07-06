@@ -20,21 +20,25 @@ const IMG = {
   mojito: '/menu/mojito-cut.png',
   caipirinha: '/menu/caipirinha.jpg',
   daiquiri: '/menu/daiquiri-cut.png',
-  margarita: '/menu/margarita-cut.png',
-  cosmopolitan: '/menu/cosmopolitan-cut.png',
-  maiTai: '/menu/mai-tai.jpg',
-  pinaColada: '/menu/pina-colada-cut.png',
+  margarita: '/menu/cocktail-cut.png',      // margarita-cut = cutout vide
+  cosmopolitan: '/menu/cocktail-cut.png',   // cosmopolitan-cut = clipart minuscule
+  // Fallbacks cocktails : les assets "mai-tai/baileys/whiskey-sour/tequila-sunrise"
+  // du repo sont en réalité des DESSINS de recette, et margarita/cosmo/pina des
+  // cutouts vides/minuscules → on retombe sur un beau cocktail générique.
+  // (En pratique Odoo fournit la vraie photo pour ces cocktails, ceci n'est qu'un secours.)
+  maiTai: '/menu/cocktail-cut.png',
+  pinaColada: '/menu/cocktail-cut.png',
   longIsland: '/menu/long-island-cut.png',
   moscowMule: '/menu/moscow-mule.jpg',
   negroni: '/menu/negroni.jpg',
   amaretto: '/menu/amaretto.jpg',
-  whiskeySour: '/menu/whiskey-sour.jpg',
+  whiskeySour: '/menu/cocktail-cut.png',
   aperol: '/menu/aperol-cut.png',
-  tequilaSunrise: '/menu/tequila-sunrise.jpg',
+  tequilaSunrise: '/menu/cocktail-cut.png',
   espressoMartini: '/menu/espresso-martini.jpg',
-  baileys: '/menu/baileys.jpg',
+  baileys: '/menu/cocktail-cut.png',
   campari: '/menu/campari.jpg',
-  cosmoCut: '/menu/cosmopolitan-cut.png',
+  cosmoCut: '/menu/cocktail-cut.png',
   mocktail: '/menu/mocktail-cut.png',
   cocktailCreation: '/menu/cocktail-creation-cut.png',
   cocktail: '/menu/cocktail-cut.png',
