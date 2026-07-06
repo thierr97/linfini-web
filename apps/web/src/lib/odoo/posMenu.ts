@@ -5,6 +5,7 @@
 // le dernier menu connu, et à froid le snapshot embarqué src/data/menu.json.
 
 import { odooCall, imageUrl } from './client'
+import { curatedImage } from './menuImages'
 import type { MenuData, MenuCategory, MenuItem } from '@/lib/data/types'
 import snapshot from '@/data/menu.json'
 
@@ -74,8 +75,10 @@ async function fetchFromOdoo(): Promise<MenuData> {
         name: p.name,
         desc: p.description_sale || '',
         price: p.list_price,
-        // image du produit depuis Odoo (correspond toujours) ; sinon image de catégorie
-        img: hasImage.has(p.id) ? imageUrl(p.id) : sec.fallbackImg,
+        // 1) image curée par nom (distincte & appétissante) ; 2) image Odoo si présente ;
+        // 3) image de catégorie. Les images d'Odoo sont réutilisées/parfois fausses,
+        // d'où la priorité au mapping curé.
+        img: curatedImage(p.name, sec.name) ?? (hasImage.has(p.id) ? imageUrl(p.id) : sec.fallbackImg),
         fallbackImg: sec.fallbackImg,
         active: true,
       })),
