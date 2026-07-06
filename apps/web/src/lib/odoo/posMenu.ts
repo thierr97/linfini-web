@@ -41,7 +41,7 @@ const ODOO_IMAGE_SECTIONS = new Set([
   'Champagnes', 'Bouteilles', 'Au verre',
   'Cocktails classiques', 'Créations', 'Sans alcool',
   'Tapas / Resto',   // vraies photos plats dans Odoo (mix tapas, accras, burgers…)
-  // 'Softs & Jus' : reste en curé (photos Odoo = verres génériques) jusqu'à upload.
+  'Softs & Jus',     // Thierry a uploadé les vraies canettes/jus 33cl dans Odoo
 ])
 
 // Produits dont l'image Odoo est fausse/aberrante → forcer le curé.
