@@ -40,7 +40,8 @@ export const POS_SECTIONS: PosSection[] = [
 const ODOO_IMAGE_SECTIONS = new Set([
   'Champagnes', 'Bouteilles', 'Au verre',
   'Cocktails classiques', 'Créations', 'Sans alcool',
-  'Softs & Jus',   // Thierry uploade les vraies photos 33cl dans Odoo → priorité Odoo
+  // 'Softs & Jus' : repassé en curé (photos Odoo actuelles = verres génériques).
+  // À rebasculer en Odoo-first quand Thierry aura uploadé ses vraies photos 33cl.
 ])
 
 // Produits dont l'image Odoo est aberrante (photo sans rapport) → forcer le curé
