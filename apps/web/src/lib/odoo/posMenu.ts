@@ -40,12 +40,14 @@ export const POS_SECTIONS: PosSection[] = [
 const ODOO_IMAGE_SECTIONS = new Set([
   'Champagnes', 'Bouteilles', 'Au verre',
   'Cocktails classiques', 'Créations', 'Sans alcool',
-  // 'Softs & Jus' : repassé en curé (photos Odoo actuelles = verres génériques).
-  // À rebasculer en Odoo-first quand Thierry aura uploadé ses vraies photos 33cl.
+  'Tapas / Resto',   // vraies photos plats dans Odoo (mix tapas, accras, burgers…)
+  // 'Softs & Jus' : reste en curé (photos Odoo = verres génériques) jusqu'à upload.
 ])
 
-// Produits dont l'image Odoo est aberrante (photo sans rapport) → forcer le curé
-const BAD_ODOO_IMAGE = /ricard|pastis/i
+// Produits dont l'image Odoo est fausse/aberrante → forcer le curé.
+// - ricard/pastis : photo Odoo sans rapport (lampe/sac)
+// - carbonara : Odoo montre la photo de la Bolognaise → on garde la vraie carbonara curée
+const BAD_ODOO_IMAGE = /ricard|pastis|carbonara/i
 
 // ── Cache mémoire ─────────────────────────────────────────────────────────────
 const TTL_MS = 15 * 60 * 1000
