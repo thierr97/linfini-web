@@ -14,12 +14,12 @@ function MenuSection({ section }: { section: MenuCategory }) {
       {section.items.map((item, idx) => {
         const line = lines.find(l => l.id === item.id)
         const qty = line?.qty ?? 0
-        const cutout = item.img.endsWith('-cut.png')
+        const cutout = true   // toutes les images : entières (object-contain) + 3D en lévitation
         return (
           <div key={item.id} className={`group glass-card card-glow rounded-2xl p-3 flex flex-col ${qty > 0 ? '!border-braise/40' : ''}`}>
             {cutout ? (
               /* Tuile sombre ambiance bar : produit détouré en lévitation, lueur chaude au survol */
-              <div className="menu-tile relative h-44 rounded-xl overflow-hidden flex items-center justify-center">
+              <div className="menu-tile relative h-52 rounded-xl overflow-hidden flex items-center justify-center">
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-600 pointer-events-none"
                   style={{ background: 'radial-gradient(ellipse 120% 90% at 50% 112%, rgba(232,130,58,0.38), transparent 62%)' }}
@@ -33,7 +33,7 @@ function MenuSection({ section }: { section: MenuCategory }) {
                     alt={item.name}
                     loading="lazy"
                     onError={e => { if (item.fallbackImg && !e.currentTarget.src.endsWith(item.fallbackImg)) e.currentTarget.src = item.fallbackImg }}
-                    className="h-32 max-w-[210px] w-auto object-contain transition-transform duration-400 group-hover:scale-110 group-hover:-rotate-2"
+                    className="h-44 max-w-[90%] w-auto object-contain transition-transform duration-400 group-hover:scale-110 group-hover:-rotate-2"
                   />
                 </div>
                 {qty > 0 && (
