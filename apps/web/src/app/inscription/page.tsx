@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import SocialAuth from '@/components/SocialAuth'
 
 export default function InscriptionPage() {
   const router = useRouter()
@@ -74,6 +75,7 @@ export default function InscriptionPage() {
               className="w-full bg-braise hover:bg-ambre disabled:opacity-50 text-white py-3 rounded-xl font-bold transition-colors">
               {loading ? 'Création en cours...' : 'Créer mon compte →'}
             </button>
+            <SocialAuth />
             <p className="text-center text-white/30 text-sm">
               Déjà un compte ?{' '}
               <Link href="/connexion" className="text-or hover:underline">Se connecter</Link>

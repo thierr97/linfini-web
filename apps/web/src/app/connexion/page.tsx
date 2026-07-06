@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import SocialAuth from '@/components/SocialAuth'
 
 export default function ConnexionPage() {
   const router = useRouter()
@@ -61,6 +62,7 @@ export default function ConnexionPage() {
               className="w-full bg-braise hover:bg-ambre disabled:opacity-50 text-white py-3 rounded-xl font-bold transition-colors">
               {loading ? 'Connexion...' : 'Se connecter →'}
             </button>
+            <SocialAuth />
             <p className="text-center text-white/30 text-sm">
               Pas encore de compte ?{' '}
               <Link href="/inscription" className="text-or hover:underline">S&apos;inscrire gratuitement</Link>
