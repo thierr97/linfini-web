@@ -17,3 +17,6 @@ add-odoo-env.sh
 update-gmail-env.sh
 *.tsbuildinfo
 update-odoo-env.sh
+
+# Exports de données personnelles (emails clients) — NE JAMAIS committer
+exports/

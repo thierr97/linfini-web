@@ -4,7 +4,7 @@
 // Résilience (spec §8) : cache mémoire 15 min ; si Odoo est injoignable on sert
 // le dernier menu connu, et à froid le snapshot embarqué src/data/menu.json.
 
-import { odooCall } from './client'
+import { odooCall, imageUrl } from './client'
 import type { MenuData, MenuCategory, MenuItem } from '@/lib/data/types'
 import snapshot from '@/data/menu.json'
 
@@ -42,14 +42,22 @@ let lastSource: 'odoo' | 'cache' | 'snapshot' = 'snapshot'
 
 // ── Lecture Odoo ──────────────────────────────────────────────────────────────
 async function fetchFromOdoo(): Promise<MenuData> {
-  const products = await odooCall<any[]>('product.template', 'search_read',
-    [[
-      ['available_in_pos', '=', true],
-      ['active', '=', true],
-      ['list_price', '>', 0],
-    ]],
-    { fields: ['id', 'name', 'description_sale', 'list_price', 'pos_categ_ids', 'write_date'], limit: 500 }
-  )
+  const [products, withImageIds] = await Promise.all([
+    odooCall<any[]>('product.template', 'search_read',
+      [[
+        ['available_in_pos', '=', true],
+        ['active', '=', true],
+        ['list_price', '>', 0],
+      ]],
+      { fields: ['id', 'name', 'description_sale', 'list_price', 'pos_categ_ids', 'write_date'], limit: 500 }
+    ),
+    // IDs des produits qui ont réellement une image dans Odoo (sans télécharger l'image)
+    odooCall<number[]>('product.template', 'search',
+      [[['available_in_pos', '=', true], ['active', '=', true], ['image_512', '!=', false]]],
+      { limit: 500 }
+    ),
+  ])
+  const hasImage = new Set<number>(withImageIds)
 
   const categories: MenuCategory[] = POS_SECTIONS.map(sec => ({
     id: String(sec.odooId),
@@ -66,7 +74,8 @@ async function fetchFromOdoo(): Promise<MenuData> {
         name: p.name,
         desc: p.description_sale || '',
         price: p.list_price,
-        img: `/menu/${p.id}-cut.png`,
+        // image du produit depuis Odoo (correspond toujours) ; sinon image de catégorie
+        img: hasImage.has(p.id) ? imageUrl(p.id) : sec.fallbackImg,
         fallbackImg: sec.fallbackImg,
         active: true,
       })),
