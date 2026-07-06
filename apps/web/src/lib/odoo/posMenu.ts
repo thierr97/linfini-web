@@ -34,15 +34,9 @@ export const POS_SECTIONS: PosSection[] = [
   { odooId: 8,  name: 'Entrées',              icon: '🎟️', fallbackImg: '/menu/entrance-cut.png', clubOnly: true },
 ]
 
-// Catégories où l'on préfère la photo Odoo : bouteilles (marque distincte) ET
-// cocktails (Odoo a de vraies belles photos ; les assets curés cocktails sont
-// souvent des dessins de recette). Pour food/softs/bières, on garde le curé.
-const ODOO_IMAGE_SECTIONS = new Set([
-  'Champagnes', 'Bouteilles', 'Au verre',
-  'Cocktails classiques', 'Créations', 'Sans alcool',
-  'Tapas / Resto',   // vraies photos plats dans Odoo (mix tapas, accras, burgers…)
-  'Softs & Jus',     // Thierry a uploadé les vraies canettes/jus 33cl dans Odoo
-])
+// Odoo = source de vérité des images pour TOUT le menu : on prend la photo Odoo
+// dès qu'elle existe (Thierry gère depuis les fiches produit), et on retombe sur
+// le mapping curé / l'image de catégorie là où aucune photo n'est encore uploadée.
 
 // Produits dont l'image Odoo est fausse/aberrante → forcer le curé.
 // - ricard/pastis : photo Odoo sans rapport (lampe/sac)
@@ -88,13 +82,8 @@ async function fetchFromOdoo(): Promise<MenuData> {
       .map((p): MenuItem => {
         const odoo = hasImage.has(p.id) && !BAD_ODOO_IMAGE.test(p.name) ? imageUrl(p.id) : null
         const curated = curatedImage(p.name, sec.name)
-        // Bouteilles/spiritueux : la MARQUE compte et Odoo a de vraies photos
-        // distinctes → on préfère Odoo. Ailleurs (cocktails, food, softs, bières)
-        // les images Odoo sont réutilisées/fausses → on préfère le mapping curé.
-        const odooFirst = ODOO_IMAGE_SECTIONS.has(sec.name)
-        const img = odooFirst
-          ? (odoo ?? curated ?? sec.fallbackImg)
-          : (curated ?? odoo ?? sec.fallbackImg)
+        // Photo Odoo si dispo (source de vérité) ; sinon mapping curé ; sinon catégorie.
+        const img = odoo ?? curated ?? sec.fallbackImg
         return {
           id: String(p.id),
           name: p.name,
