@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useMenuCart } from '@/stores/menuCart'
 import { useClientDiscount } from '@/hooks/useClientDiscount'
 import type { MenuCategory } from '@/lib/data'
@@ -210,8 +210,22 @@ function CartBar() {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 
+/** Slug URL d'une catégorie : "Cocktails classiques" → "cocktails-classiques" */
+const slugify = (s: string) =>
+  s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+
 export default function MenuInteractive({ categories }: { categories: MenuCategory[] }) {
   const [activeTab, setActiveTab] = useState(categories[0]?.id ?? 'tapas')
+
+  // Onglet initial pilotable par l'URL : /menu?cat=champagnes (slug du nom ou id Odoo)
+  useEffect(() => {
+    const cat = new URLSearchParams(window.location.search).get('cat')
+    if (!cat) return
+    const target = categories.find(c => c.id === cat || slugify(c.name) === slugify(cat))
+    if (target) setActiveTab(target.id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // Filtre les articles inactifs
   const visibleCategories = categories.map(cat => ({
