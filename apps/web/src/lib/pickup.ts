@@ -52,11 +52,20 @@ function toView(o: any): PickupOrderView {
   }
 }
 
-/** Caisse de retrait à indiquer au client, selon la zone choisie (📍 en tête de note) :
- *  Maestro → caisse du Maestro ; toutes les autres zones → Smile Bar. */
+/** Caisse de retrait à indiquer au client : chaque zone a sa propre caisse
+ *  (📍 en tête de note). Sans zone connue → Smile Bar. */
+const PICKUP_COUNTERS: Record<string, string> = {
+  'Maestro':    'à la caisse du Maestro',
+  'Smile Bar':  'au Smile Bar',
+  'Boîte 1':    'à la caisse de la Boîte 1',
+  'Boîte 2':    'à la caisse de la Boîte 2',
+  'Terrasse 1': 'à la caisse de la Terrasse 1',
+  'Terrasse 2': 'à la caisse de la Terrasse 2',
+}
+
 export function pickupCounter(order: { note?: string | null }): string {
   const loc = order.note?.match(/📍 ([^·]+)/)?.[1]?.trim()
-  return loc === 'Maestro' ? 'à la caisse du Maestro' : 'au Smile Bar'
+  return (loc && PICKUP_COUNTERS[loc]) || 'au Smile Bar'
 }
 
 /** Crée (ou retrouve) la commande de retrait pour une session Stripe payée. */
