@@ -52,6 +52,13 @@ function toView(o: any): PickupOrderView {
   }
 }
 
+/** Caisse de retrait à indiquer au client, selon la zone choisie (📍 en tête de note) :
+ *  Maestro → caisse du Maestro ; toutes les autres zones → Smile Bar. */
+export function pickupCounter(order: { note?: string | null }): string {
+  const loc = order.note?.match(/📍 ([^·]+)/)?.[1]?.trim()
+  return loc === 'Maestro' ? 'à la caisse du Maestro' : 'au Smile Bar'
+}
+
 /** Crée (ou retrouve) la commande de retrait pour une session Stripe payée. */
 export async function ensurePickupOrder(sessionId: string): Promise<PickupOrderView> {
   const prisma = await db()

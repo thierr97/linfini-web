@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import Code39 from '@/components/Code39'
-import { ensurePickupOrder, type PickupOrderView } from '@/lib/pickup'
+import { ensurePickupOrder, pickupCounter, type PickupOrderView } from '@/lib/pickup'
 
 export const dynamic = 'force-dynamic'
 
@@ -47,8 +47,11 @@ export default async function OrderConfirmationPage({
           <>
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-900/30 border border-green-500/30 text-4xl mb-6">✅</div>
             <h1 className="font-display text-4xl font-bold text-creme mb-2">Commande confirmée !</h1>
-            <p className="text-white/50 mb-8">
-              Merci {order.customerName} — votre commande part en préparation au bar.
+            <p className="text-white/50 mb-2">
+              Merci {order.customerName} — votre commande part en préparation.
+            </p>
+            <p className="text-or font-semibold mb-8">
+              📍 Retirez votre commande {pickupCounter(order)}.
             </p>
 
             {/* Code de retrait */}
@@ -63,7 +66,7 @@ export default async function OrderConfirmationPage({
                 <img src={qrUrl(order.code)} alt={`QR code ${order.code}`} width={160} height={160} className="rounded-lg" />
               </div>
               <p className="text-noir/50 text-xs mt-4">
-                Présentez ce code au bar — il peut être scanné (douchette ou appareil photo) ou saisi.
+                Présentez ce code {pickupCounter(order)} — il peut être scanné (douchette ou appareil photo) ou saisi.
               </p>
             </div>
 

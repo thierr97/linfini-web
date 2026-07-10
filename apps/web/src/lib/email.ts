@@ -243,10 +243,13 @@ export async function sendPickupCodeEmail(order: {
   code: string
   customerName: string
   customerEmail: string | null
+  note?: string | null
   lines: { name: string; price: number; qty: number }[]
   total: number
 }) {
   if (!order.customerEmail) return
+  const { pickupCounter } = await import('@/lib/pickup')
+  const counter = pickupCounter(order)
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(order.code)}&qzone=2`
   const rows = order.lines.map(l =>
     `<tr><td style="padding:4px 0;color:#555;">${l.qty} × ${l.name}</td><td align="right" style="padding:4px 0;color:#111;font-weight:bold;">${(l.price * l.qty).toFixed(2)} €</td></tr>`
@@ -265,7 +268,8 @@ export async function sendPickupCodeEmail(order: {
       <p style="color:#555;margin:0 0 6px;">Bonjour ${order.customerName}, voici votre code de retrait :</p>
       <p style="font-size:44px;font-weight:bold;letter-spacing:10px;margin:8px 0 16px;color:#111;">${order.code}</p>
       <img src="${qrUrl}" alt="QR ${order.code}" width="180" height="180" style="display:block;margin:0 auto 16px;border-radius:8px;" />
-      <p style="color:#888;font-size:12px;margin:0 0 20px;">Présentez ce code au bar (scan ou saisie) pour récupérer votre commande.</p>
+      <p style="color:#E8823A;font-size:14px;font-weight:bold;margin:0 0 8px;">📍 Retrait ${counter}</p>
+      <p style="color:#888;font-size:12px;margin:0 0 20px;">Présentez ce code ${counter} (scan ou saisie) pour récupérer votre commande.</p>
       <table width="100%" cellpadding="0" cellspacing="0" style="border-top:1px solid #eee;padding-top:12px;">
         ${rows}
         <tr><td style="padding:10px 0 0;color:#111;font-weight:bold;">Total payé en ligne</td><td align="right" style="padding:10px 0 0;color:#E8823A;font-weight:bold;">${order.total.toFixed(2)} €</td></tr>
