@@ -101,6 +101,9 @@ function MenuSection({ section }: { section: MenuCategory }) {
 
 // ── Cart ──────────────────────────────────────────────────────────────────────
 
+// Zones de L'Infini : le client indique où il se trouve pour être servi.
+const LOCATIONS = ['Maestro', 'Smile Bar', 'Boîte 1', 'Boîte 2', 'Terrasse 1', 'Terrasse 2']
+
 function CartBar() {
   const { lines, updateQty, removeLine, total, count, clear } = useMenuCart()
   const discount = useClientDiscount()
@@ -108,6 +111,15 @@ function CartBar() {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
+  const [location, setLocation] = useState('')
+
+  // Lieu pré-rempli par l'URL (?lieu=terrasse-1) — pour des QR codes par zone
+  useEffect(() => {
+    const lieu = new URLSearchParams(window.location.search).get('lieu')
+    if (!lieu) return
+    const match = LOCATIONS.find(l => slugify(l) === slugify(lieu))
+    if (match) setLocation(match)
+  }, [])
   const n = count()
   const gross = total()
   const net = discount > 0 ? gross * (1 - discount / 100) : gross
@@ -119,7 +131,7 @@ function CartBar() {
       const res = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lines, customerEmail: email, customerName: name }),
+        body: JSON.stringify({ lines, customerEmail: email, customerName: name, location }),
       })
       const data = await res.json()
       if (data.url) window.location.href = data.url
@@ -175,6 +187,21 @@ function CartBar() {
               ))}
             </div>
             <div className="p-5 border-t border-white/10 space-y-3">
+              <div>
+                <p className="text-xs text-white/40 mb-2">Où êtes-vous ? *</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {LOCATIONS.map(l => (
+                    <button key={l} onClick={() => setLocation(l)}
+                      className={`px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors duration-200 cursor-pointer ${
+                        location === l
+                          ? 'bg-braise text-white shadow-lg shadow-braise/25'
+                          : 'bg-noir/50 border border-white/10 text-white/60 hover:border-braise/50 hover:text-white'
+                      }`}>
+                      📍 {l}
+                    </button>
+                  ))}
+                </div>
+              </div>
               <input value={name} onChange={e => setName(e.target.value)} placeholder="Votre nom *"
                 className="w-full bg-noir/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-braise/50" />
               <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email (pour confirmation)" type="email"
@@ -195,9 +222,9 @@ function CartBar() {
                 <span className="text-sm text-white/50">Total</span>
                 <span className="text-or font-bold text-2xl">{net.toFixed(2)} €</span>
               </div>
-              <button onClick={checkout} disabled={loading || !name}
-                className={`w-full py-4 rounded-xl font-bold text-white transition-colors duration-200 ${loading || !name ? 'bg-white/10 text-white/30 cursor-not-allowed' : 'bg-braise hover:bg-ambre cursor-pointer'}`}>
-                {loading ? 'Redirection...' : `Payer ${net.toFixed(2)} €`}
+              <button onClick={checkout} disabled={loading || !name || !location}
+                className={`w-full py-4 rounded-xl font-bold text-white transition-colors duration-200 ${loading || !name || !location ? 'bg-white/10 text-white/30 cursor-not-allowed' : 'bg-braise hover:bg-ambre cursor-pointer'}`}>
+                {loading ? 'Redirection...' : !location ? 'Choisissez votre lieu' : `Payer ${net.toFixed(2)} €`}
               </button>
               <button onClick={clear} className="w-full text-xs text-white/20 hover:text-white/40 transition-colors py-1 cursor-pointer">Vider le panier</button>
             </div>

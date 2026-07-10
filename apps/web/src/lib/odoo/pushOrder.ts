@@ -77,7 +77,13 @@ export async function pushOrderToPos(order: {
     amount_total: amountTotal,
     amount_paid: 0,
     amount_return: 0,
-    floating_order_name: `WEB #${order.code} — ${order.customerName}`.slice(0, 60),
+    // Le lieu (📍 Maestro, Terrasse 1…) est en tête de note : on le remonte
+    // dans le nom de commande pour qu'il soit visible dans la liste de la caisse.
+    floating_order_name: [
+      `WEB #${order.code}`,
+      order.customerName,
+      order.note?.match(/📍 ([^·]+)/)?.[1]?.trim() ?? '',
+    ].filter(Boolean).join(' — ').slice(0, 60),
     internal_note: [
       `PAYÉ PAR INTERNET (Stripe) — Retrait #${order.code}`,
       `Client : ${order.customerName}`,

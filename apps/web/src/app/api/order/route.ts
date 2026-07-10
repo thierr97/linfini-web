@@ -6,7 +6,7 @@ export async function POST(req: NextRequest) {
     const Stripe = (await import('stripe')).default
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2026-02-25.clover' })
 
-    const { lines, customerName, customerEmail, customerPhone, note } = await req.json()
+    const { lines, customerName, customerEmail, customerPhone, note, location } = await req.json()
 
     if (!lines?.length) {
       return NextResponse.json({ error: 'Panier vide.' }, { status: 400 })
@@ -53,6 +53,7 @@ export async function POST(req: NextRequest) {
         type: 'food_order',
         customerName: customerName || '',
         customerPhone: customerPhone || '',
+        location: String(location || '').slice(0, 40),
         note: note || '',
         lines: JSON.stringify(lines),
         clientDiscount: String(clientDiscount),

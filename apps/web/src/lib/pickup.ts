@@ -89,8 +89,11 @@ export async function ensurePickupOrder(sessionId: string): Promise<PickupOrderV
         stripeSessionId: sessionId,
         customerName: session.metadata?.customerName || 'Client',
         customerEmail: session.customer_email || session.customer_details?.email || null,
-        note: [session.metadata?.note, discount > 0 ? `Remise fidélité ${discount}%` : '']
-          .filter(Boolean).join(' · ') || null,
+        note: [
+          session.metadata?.location ? `📍 ${session.metadata.location}` : '',
+          session.metadata?.note,
+          discount > 0 ? `Remise fidélité ${discount}%` : '',
+        ].filter(Boolean).join(' · ') || null,
         lines: lines as any,
         total,
       },
