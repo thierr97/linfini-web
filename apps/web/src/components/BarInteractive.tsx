@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useMenuCart } from '@/stores/menuCart'
 import { useClientDiscount } from '@/hooks/useClientDiscount'
 import type { MenuCategory } from '@/lib/data/types'
@@ -81,6 +81,13 @@ function DrinkCard({ item }: { item: DrinkItem }) {
   )
 }
 
+// Zones de L'Infini : le client indique où il se trouve pour être servi.
+const LOCATIONS = ['Maestro', 'Smile Bar', 'Boîte 1', 'Boîte 2', 'Terrasse 1', 'Terrasse 2']
+
+const slugify = (s: string) =>
+  s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+
 function CartBar() {
   const { lines, updateQty, removeLine, total, count, clear } = useMenuCart()
   const discount = useClientDiscount()
@@ -88,6 +95,16 @@ function CartBar() {
   const [loading, setLoading] = useState(false)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [location, setLocation] = useState('')
+
+  // Lieu pré-rempli par l'URL (?lieu=terrasse-1) — pour des QR codes par zone
+  useEffect(() => {
+    const lieu = new URLSearchParams(window.location.search).get('lieu')
+    if (!lieu) return
+    const match = LOCATIONS.find(l => slugify(l) === slugify(lieu))
+    if (match) setLocation(match)
+  }, [])
+
   const n = count()
   const gross = total()
   const net = discount > 0 ? gross * (1 - discount / 100) : gross
@@ -95,12 +112,13 @@ function CartBar() {
 
   const checkout = async () => {
     if (!name.trim()) { alert('Veuillez entrer votre nom.'); return }
+    if (!location) { alert('Veuillez indiquer où vous êtes.'); return }
     setLoading(true)
     try {
       const res = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lines, customerName: name, customerEmail: email, note: 'Commande Bar' }),
+        body: JSON.stringify({ lines, customerName: name, customerEmail: email, location, note: 'Commande Bar' }),
       })
       const data = await res.json()
       if (data.url) { clear(); window.location.href = data.url }
@@ -148,6 +166,21 @@ function CartBar() {
             </div>
 
             <div className="p-5 border-t border-white/10 space-y-3">
+              <div>
+                <p className="text-xs text-white/40 mb-2">Où êtes-vous ? *</p>
+                <div className="grid grid-cols-2 gap-2">
+                  {LOCATIONS.map(l => (
+                    <button key={l} onClick={() => setLocation(l)}
+                      className={`px-3 py-2.5 rounded-xl text-sm font-semibold transition-colors duration-200 cursor-pointer ${
+                        location === l
+                          ? 'bg-braise text-white shadow-lg shadow-braise/25'
+                          : 'bg-noir/50 border border-white/10 text-white/60 hover:border-braise/50 hover:text-white'
+                      }`}>
+                      📍 {l}
+                    </button>
+                  ))}
+                </div>
+              </div>
               <input value={name} onChange={e => setName(e.target.value)} placeholder="Votre nom *" required
                 className="w-full bg-noir/50 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/30 focus:outline-none focus:border-braise/50" />
               <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email (pour confirmation)" type="email"
