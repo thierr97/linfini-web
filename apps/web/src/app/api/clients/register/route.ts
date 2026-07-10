@@ -21,12 +21,14 @@ export async function POST(req: NextRequest) {
     }
 
     const hash = await bcrypt.hash(password, 12)
+    const { launchOffer } = await import('@/lib/promo')
+    const offer = await launchOffer(prisma)
     const client = await prisma.client.create({
-      data: { name, email, telephone: telephone || null, password: hash },
+      data: { name, email, telephone: telephone || null, password: hash, ...(offer ?? {}) },
     })
 
     const token = await signToken({ id: client.id, email: client.email, name: client.name })
-    const res = NextResponse.json({ success: true, name: client.name })
+    const res = NextResponse.json({ success: true, name: client.name, discount: client.discount })
     res.cookies.set(COOKIE, token, { httpOnly: true, secure: true, sameSite: 'lax', maxAge: 60 * 60 * 24 * 30, path: '/' })
     return res
   } catch (err) {

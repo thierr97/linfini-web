@@ -39,6 +39,14 @@ export default function InscriptionPage() {
             <p className="text-white/40 text-sm">Accédez à vos devis et bénéficiez d&apos;offres exclusives</p>
           </div>
 
+          <div className="bg-or/10 border border-or/30 rounded-2xl px-5 py-4 mb-6 text-center">
+            <p className="text-or font-bold">🎉 Offre de lancement</p>
+            <p className="text-creme/80 text-sm mt-1">
+              <span className="font-semibold">10% de remise automatique</span> sur vos commandes en ligne
+              pour les <span className="font-semibold">500 premiers inscrits</span>
+            </p>
+          </div>
+
           <form onSubmit={handleSubmit} className="bg-charbon border border-white/5 rounded-2xl p-8 space-y-5">
             <div>
               <label className="block text-sm text-white/50 mb-1">Nom complet *</label>

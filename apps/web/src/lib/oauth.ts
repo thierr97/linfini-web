@@ -20,8 +20,10 @@ export async function finishOAuthLogin(rawEmail: string, name: string) {
   if (!client) {
     // Compte social : mot de passe aléatoire inutilisable (connexion via le provider)
     const hash = await bcrypt.hash(randomBytes(24).toString('hex'), 12)
+    const { launchOffer } = await import('@/lib/promo')
+    const offer = await launchOffer(prisma)
     client = await prisma.client.create({
-      data: { name: name || email.split('@')[0], email, password: hash },
+      data: { name: name || email.split('@')[0], email, password: hash, ...(offer ?? {}) },
     })
   }
 
