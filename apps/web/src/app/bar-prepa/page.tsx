@@ -197,7 +197,10 @@ export default function BarPrepaPage() {
   const served = orders.filter(o => o.status === 'SERVED')
 
   return (
-    <div className="min-h-screen bg-noir text-creme p-4 sm:p-6 print:hidden">
+    {/* Pas de print:hidden ici : le reçu .receipt-print est un enfant de ce div,
+        un parent display:none le rendrait ininprimable (page blanche).
+        L'écran est déjà masqué à l'impression par `body * { visibility: hidden }`. */}
+    <div className="min-h-screen bg-noir text-creme p-4 sm:p-6">
       {/* Barre du haut */}
       <div className="flex flex-wrap items-center gap-3 mb-6">
         <h1 className="font-bold text-2xl mr-auto">🍹 Préparation — commandes web</h1>
