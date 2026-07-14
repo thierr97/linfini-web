@@ -199,8 +199,9 @@ export default function BarPrepaPage() {
   return (
     // Pas de print:hidden ici : le reçu .receipt-print est un enfant de ce div,
     // un parent display:none le rendrait inimprimable (page blanche).
-    // L'écran est déjà masqué à l'impression par `body * { visibility: hidden }`.
-    <div className="min-h-screen bg-noir text-creme p-4 sm:p-6">
+    // À l'impression, les autres enfants sont retirés du flux (display:none)
+    // pour que la hauteur du papier = la hauteur du reçu, sans fond sombre.
+    <div className="prepa-root min-h-screen bg-noir text-creme p-4 sm:p-6">
       {/* Barre du haut */}
       <div className="flex flex-wrap items-center gap-3 mb-6">
         <h1 className="font-bold text-2xl mr-auto">🍹 Préparation — commandes web</h1>
@@ -300,9 +301,12 @@ export default function BarPrepaPage() {
       <style dangerouslySetInnerHTML={{ __html: `
         .receipt-print { display: none; }
         @media print {
-          body * { visibility: hidden; }
-          .receipt-print, .receipt-print * { visibility: visible; }
-          .receipt-print { display: block; position: absolute; left: 0; top: 0; width: 72mm; padding: 4mm; background: #fff; color: #000; }
+          /* Fond blanc partout : le thème sombre imprimait une grande bande noire */
+          html, body { background: #fff !important; height: auto !important; }
+          .prepa-root { min-height: 0 !important; height: auto !important; padding: 0 !important; background: #fff !important; }
+          /* Seul le reçu reste dans le flux → le papier s'arrête à la fin du ticket */
+          .prepa-root > *:not(.receipt-print) { display: none !important; }
+          .receipt-print { display: block; width: 72mm; padding: 4mm; background: #fff; color: #000; }
           @page { size: 80mm auto; margin: 0; }
         }
       ` }} />
