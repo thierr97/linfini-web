@@ -280,14 +280,62 @@ export async function sendPickupCodeEmail(order: {
 </html>`
 
   try {
-    await resend.emails.send({
-      from: FROM,
-      to: order.customerEmail,
-      subject: `🍹 Votre commande — code de retrait ${order.code}`,
-      html,
-    })
+    await sendTransactional(order.customerEmail, `🍹 Votre commande — code de retrait ${order.code}`, html)
     console.log(`[email] Code retrait envoyé à ${order.customerEmail}`)
   } catch (err) {
     console.error('[email] Erreur envoi code retrait:', err)
+  }
+}
+
+// Envoi transactionnel via Gmail SMTP (canal fiable, même compte que la
+// newsletter). Resend est conservé en secours si sa clé est configurée.
+async function sendTransactional(to: string, subject: string, html: string) {
+  if (process.env.GMAIL_DEVIS_PASSWORD) {
+    const { getTransporter, MAIL_FROM } = await import('@/lib/mailer')
+    await getTransporter().sendMail({ from: MAIL_FROM, to, subject, html })
+    return
+  }
+  await resend.emails.send({ from: FROM, to, subject, html })
+}
+
+/** Prévient le client que sa commande est prête à être retirée au bar. */
+export async function sendOrderReadyEmail(order: {
+  code: string
+  customerName: string
+  customerEmail: string | null
+  note?: string | null
+  lines: { name: string; price: number; qty: number }[]
+  total: number
+}) {
+  if (!order.customerEmail) return
+  const { pickupCounter } = await import('@/lib/pickup')
+  const counter = pickupCounter(order)
+  const items = order.lines.map(l => `${l.qty} × ${l.name}`).join(' · ')
+
+  const html = `
+<!DOCTYPE html>
+<html lang="fr">
+<body style="margin:0;padding:24px;background:#111;font-family:Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:16px;overflow:hidden;">
+    <tr><td style="background:#1a5c2a;padding:20px;text-align:center;">
+      <p style="color:#c9f0d0;font-size:13px;letter-spacing:3px;margin:0;">L'INFINI — SMILE BAR</p>
+      <h1 style="color:#ffffff;font-size:22px;margin:8px 0 0;">Votre commande est prête ! 🍹</h1>
+    </td></tr>
+    <tr><td style="padding:24px;text-align:center;">
+      <p style="color:#555;margin:0 0 10px;">${order.customerName}, votre commande vous attend :</p>
+      <p style="color:#1a5c2a;font-size:16px;font-weight:bold;margin:0 0 16px;">📍 Venez la récupérer ${counter}</p>
+      <p style="color:#555;font-size:13px;margin:0 0 6px;">Présentez votre code de retrait :</p>
+      <p style="font-size:44px;font-weight:bold;letter-spacing:10px;margin:8px 0 16px;color:#111;">${order.code}</p>
+      <p style="color:#888;font-size:13px;margin:0;">${items}</p>
+    </td></tr>
+  </table>
+</body>
+</html>`
+
+  try {
+    await sendTransactional(order.customerEmail, `✅ Commande ${order.code} prête — à récupérer ${counter}`, html)
+    console.log(`[email] Commande prête envoyé à ${order.customerEmail}`)
+  } catch (err) {
+    console.error('[email] Erreur envoi commande prête:', err)
   }
 }

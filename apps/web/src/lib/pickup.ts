@@ -193,6 +193,18 @@ export async function setOrderStatus(id: string, status: string): Promise<Pickup
   const allowed = ['NEW', 'PREP', 'READY', 'SERVED', 'CANCELLED']
   if (!allowed.includes(status)) throw new Error('Statut invalide')
   const prisma = await db()
+  const previous = await prisma.pickupOrder.findUnique({ where: { id } })
   const updated = await prisma.pickupOrder.update({ where: { id }, data: { status: status as any } })
-  return toView(updated)
+  const view = toView(updated)
+
+  // Passage à « prête » → on prévient le client par email (best effort)
+  if (status === 'READY' && previous?.status !== 'READY' && view.customerEmail) {
+    try {
+      const { sendOrderReadyEmail } = await import('@/lib/email')
+      await sendOrderReadyEmail(view)
+    } catch (e) {
+      console.error('[pickup] email commande prête échoué:', e)
+    }
+  }
+  return view
 }
