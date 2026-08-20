@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Syne, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import ChatWidget from '@/components/ChatWidget'
+import SmoothScroll from '@/components/SmoothScroll'
+import RevealInit from '@/components/RevealInit'
 
 const fontDisplay = Syne({
   subsets: ['latin'],
@@ -75,6 +77,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <SmoothScroll />
+        <RevealInit />
         {children}
         <ChatWidget />
       </body>

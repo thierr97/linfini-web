@@ -10,6 +10,7 @@ import LocationSection from '@/components/LocationSection'
 import ReservationForm from '@/components/ReservationForm'
 import DevisForm from '@/components/DevisForm'
 import Footer from '@/components/Footer'
+import Reveal from '@/components/Reveal'
 import { getAllEvents } from '@/lib/bizouk'
 import { getPosMenu, pickItems } from '@/lib/odoo/posMenu'
 
@@ -42,13 +43,14 @@ export default async function HomePage() {
     <main className="min-h-screen bg-noir">
       <Header />
       <Hero />
-      <EventsPreview events={upcomingEvents} />
-      <ConceptSection />
-      <MenuSection items={featured} />
-      <PizzaTeaser />
-      <BarSection aperitifs={pickItems(posMenu, TEASER_APERITIFS)} cocktails={pickItems(posMenu, TEASER_COCKTAILS)} />
-      <GaleriePreview />
-      <section id="reservation" className="py-24 px-4 bg-charbon">
+      <Reveal><EventsPreview events={upcomingEvents} /></Reveal>
+      <Reveal><ConceptSection /></Reveal>
+      <Reveal><MenuSection items={featured} /></Reveal>
+      <Reveal><PizzaTeaser /></Reveal>
+      <Reveal><BarSection aperitifs={pickItems(posMenu, TEASER_APERITIFS)} cocktails={pickItems(posMenu, TEASER_COCKTAILS)} /></Reveal>
+      <Reveal><GaleriePreview /></Reveal>
+      <Reveal>
+      <section id="reservation" className="py-24 px-4 bg-charbon scroll-mt-24">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-braise text-sm font-semibold tracking-widest uppercase mb-3">Réserver une table</p>
@@ -59,8 +61,10 @@ export default async function HomePage() {
           <ReservationForm />
         </div>
       </section>
+      </Reveal>
       {/* Devis événement */}
-      <section id="devis" className="py-24 px-4 bg-noir">
+      <Reveal>
+      <section id="devis" className="py-24 px-4 bg-noir scroll-mt-24">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-or text-sm font-semibold tracking-widest uppercase mb-3">Événement privé</p>
@@ -74,7 +78,8 @@ export default async function HomePage() {
           <DevisForm />
         </div>
       </section>
-      <LocationSection />
+      </Reveal>
+      <Reveal><LocationSection /></Reveal>
       <Footer />
     </main>
   )

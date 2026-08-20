@@ -132,7 +132,7 @@ export default function ProPage() {
       <div className="max-w-5xl mx-auto px-4 pt-20 pb-24 space-y-20">
 
         {/* Capacités */}
-        <section>
+        <section className="reveal">
           <Eyebrow>Capacités d&apos;accueil</Eyebrow>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {CAPACITES.map(({ type, nb, Icon }) => (
@@ -147,7 +147,7 @@ export default function ProPage() {
         </section>
 
         {/* Formats d'événements */}
-        <section>
+        <section className="reveal">
           <Eyebrow>Nos formats</Eyebrow>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {FORMATS.map(({ titre, detail, Icon, img }) => (
@@ -171,7 +171,7 @@ export default function ProPage() {
         </section>
 
         {/* Le lieu en images */}
-        <section>
+        <section className="reveal">
           <Eyebrow>Le lieu en images</Eyebrow>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {LIEU.map(({ src, alt, label, large }) => (
@@ -199,7 +199,7 @@ export default function ProPage() {
         </section>
 
         {/* Espaces */}
-        <section>
+        <section className="reveal">
           <Eyebrow>Nos espaces</Eyebrow>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {ESPACES.map(({ label, detail, Icon }) => (
@@ -214,7 +214,7 @@ export default function ProPage() {
         </section>
 
         {/* Prestations */}
-        <section>
+        <section className="reveal">
           <Eyebrow>Prestations clé en main</Eyebrow>
           <div className="bg-white rounded-2xl p-8 grid grid-cols-1 md:grid-cols-2 gap-4 border" style={{ borderColor: SABLE }}>
             {PRESTATIONS.map(s => (
@@ -227,7 +227,7 @@ export default function ProPage() {
         </section>
 
         {/* Comment ça marche */}
-        <section>
+        <section className="reveal">
           <Eyebrow>Comment ça marche</Eyebrow>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {ETAPES.map(({ n, titre, detail }) => (
@@ -241,7 +241,7 @@ export default function ProPage() {
         </section>
 
         {/* Garanties / conditions */}
-        <section className="rounded-3xl p-8 md:p-12 border" style={{ backgroundColor: '#F3EFE5', borderColor: SABLE }}>
+        <section className="reveal rounded-3xl p-8 md:p-12 border" style={{ backgroundColor: '#F3EFE5', borderColor: SABLE }}>
           <h3 className="font-display text-2xl font-bold mb-2" style={{ color: ENCRE }}>Tarification sur devis</h3>
           <p className="text-sm leading-relaxed max-w-2xl mb-6" style={{ color: '#6B675E' }}>
             Chaque événement d&apos;entreprise est dimensionné sur mesure : durée, effectif,
@@ -258,7 +258,7 @@ export default function ProPage() {
         </section>
 
         {/* Formulaire devis — le soir tombe sur L'Infini */}
-        <section id="devis-pro" className="scroll-mt-28">
+        <section id="devis-pro" className="reveal scroll-mt-28">
           <div className="bg-charbon rounded-3xl p-6 md:p-12 border border-white/5">
             <div className="text-center mb-10">
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-or/70 mb-3">Et le soir venu…</p>
