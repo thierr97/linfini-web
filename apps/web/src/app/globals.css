@@ -102,3 +102,33 @@ body { background: #080808; color: #F5EDD8; }
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Espace Pro — envolée 3D du hero à l'arrivée */
+@keyframes proStage {
+  from { opacity: 0; transform: rotateX(16deg) scale(1.18) translateY(48px); }
+  to { opacity: 1; transform: rotateX(0deg) scale(1.07) translateY(0); }
+}
+.pro-stage-anim {
+  animation: proStage 1.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: center 80%;
+}
+@keyframes proRise {
+  from { opacity: 0; transform: translateY(38px) rotateX(24deg); filter: blur(7px); }
+  to { opacity: 1; transform: translateY(0) rotateX(0deg); filter: blur(0); }
+}
+.pro-rise {
+  animation: proRise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes proShine {
+  from { background-position: 180% center; }
+  to { background-position: -80% center; }
+}
+.pro-shine {
+  background-image: linear-gradient(110deg, #D4A853 35%, #ffe9b3 48%, #E8823A 58%, #C84B1F 75%);
+  background-size: 220% auto;
+  background-position: -80% center;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: proShine 1.5s ease-out 1.15s both;
+}

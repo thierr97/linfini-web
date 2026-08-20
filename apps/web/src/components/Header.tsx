@@ -8,7 +8,6 @@ const NAV = [
   { href: '/menu', label: 'Menu' },
   { href: '/evenements', label: 'Événements' },
   { href: '/bar', label: 'Bar' },
-  { href: '/pro', label: 'Espace Pro' },
   { href: '/galerie', label: 'Galerie' },
   { href: '/#reservation', label: 'Réserver' },
 ]
@@ -78,6 +77,16 @@ export default function Header() {
 
           {/* CTA */}
           <div className="hidden md:flex items-center gap-2">
+            <Link
+              href="/pro"
+              className={`px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${
+                pathname === '/pro'
+                  ? 'bg-or text-noir shadow-lg shadow-or/25'
+                  : 'border border-or/60 text-or hover:bg-or hover:text-noir hover:shadow-lg hover:shadow-or/25'
+              }`}
+            >
+              Espace Pro
+            </Link>
             <Link href={accountHref} className="px-3 py-2 rounded-full text-sm text-white/50 hover:text-white hover:bg-white/5 transition-colors duration-200">
               Mon compte
             </Link>
@@ -124,11 +133,21 @@ export default function Header() {
           </Link>
         ))}
         <Link
+          href="/pro"
+          className={`font-display text-3xl font-bold text-or hover:text-ambre transition-all duration-400 ${
+            open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
+          }`}
+          style={{ transitionDelay: open ? `${NAV.length * 60}ms` : '0ms' }}
+          onClick={() => setOpen(false)}
+        >
+          Espace Pro
+        </Link>
+        <Link
           href={accountHref}
           className={`text-sm text-white/40 hover:text-white transition-all duration-400 mt-4 ${
             open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
           }`}
-          style={{ transitionDelay: open ? `${NAV.length * 60}ms` : '0ms' }}
+          style={{ transitionDelay: open ? `${(NAV.length + 1) * 60}ms` : '0ms' }}
           onClick={() => setOpen(false)}
         >
           Mon compte

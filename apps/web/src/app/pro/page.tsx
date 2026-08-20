@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import DevisForm from '@/components/DevisForm'
+import ProHero from '@/components/ProHero'
 import {
   IconUsers, IconUtensils, IconTicket, IconBriefcase, IconClipboard,
   IconLandmark, IconSun, IconMartini, IconMic, IconCheck, IconMail,
@@ -126,45 +127,8 @@ export default function ProPage() {
     <main className="min-h-screen" style={{ backgroundColor: IVOIRE, color: ENCRE }}>
       <Header />
 
-      {/* Hero — L'Infini en plein jour */}
-      <section className="relative overflow-hidden">
-        <div className="relative h-[62vh] min-h-[420px]">
-          <Image
-            src="/images/terrasse.jpg"
-            alt="La terrasse de L'Infini au Gosier en plein jour"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-          {/* Voile sombre en haut pour le header, fondu ivoire en bas vers le corps de page */}
-          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/55 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-44" style={{ background: `linear-gradient(to top, ${IVOIRE}, transparent)` }} />
-        </div>
-        <div className="relative max-w-5xl mx-auto px-4 -mt-28 pb-4 text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] mb-4 text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]">
-            Espace Pro · Le Gosier, Guadeloupe
-          </p>
-          <h1 className="font-display text-5xl md:text-7xl font-bold mb-5" style={{ color: ENCRE }}>
-            L&apos;Infini, <span className="text-gradient">côté jour</span>
-          </h1>
-          <p className="text-lg max-w-xl mx-auto mb-8" style={{ color: '#5A5548' }}>
-            Séminaires, soirées d&apos;entreprise, lancements, galas — privatisez le lieu
-            et confiez l&apos;organisation à une équipe dédiée.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="#devis-pro"
-              className="inline-block bg-braise hover:bg-ambre text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg shadow-braise/20 hover:shadow-ambre/30">
-              Demander un devis →
-            </a>
-            <a href="tel:+590690272875"
-              className="inline-block border px-10 py-4 rounded-full font-bold text-lg transition-colors duration-300 hover:border-or"
-              style={{ borderColor: SABLE, color: ENCRE }}>
-              +590 690 27 28 75
-            </a>
-          </div>
-        </div>
-      </section>
+      {/* Hero — L'Infini en plein jour, envolée 3D */}
+      <ProHero />
 
       <div className="max-w-5xl mx-auto px-4 pt-20 pb-24 space-y-20">
 
