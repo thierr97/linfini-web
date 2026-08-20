@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import DevisForm from '@/components/DevisForm'
 import {
   IconUsers, IconUtensils, IconTicket, IconBriefcase, IconClipboard,
-  IconLandmark, IconSun, IconMartini, IconMic, IconCheck, IconMail, IconChat,
+  IconLandmark, IconSun, IconMartini, IconMic, IconCheck, IconMail,
 } from '@/components/icons'
 
 export const metadata: Metadata = {
@@ -14,6 +14,12 @@ export const metadata: Metadata = {
   description:
     "Privatisez L'Infini au Gosier pour vos séminaires, soirées d'entreprise, lancements de produit et galas. Jusqu'à 600 personnes, prestations clé en main, devis sous 24h.",
 }
+
+// Palette jour : ivoire, encre, or brand — l'univers nocturne du site passé en négatif
+const IVOIRE = '#FBFAF7'
+const ENCRE = '#14120E'
+const SABLE = '#E9E4D8'
+const OR_FONCE = '#8A6B2B'
 
 const CAPACITES = [
   { type: 'Cocktail Debout', nb: '600', Icon: IconUsers },
@@ -48,6 +54,13 @@ const FORMATS = [
     Icon: IconUsers,
     img: '/images/pro/gala.jpg',
   },
+]
+
+const LIEU = [
+  { src: '/images/salle-event.jpg', alt: 'Banquet dressé pour un événement d\'entreprise', label: 'Banquets & dîners assis', large: true },
+  { src: '/images/terrasse.jpg', alt: 'Terrasse extérieure de L\'Infini au Gosier', label: 'Terrasse extérieure', large: false },
+  { src: '/images/cocktail.jpg', alt: 'Cocktail signature du bar de L\'Infini', label: 'Cocktails signature', large: false },
+  { src: '/images/decoration.jpg', alt: 'Décoration florale sur mesure', label: 'Décoration sur mesure', large: false },
 ]
 
 const ESPACES = [
@@ -96,56 +109,75 @@ const GARANTIES = [
   'Parking et accès PMR',
 ]
 
+function Eyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-center justify-center gap-4 mb-8">
+      <span className="h-px w-10 bg-or/60" />
+      <h2 className="text-xs font-semibold uppercase tracking-[0.2em]" style={{ color: OR_FONCE }}>
+        {children}
+      </h2>
+      <span className="h-px w-10 bg-or/60" />
+    </div>
+  )
+}
+
 export default function ProPage() {
   return (
-    <main className="min-h-screen bg-noir">
+    <main className="min-h-screen" style={{ backgroundColor: IVOIRE, color: ENCRE }}>
       <Header />
 
-      {/* Hero */}
-      <section className="relative pt-36 pb-20 px-4 text-center overflow-hidden">
-        <Image
-          src="/images/salle-event.jpg"
-          alt="Banquet dressé sur la terrasse de L'Infini"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover opacity-25"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-noir/70 via-noir/55 to-noir pointer-events-none" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-or/5 blur-3xl pointer-events-none" />
-        <div className="relative">
-        <p className="text-braise text-sm font-semibold tracking-widest uppercase mb-3">Espace Pro</p>
-        <h1 className="font-display text-5xl md:text-6xl font-bold text-creme mb-4">
-          Vos événements <span className="text-gradient">d&apos;entreprise</span>
-        </h1>
-        <p className="text-white/40 text-lg max-w-xl mx-auto mb-8">
-          Séminaires, soirées d&apos;entreprise, lancements, galas — privatisez L&apos;Infini
-          et confiez l&apos;organisation à une équipe dédiée.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="#devis-pro"
-            className="inline-block bg-braise hover:bg-ambre text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg shadow-braise/20 hover:shadow-ambre/30">
-            Demander un devis →
-          </a>
-          <a href="tel:+590690272875"
-            className="inline-block border border-white/20 hover:border-or/50 text-white/60 hover:text-white px-10 py-4 rounded-full font-bold text-lg transition-colors duration-300">
-            +590 690 27 28 75
-          </a>
+      {/* Hero — L'Infini en plein jour */}
+      <section className="relative overflow-hidden">
+        <div className="relative h-[62vh] min-h-[420px]">
+          <Image
+            src="/images/terrasse.jpg"
+            alt="La terrasse de L'Infini au Gosier en plein jour"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+          {/* Voile sombre en haut pour le header, fondu ivoire en bas vers le corps de page */}
+          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/55 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-44" style={{ background: `linear-gradient(to top, ${IVOIRE}, transparent)` }} />
         </div>
+        <div className="relative max-w-5xl mx-auto px-4 -mt-28 pb-4 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] mb-4 text-white drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]">
+            Espace Pro · Le Gosier, Guadeloupe
+          </p>
+          <h1 className="font-display text-5xl md:text-7xl font-bold mb-5" style={{ color: ENCRE }}>
+            L&apos;Infini, <span className="text-gradient">côté jour</span>
+          </h1>
+          <p className="text-lg max-w-xl mx-auto mb-8" style={{ color: '#5A5548' }}>
+            Séminaires, soirées d&apos;entreprise, lancements, galas — privatisez le lieu
+            et confiez l&apos;organisation à une équipe dédiée.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#devis-pro"
+              className="inline-block bg-braise hover:bg-ambre text-white px-10 py-4 rounded-full font-bold text-lg transition-all duration-300 shadow-lg shadow-braise/20 hover:shadow-ambre/30">
+              Demander un devis →
+            </a>
+            <a href="tel:+590690272875"
+              className="inline-block border px-10 py-4 rounded-full font-bold text-lg transition-colors duration-300 hover:border-or"
+              style={{ borderColor: SABLE, color: ENCRE }}>
+              +590 690 27 28 75
+            </a>
+          </div>
         </div>
       </section>
 
-      <div className="max-w-5xl mx-auto px-4 pb-24 space-y-16">
+      <div className="max-w-5xl mx-auto px-4 pt-20 pb-24 space-y-20">
 
         {/* Capacités */}
         <section>
-          <h2 className="text-sm font-semibold text-white/40 uppercase tracking-widest mb-6 text-center">Capacités d&apos;accueil</h2>
+          <Eyebrow>Capacités d&apos;accueil</Eyebrow>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {CAPACITES.map(({ type, nb, Icon }) => (
-              <div key={type} className="glass-card card-glow rounded-2xl p-6 text-center">
-                <Icon className="w-7 h-7 mx-auto mb-3 text-or/70" />
+              <div key={type} className="bg-white rounded-2xl p-6 text-center border transition-shadow hover:shadow-[0_8px_30px_rgba(138,107,43,0.12)]"
+                style={{ borderColor: SABLE }}>
+                <Icon className="w-7 h-7 mx-auto mb-3 text-or" />
                 <p className="font-display text-4xl font-bold text-or mb-1">{nb}</p>
-                <p className="text-white/40 text-xs leading-tight">{type}</p>
+                <p className="text-xs leading-tight" style={{ color: '#6B675E' }}>{type}</p>
               </div>
             ))}
           </div>
@@ -153,20 +185,22 @@ export default function ProPage() {
 
         {/* Formats d'événements */}
         <section>
-          <h2 className="text-sm font-semibold text-white/40 uppercase tracking-widest mb-6 text-center">Nos formats</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Eyebrow>Nos formats</Eyebrow>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {FORMATS.map(({ titre, detail, Icon, img }) => (
-              <div key={titre} className="glass-card card-glow rounded-2xl overflow-hidden group">
+              <div key={titre} className="bg-white rounded-2xl overflow-hidden border group transition-shadow hover:shadow-[0_12px_40px_rgba(138,107,43,0.14)]"
+                style={{ borderColor: SABLE }}>
                 <div className="relative h-44">
                   <Image src={img} alt={titre}
                     fill sizes="(min-width: 768px) 50vw, 100vw"
                     className="object-cover transition-transform duration-500 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-charbon via-charbon/20 to-transparent" />
-                  <Icon className="absolute bottom-3 left-6 w-7 h-7 text-or/80" />
                 </div>
-                <div className="p-6 pt-4">
-                  <h3 className="text-creme font-semibold text-lg mb-2">{titre}</h3>
-                  <p className="text-white/40 text-sm leading-relaxed">{detail}</p>
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-2">
+                    <Icon className="w-5 h-5 text-or" />
+                    <h3 className="font-semibold text-lg" style={{ color: ENCRE }}>{titre}</h3>
+                  </div>
+                  <p className="text-sm leading-relaxed" style={{ color: '#6B675E' }}>{detail}</p>
                 </div>
               </div>
             ))}
@@ -175,41 +209,24 @@ export default function ProPage() {
 
         {/* Le lieu en images */}
         <section>
-          <h2 className="text-sm font-semibold text-white/40 uppercase tracking-widest mb-6 text-center">Le lieu en images</h2>
+          <Eyebrow>Le lieu en images</Eyebrow>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="relative md:col-span-2 h-64 md:h-72 rounded-2xl overflow-hidden group">
-              <Image src="/images/salle-event.jpg" alt="Banquet dressé pour un événement d'entreprise"
-                fill sizes="(min-width: 768px) 66vw, 100vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-noir/80 via-transparent to-transparent" />
-              <p className="absolute bottom-4 left-5 text-creme font-semibold">Banquets & dîners assis</p>
-            </div>
-            <div className="relative h-64 md:h-72 rounded-2xl overflow-hidden group">
-              <Image src="/images/terrasse.jpg" alt="Terrasse extérieure de L'Infini au Gosier"
-                fill sizes="(min-width: 768px) 33vw, 100vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-noir/80 via-transparent to-transparent" />
-              <p className="absolute bottom-4 left-5 text-creme font-semibold">Terrasse extérieure</p>
-            </div>
-            <div className="relative h-64 rounded-2xl overflow-hidden group">
-              <Image src="/images/cocktail.jpg" alt="Cocktail signature du bar de L'Infini"
-                fill sizes="(min-width: 768px) 33vw, 100vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-noir/80 via-transparent to-transparent" />
-              <p className="absolute bottom-4 left-5 text-creme font-semibold">Cocktails signature</p>
-            </div>
-            <div className="relative h-64 rounded-2xl overflow-hidden group">
-              <Image src="/images/decoration.jpg" alt="Décoration florale sur mesure"
-                fill sizes="(min-width: 768px) 33vw, 100vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-noir/80 via-transparent to-transparent" />
-              <p className="absolute bottom-4 left-5 text-creme font-semibold">Décoration sur mesure</p>
-            </div>
+            {LIEU.map(({ src, alt, label, large }) => (
+              <div key={src} className={`relative h-64 ${large ? 'md:col-span-2' : ''} rounded-2xl overflow-hidden group`}>
+                <Image src={src} alt={alt}
+                  fill sizes={large ? '(min-width: 768px) 66vw, 100vw' : '(min-width: 768px) 33vw, 100vw'}
+                  className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <p className="absolute bottom-4 left-5 text-white font-semibold drop-shadow">{label}</p>
+              </div>
+            ))}
             <Link href="/galerie"
-              className="relative h-64 rounded-2xl overflow-hidden glass-card card-glow flex flex-col items-center justify-center text-center p-6 group">
+              className="relative h-64 md:h-auto rounded-2xl border bg-white flex flex-col items-center justify-center text-center p-6 group transition-shadow hover:shadow-[0_12px_40px_rgba(138,107,43,0.14)]"
+              style={{ borderColor: SABLE }}>
               <p className="font-display text-2xl font-bold text-or mb-2">+ de photos</p>
-              <p className="text-white/40 text-sm mb-4">Découvrez nos événements passés</p>
-              <span className="border border-white/20 group-hover:border-or/50 text-white/60 group-hover:text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-colors">
+              <p className="text-sm mb-4" style={{ color: '#6B675E' }}>Découvrez nos événements passés</p>
+              <span className="border group-hover:border-or px-6 py-2.5 rounded-full text-sm font-semibold transition-colors"
+                style={{ borderColor: SABLE, color: ENCRE }}>
                 Voir la galerie →
               </span>
             </Link>
@@ -218,13 +235,14 @@ export default function ProPage() {
 
         {/* Espaces */}
         <section>
-          <h2 className="text-sm font-semibold text-white/40 uppercase tracking-widest mb-6 text-center">Nos espaces</h2>
+          <Eyebrow>Nos espaces</Eyebrow>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {ESPACES.map(({ label, detail, Icon }) => (
-              <div key={label} className="glass-card card-glow rounded-2xl p-6 text-center">
-                <Icon className="w-7 h-7 mx-auto mb-3 text-or/70" />
-                <p className="text-creme font-semibold text-sm mb-1">{label}</p>
-                <p className="text-white/30 text-xs">{detail}</p>
+              <div key={label} className="bg-white rounded-2xl p-6 text-center border transition-shadow hover:shadow-[0_8px_30px_rgba(138,107,43,0.12)]"
+                style={{ borderColor: SABLE }}>
+                <Icon className="w-7 h-7 mx-auto mb-3 text-or" />
+                <p className="font-semibold text-sm mb-1" style={{ color: ENCRE }}>{label}</p>
+                <p className="text-xs" style={{ color: '#6B675E' }}>{detail}</p>
               </div>
             ))}
           </div>
@@ -232,12 +250,12 @@ export default function ProPage() {
 
         {/* Prestations */}
         <section>
-          <h2 className="text-sm font-semibold text-white/40 uppercase tracking-widest mb-6 text-center">Prestations clé en main</h2>
-          <div className="glass-card rounded-2xl p-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Eyebrow>Prestations clé en main</Eyebrow>
+          <div className="bg-white rounded-2xl p-8 grid grid-cols-1 md:grid-cols-2 gap-4 border" style={{ borderColor: SABLE }}>
             {PRESTATIONS.map(s => (
               <div key={s} className="flex items-center gap-3">
-                <IconCheck className="w-4 h-4 text-or shrink-0" />
-                <span className="text-white/60 text-sm">{s}</span>
+                <IconCheck className="w-4 h-4 shrink-0 text-[#8A6B2B]" />
+                <span className="text-sm" style={{ color: '#44403A' }}>{s}</span>
               </div>
             ))}
           </div>
@@ -245,63 +263,55 @@ export default function ProPage() {
 
         {/* Comment ça marche */}
         <section>
-          <h2 className="text-sm font-semibold text-white/40 uppercase tracking-widest mb-6 text-center">Comment ça marche</h2>
+          <Eyebrow>Comment ça marche</Eyebrow>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {ETAPES.map(({ n, titre, detail }) => (
-              <div key={n} className="glass-card rounded-2xl p-7 text-center">
-                <p className="font-display text-4xl font-bold text-or/60 mb-3">{n}</p>
-                <h3 className="text-creme font-semibold mb-2">{titre}</h3>
-                <p className="text-white/40 text-sm leading-relaxed">{detail}</p>
+              <div key={n} className="bg-white rounded-2xl p-7 text-center border" style={{ borderColor: SABLE }}>
+                <p className="font-display text-4xl font-bold mb-3 text-or">{n}</p>
+                <h3 className="font-semibold mb-2" style={{ color: ENCRE }}>{titre}</h3>
+                <p className="text-sm leading-relaxed" style={{ color: '#6B675E' }}>{detail}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Garanties / conditions */}
-        <section className="relative bg-or/5 border border-or/20 rounded-3xl p-8 md:p-12 overflow-hidden">
-          <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-or/10 blur-3xl pointer-events-none" />
-          <div className="flex items-start gap-4 mb-6">
-            <IconChat className="w-8 h-8 text-or/80 shrink-0" />
-            <div>
-              <h3 className="font-display text-2xl font-bold text-or mb-2">Tarification sur devis</h3>
-              <p className="text-white/50 text-sm leading-relaxed max-w-2xl">
-                Chaque événement d&apos;entreprise est dimensionné sur mesure : durée, effectif,
-                technique et prestations. Nous construisons le devis avec vous, ligne par ligne.
-              </p>
-            </div>
-          </div>
+        <section className="rounded-3xl p-8 md:p-12 border" style={{ backgroundColor: '#F3EFE5', borderColor: SABLE }}>
+          <h3 className="font-display text-2xl font-bold mb-2" style={{ color: ENCRE }}>Tarification sur devis</h3>
+          <p className="text-sm leading-relaxed max-w-2xl mb-6" style={{ color: '#6B675E' }}>
+            Chaque événement d&apos;entreprise est dimensionné sur mesure : durée, effectif,
+            technique et prestations. Nous construisons le devis avec vous, ligne par ligne.
+          </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {GARANTIES.map(g => (
               <div key={g} className="flex items-center gap-3">
-                <IconCheck className="w-4 h-4 text-or shrink-0" />
-                <span className="text-white/60 text-sm">{g}</span>
+                <IconCheck className="w-4 h-4 shrink-0 text-[#8A6B2B]" />
+                <span className="text-sm" style={{ color: '#44403A' }}>{g}</span>
               </div>
             ))}
           </div>
         </section>
 
-        {/* Formulaire devis */}
+        {/* Formulaire devis — le soir tombe sur L'Infini */}
         <section id="devis-pro" className="scroll-mt-28">
-          <div className="text-center mb-8">
-            <h2 className="font-display text-3xl md:text-4xl font-bold text-creme mb-3">
-              Demande de <span className="text-gradient">devis pro</span>
-            </h2>
-            <p className="text-white/40 max-w-lg mx-auto text-sm">
-              Réponse sous 24h ouvrées. Pour une demande urgente, appelez-nous directement.
+          <div className="bg-charbon rounded-3xl p-6 md:p-12 border border-white/5">
+            <div className="text-center mb-10">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-or/70 mb-3">Et le soir venu…</p>
+              <h2 className="font-display text-3xl md:text-4xl font-bold text-creme mb-3">
+                Parlons de votre <span className="text-gradient">événement</span>
+              </h2>
+              <p className="text-white/40 max-w-lg mx-auto text-sm">
+                Réponse sous 24h ouvrées. Pour une demande urgente, appelez-nous directement.
+              </p>
+            </div>
+            <DevisForm />
+            <p className="text-center text-white/30 text-sm mt-8">
+              Vous préférez un contact direct ?{' '}
+              <a href="mailto:direction.infini971@gmail.com" className="inline-flex items-center gap-1.5 text-white/60 hover:text-white transition-colors">
+                <IconMail className="w-4 h-4" /> direction.infini971@gmail.com
+              </a>
             </p>
           </div>
-          <div className="glass-card rounded-3xl p-6 md:p-10">
-            <DevisForm />
-          </div>
-        </section>
-
-        {/* Contact direct */}
-        <section className="text-center">
-          <p className="text-white/40 text-sm mb-4">Vous préférez un contact direct ?</p>
-          <a href="mailto:direction.infini971@gmail.com"
-            className="inline-flex items-center gap-2 border border-white/20 hover:border-or/50 text-white/60 hover:text-white px-8 py-3.5 rounded-full font-semibold transition-colors duration-300">
-            <IconMail className="w-4 h-4" /> direction.infini971@gmail.com
-          </a>
         </section>
 
       </div>
