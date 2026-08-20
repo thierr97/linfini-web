@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 
 const IVOIRE = '#FBFAF7'
 
-// Hero « L'Infini, côté jour » — envolée 3D à l'arrivée puis tilt parallaxe sous la souris.
+// Hero « L'Infini, côté pro » — envolée 3D à l'arrivée puis tilt parallaxe sous la souris.
 // La photo ET ses dégradés vivent dans le même bloc transformé : ordre de peinture garanti,
 // et le fondu suit l'inclinaison (le scale 1.07 couvre les bords pendant le tilt).
 export default function ProHero() {
@@ -76,11 +76,11 @@ export default function ProHero() {
           Espace Pro · Le Gosier, Guadeloupe
         </p>
         <h1 className="pro-rise font-display text-5xl md:text-7xl font-bold mb-5" style={{ color: '#14120E', animationDelay: '0.6s' }}>
-          L&apos;Infini, <span className="pro-shine">côté jour</span>
+          L&apos;Infini, <span className="pro-shine">côté pro</span>
         </h1>
         <p className="pro-rise text-lg max-w-xl mx-auto mb-8" style={{ color: '#5A5548', animationDelay: '0.75s' }}>
-          Séminaires, soirées d&apos;entreprise, lancements, galas — privatisez le lieu
-          et confiez l&apos;organisation à une équipe dédiée.
+          Séminaires, soirées d&apos;entreprise, lancements, galas — de jour comme de nuit,
+          privatisez le lieu et confiez l&apos;organisation à une équipe dédiée.
         </p>
         <div className="pro-rise flex flex-col sm:flex-row gap-4 justify-center" style={{ animationDelay: '0.9s' }}>
           <a href="#devis-pro"
