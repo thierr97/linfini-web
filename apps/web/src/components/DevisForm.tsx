@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { IconCheck, IconAlert } from '@/components/icons'
 
 const TYPES_EVENEMENT = [
-  'Mariage', 'Anniversaire', 'Soirée d\'entreprise', 'Baptême / Communion',
-  'Soirée privée', 'Cocktail / Gala', 'Baby shower', 'Autre',
+  'Mariage', 'Anniversaire', 'Soirée d\'entreprise', 'Séminaire / Conférence',
+  'Baptême / Communion', 'Soirée privée', 'Cocktail / Gala', 'Baby shower', 'Autre',
 ]
 
 const SERVICES = [

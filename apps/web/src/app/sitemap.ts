@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/evenements', priority: 0.9, changeFrequency: 'daily' as const },
     { path: '/bar', priority: 0.8, changeFrequency: 'monthly' as const },
     { path: '/club', priority: 0.8, changeFrequency: 'weekly' as const },
-    { path: '/tarifs', priority: 0.8, changeFrequency: 'monthly' as const },
+    { path: '/pro', priority: 0.8, changeFrequency: 'monthly' as const },
     { path: '/galerie', priority: 0.6, changeFrequency: 'monthly' as const },
     { path: '/mentions-legales', priority: 0.1, changeFrequency: 'yearly' as const },
     { path: '/politique-confidentialite', priority: 0.1, changeFrequency: 'yearly' as const },

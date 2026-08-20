@@ -8,7 +8,7 @@ const NAV = [
   { href: '/menu', label: 'Menu' },
   { href: '/evenements', label: 'Événements' },
   { href: '/bar', label: 'Bar' },
-  { href: '/tarifs', label: 'Tarifs' },
+  { href: '/pro', label: 'Espace Pro' },
   { href: '/galerie', label: 'Galerie' },
   { href: '/#reservation', label: 'Réserver' },
 ]

@@ -34,7 +34,7 @@ const LINKS = [
   { href: '/menu', label: 'Menu' },
   { href: '/evenements', label: 'Événements' },
   { href: '/bar', label: 'Bar & Cocktails' },
-  { href: '/tarifs', label: 'Tarifs location' },
+  { href: '/pro', label: 'Espace Pro' },
   { href: '/club', label: 'Le Club' },
   { href: '/galerie', label: 'Galerie' },
   { href: '/#reservation', label: 'Réserver' },
