@@ -103,18 +103,18 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.65 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
+              <Link
+                href="/pro"
+                className="bg-or hover:bg-ambre text-noir hover:text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg shadow-or/30 hover:shadow-ambre/30 hover:scale-[1.03]"
+              >
+                Espace Pro
+              </Link>
               <a
                 href="#reservation"
                 className="bg-braise hover:bg-ambre text-white px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 shadow-lg shadow-braise/30 hover:shadow-ambre/30 hover:scale-[1.03]"
               >
                 Réserver une table
               </a>
-              <Link
-                href="/menu"
-                className="border border-white/30 hover:border-white/60 bg-white/5 backdrop-blur-sm text-white/80 hover:text-white px-8 py-4 rounded-full font-semibold text-lg transition-all hover:bg-white/10"
-              >
-                Voir le menu →
-              </Link>
             </motion.div>
 
             {/* Dots */}
