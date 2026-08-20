@@ -28,21 +28,25 @@ const FORMATS = [
     titre: 'Séminaires & conférences',
     detail: 'Plénière jusqu\'à 300 places, sonorisation, micros, vidéoprojection, pauses café et déjeuner sur place.',
     Icon: IconBriefcase,
+    img: '/images/pro/seminaire.jpg',
   },
   {
     titre: 'Soirées d\'entreprise',
     detail: 'Fin d\'année, team building, anniversaire de société — dîner, open bar, DJ et animations clé en main.',
     Icon: IconMartini,
+    img: '/images/pro/soiree-entreprise.jpg',
   },
   {
     titre: 'Lancements & showrooms',
     detail: 'Présentation produit, scène équipée son & lumière, scénographie sur mesure, captation photo/vidéo.',
     Icon: IconMic,
+    img: '/images/pro/lancement.jpg',
   },
   {
     titre: 'Cocktails & galas',
     detail: 'Réception debout jusqu\'à 600 invités, service traiteur premium, hôtesses et vestiaire.',
     Icon: IconUsers,
+    img: '/images/pro/gala.jpg',
   },
 ]
 
@@ -151,11 +155,19 @@ export default function ProPage() {
         <section>
           <h2 className="text-sm font-semibold text-white/40 uppercase tracking-widest mb-6 text-center">Nos formats</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {FORMATS.map(({ titre, detail, Icon }) => (
-              <div key={titre} className="glass-card card-glow rounded-2xl p-7">
-                <Icon className="w-7 h-7 mb-4 text-or/70" />
-                <h3 className="text-creme font-semibold text-lg mb-2">{titre}</h3>
-                <p className="text-white/40 text-sm leading-relaxed">{detail}</p>
+            {FORMATS.map(({ titre, detail, Icon, img }) => (
+              <div key={titre} className="glass-card card-glow rounded-2xl overflow-hidden group">
+                <div className="relative h-44">
+                  <Image src={img} alt={titre}
+                    fill sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-charbon via-charbon/20 to-transparent" />
+                  <Icon className="absolute bottom-3 left-6 w-7 h-7 text-or/80" />
+                </div>
+                <div className="p-6 pt-4">
+                  <h3 className="text-creme font-semibold text-lg mb-2">{titre}</h3>
+                  <p className="text-white/40 text-sm leading-relaxed">{detail}</p>
+                </div>
               </div>
             ))}
           </div>
