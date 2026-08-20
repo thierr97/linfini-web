@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import DevisForm from '@/components/DevisForm'
@@ -96,8 +98,18 @@ export default function ProPage() {
       <Header />
 
       {/* Hero */}
-      <section className="relative pt-36 pb-16 px-4 text-center overflow-hidden">
+      <section className="relative pt-36 pb-20 px-4 text-center overflow-hidden">
+        <Image
+          src="/images/salle-event.jpg"
+          alt="Banquet dressé sur la terrasse de L'Infini"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover opacity-25"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-noir/70 via-noir/55 to-noir pointer-events-none" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-or/5 blur-3xl pointer-events-none" />
+        <div className="relative">
         <p className="text-braise text-sm font-semibold tracking-widest uppercase mb-3">Espace Pro</p>
         <h1 className="font-display text-5xl md:text-6xl font-bold text-creme mb-4">
           Vos événements <span className="text-gradient">d&apos;entreprise</span>
@@ -115,6 +127,7 @@ export default function ProPage() {
             className="inline-block border border-white/20 hover:border-or/50 text-white/60 hover:text-white px-10 py-4 rounded-full font-bold text-lg transition-colors duration-300">
             +590 690 27 28 75
           </a>
+        </div>
         </div>
       </section>
 
@@ -145,6 +158,49 @@ export default function ProPage() {
                 <p className="text-white/40 text-sm leading-relaxed">{detail}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Le lieu en images */}
+        <section>
+          <h2 className="text-sm font-semibold text-white/40 uppercase tracking-widest mb-6 text-center">Le lieu en images</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="relative md:col-span-2 h-64 md:h-72 rounded-2xl overflow-hidden group">
+              <Image src="/images/salle-event.jpg" alt="Banquet dressé pour un événement d'entreprise"
+                fill sizes="(min-width: 768px) 66vw, 100vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-noir/80 via-transparent to-transparent" />
+              <p className="absolute bottom-4 left-5 text-creme font-semibold">Banquets & dîners assis</p>
+            </div>
+            <div className="relative h-64 md:h-72 rounded-2xl overflow-hidden group">
+              <Image src="/images/terrasse.jpg" alt="Terrasse extérieure de L'Infini au Gosier"
+                fill sizes="(min-width: 768px) 33vw, 100vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-noir/80 via-transparent to-transparent" />
+              <p className="absolute bottom-4 left-5 text-creme font-semibold">Terrasse extérieure</p>
+            </div>
+            <div className="relative h-64 rounded-2xl overflow-hidden group">
+              <Image src="/images/cocktail.jpg" alt="Cocktail signature du bar de L'Infini"
+                fill sizes="(min-width: 768px) 33vw, 100vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-noir/80 via-transparent to-transparent" />
+              <p className="absolute bottom-4 left-5 text-creme font-semibold">Cocktails signature</p>
+            </div>
+            <div className="relative h-64 rounded-2xl overflow-hidden group">
+              <Image src="/images/decoration.jpg" alt="Décoration florale sur mesure"
+                fill sizes="(min-width: 768px) 33vw, 100vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-noir/80 via-transparent to-transparent" />
+              <p className="absolute bottom-4 left-5 text-creme font-semibold">Décoration sur mesure</p>
+            </div>
+            <Link href="/galerie"
+              className="relative h-64 rounded-2xl overflow-hidden glass-card card-glow flex flex-col items-center justify-center text-center p-6 group">
+              <p className="font-display text-2xl font-bold text-or mb-2">+ de photos</p>
+              <p className="text-white/40 text-sm mb-4">Découvrez nos événements passés</p>
+              <span className="border border-white/20 group-hover:border-or/50 text-white/60 group-hover:text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-colors">
+                Voir la galerie →
+              </span>
+            </Link>
           </div>
         </section>
 
