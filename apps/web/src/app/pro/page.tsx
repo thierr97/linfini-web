@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import DevisForm from '@/components/DevisForm'
@@ -184,16 +183,18 @@ export default function ProPage() {
                 <p className="absolute bottom-4 left-5 text-white font-semibold drop-shadow">{label}</p>
               </div>
             ))}
-            <Link href="/galerie"
+            <a href="#devis-pro"
               className="relative h-64 md:h-auto rounded-2xl border bg-white flex flex-col items-center justify-center text-center p-6 group transition-shadow hover:shadow-[0_12px_40px_rgba(138,107,43,0.14)]"
               style={{ borderColor: SABLE }}>
-              <p className="font-display text-2xl font-bold text-or mb-2">+ de photos</p>
-              <p className="text-sm mb-4" style={{ color: '#6B675E' }}>Découvrez nos événements passés</p>
+              <p className="font-display text-2xl font-bold text-or mb-2">Visite privée</p>
+              <p className="text-sm mb-4" style={{ color: '#6B675E' }}>
+                Découvrez les espaces sur place avec notre équipe, sur rendez-vous
+              </p>
               <span className="border group-hover:border-or px-6 py-2.5 rounded-full text-sm font-semibold transition-colors"
                 style={{ borderColor: SABLE, color: ENCRE }}>
-                Voir la galerie →
+                Planifier une visite →
               </span>
-            </Link>
+            </a>
           </div>
         </section>
 
