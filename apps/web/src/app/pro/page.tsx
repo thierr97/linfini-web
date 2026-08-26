@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import Header from '@/components/Header'
+import ProHeader from '@/components/ProHeader'
 import Footer from '@/components/Footer'
 import DevisForm from '@/components/DevisForm'
 import ProHero from '@/components/ProHero'
@@ -124,7 +124,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 export default function ProPage() {
   return (
     <main className="min-h-screen" style={{ backgroundColor: IVOIRE, color: ENCRE }}>
-      <Header />
+      <ProHeader />
 
       {/* Hero — L'Infini en plein jour, envolée 3D */}
       <ProHero />
@@ -132,7 +132,7 @@ export default function ProPage() {
       <div className="max-w-5xl mx-auto px-4 pt-20 pb-24 space-y-20">
 
         {/* Capacités */}
-        <section className="reveal">
+        <section id="capacites" className="reveal scroll-mt-28">
           <Eyebrow>Capacités d&apos;accueil</Eyebrow>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {CAPACITES.map(({ type, nb, Icon }) => (
@@ -147,7 +147,7 @@ export default function ProPage() {
         </section>
 
         {/* Formats d'événements */}
-        <section className="reveal">
+        <section id="formats" className="reveal scroll-mt-28">
           <Eyebrow>Nos formats</Eyebrow>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {FORMATS.map(({ titre, detail, Icon, img }) => (
@@ -171,7 +171,7 @@ export default function ProPage() {
         </section>
 
         {/* Le lieu en images */}
-        <section className="reveal">
+        <section id="lieu" className="reveal scroll-mt-28">
           <Eyebrow>Le lieu en images</Eyebrow>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {LIEU.map(({ src, alt, label, large }) => (
@@ -214,7 +214,7 @@ export default function ProPage() {
         </section>
 
         {/* Prestations */}
-        <section className="reveal">
+        <section id="prestations" className="reveal scroll-mt-28">
           <Eyebrow>Prestations clé en main</Eyebrow>
           <div className="bg-white rounded-2xl p-8 grid grid-cols-1 md:grid-cols-2 gap-4 border" style={{ borderColor: SABLE }}>
             {PRESTATIONS.map(s => (
@@ -257,22 +257,22 @@ export default function ProPage() {
           </div>
         </section>
 
-        {/* Formulaire devis — le soir tombe sur L'Infini */}
+        {/* Formulaire devis — version claire, lisibilité avant tout */}
         <section id="devis-pro" className="reveal scroll-mt-28">
-          <div className="bg-charbon rounded-3xl p-6 md:p-12 border border-white/5">
+          <div className="bg-white rounded-3xl p-6 md:p-12 border shadow-[0_12px_50px_rgba(138,107,43,0.10)]" style={{ borderColor: SABLE }}>
             <div className="text-center mb-10">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-or/70 mb-3">Et le soir venu…</p>
-              <h2 className="font-display text-3xl md:text-4xl font-bold text-creme mb-3">
+              <p className="text-xs font-semibold uppercase tracking-[0.25em] mb-3" style={{ color: OR_FONCE }}>Votre projet d&apos;entreprise</p>
+              <h2 className="font-display text-3xl md:text-4xl font-bold mb-3" style={{ color: ENCRE }}>
                 Parlons de votre <span className="text-gradient">événement</span>
               </h2>
-              <p className="text-white/40 max-w-lg mx-auto text-sm">
+              <p className="max-w-lg mx-auto text-sm" style={{ color: '#6B675E' }}>
                 Réponse sous 24h ouvrées. Pour une demande urgente, appelez-nous directement.
               </p>
             </div>
-            <DevisForm />
-            <p className="text-center text-white/30 text-sm mt-8">
+            <DevisForm variant="light" />
+            <p className="text-center text-sm mt-8" style={{ color: '#8B8677' }}>
               Vous préférez un contact direct ?{' '}
-              <a href="mailto:direction.infini971@gmail.com" className="inline-flex items-center gap-1.5 text-white/60 hover:text-white transition-colors">
+              <a href="mailto:direction.infini971@gmail.com" className="inline-flex items-center gap-1.5 transition-colors hover:text-braise" style={{ color: '#44403A' }}>
                 <IconMail className="w-4 h-4" /> direction.infini971@gmail.com
               </a>
             </p>

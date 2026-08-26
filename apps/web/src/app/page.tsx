@@ -1,4 +1,5 @@
 import Header from '@/components/Header'
+import EntranceChoice from '@/components/EntranceChoice'
 import Hero from '@/components/Hero'
 import EventsPreview from '@/components/EventsPreview'
 import ConceptSection from '@/components/ConceptSection'
@@ -41,6 +42,7 @@ export default async function HomePage() {
 
   return (
     <main className="min-h-screen bg-noir">
+      <EntranceChoice />
       <Header />
       <Hero />
       <Reveal><EventsPreview events={upcomingEvents} /></Reveal>

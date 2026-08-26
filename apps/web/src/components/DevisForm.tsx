@@ -21,7 +21,47 @@ const BUDGETS = [
   '5 000 – 10 000 €', 'Plus de 10 000 €', 'À définir ensemble',
 ]
 
-export default function DevisForm() {
+// Deux thèmes : 'dark' (site événement) et 'light' (Espace Pro, fond ivoire) —
+// suite aux retours lisibilité, les contrastes du sombre sont renforcés.
+const THEMES = {
+  dark: {
+    input: 'w-full bg-noir border border-white/15 rounded-lg px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-braise [color-scheme:dark]',
+    label: 'block text-sm text-white/70 mb-1',
+    hint: 'text-white/40',
+    heading: 'text-sm font-semibold text-white/60 uppercase tracking-wider mb-3',
+    chipOff: 'border-white/15 bg-noir text-white/70 hover:border-white/40',
+    chipOnService: 'border-braise bg-braise/20 text-white',
+    chipOnBudget: 'border-or bg-or/20 text-or',
+    noticeBox: 'bg-ambre/5 border border-ambre/20',
+    noticeTitle: 'text-ambre',
+    noticeText: 'text-white/60',
+    noticeStrong: 'text-white/85',
+    footNote: 'text-white/40',
+    error: 'text-red-400',
+    successTitle: 'text-or',
+    successText: 'text-white/60',
+  },
+  light: {
+    input: 'w-full bg-white border border-[#DCD5C4] rounded-lg px-4 py-3 text-[#14120E] placeholder-[#A39E90] focus:outline-none focus:border-braise [color-scheme:light]',
+    label: 'block text-sm text-[#44403A] mb-1',
+    hint: 'text-[#8B8677]',
+    heading: 'text-sm font-semibold text-[#8A6B2B] uppercase tracking-wider mb-3',
+    chipOff: 'border-[#DCD5C4] bg-white text-[#44403A] hover:border-[#8A6B2B]',
+    chipOnService: 'border-braise bg-braise/10 text-braise',
+    chipOnBudget: 'border-[#8A6B2B] bg-[#8A6B2B]/10 text-[#8A6B2B]',
+    noticeBox: 'bg-ambre/10 border border-ambre/30',
+    noticeTitle: 'text-[#B05E1B]',
+    noticeText: 'text-[#6B675E]',
+    noticeStrong: 'text-[#14120E]',
+    footNote: 'text-[#8B8677]',
+    error: 'text-red-600',
+    successTitle: 'text-[#8A6B2B]',
+    successText: 'text-[#6B675E]',
+  },
+} as const
+
+export default function DevisForm({ variant = 'dark' }: { variant?: 'dark' | 'light' }) {
+  const t = THEMES[variant]
   const [form, setForm] = useState({
     nom: '', email: '', telephone: '',
     type_evenement: '', date: '', nb_invites: '',
@@ -60,8 +100,8 @@ export default function DevisForm() {
         <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-or/10 border border-or/30 flex items-center justify-center">
           <IconCheck className="w-8 h-8 text-or" />
         </div>
-        <h3 className="text-2xl font-bold text-or mb-3">Demande envoyée !</h3>
-        <p className="text-white/50 max-w-sm mx-auto">
+        <h3 className={`text-2xl font-bold mb-3 ${t.successTitle}`}>Demande envoyée !</h3>
+        <p className={`max-w-sm mx-auto ${t.successText}`}>
           Notre équipe vous contacte sous 24h pour affiner votre projet et établir un devis personnalisé.
         </p>
       </div>
@@ -72,65 +112,63 @@ export default function DevisForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Coordonnées */}
       <div>
-        <h4 className="text-sm font-semibold text-white/40 uppercase tracking-wider mb-3">Vos coordonnées</h4>
+        <h4 className={t.heading}>Vos coordonnées</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm text-white/50 mb-1">Nom complet *</label>
+            <label className={t.label}>Nom complet *</label>
             <input required value={form.nom} onChange={e => set('nom', e.target.value)}
-              className="w-full bg-noir border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-braise" />
+              className={t.input} />
           </div>
           <div>
-            <label className="block text-sm text-white/50 mb-1">Email *</label>
+            <label className={t.label}>Email *</label>
             <input required type="email" value={form.email} onChange={e => set('email', e.target.value)}
-              className="w-full bg-noir border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-braise" />
+              className={t.input} />
           </div>
           <div>
-            <label className="block text-sm text-white/50 mb-1">Téléphone <span className="text-white/25">(facultatif)</span></label>
+            <label className={t.label}>Téléphone <span className={t.hint}>(facultatif)</span></label>
             <input type="tel" value={form.telephone} onChange={e => set('telephone', e.target.value)}
               placeholder="+590 6XX XX XX XX"
-              className="w-full bg-noir border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-braise" />
+              className={t.input} />
           </div>
         </div>
       </div>
 
       {/* Événement */}
       <div>
-        <h4 className="text-sm font-semibold text-white/40 uppercase tracking-wider mb-3">Votre événement</h4>
+        <h4 className={t.heading}>Votre événement</h4>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <div>
-            <label className="block text-sm text-white/50 mb-1">Type d'événement *</label>
+            <label className={t.label}>Type d'événement *</label>
             <select required value={form.type_evenement} onChange={e => set('type_evenement', e.target.value)}
-              className="w-full bg-noir border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-braise">
+              className={t.input}>
               <option value="">Choisir...</option>
-              {TYPES_EVENEMENT.map(t => <option key={t} value={t}>{t}</option>)}
+              {TYPES_EVENEMENT.map(tp => <option key={tp} value={tp}>{tp}</option>)}
             </select>
           </div>
           <div>
-            <label className="block text-sm text-white/50 mb-1">Date souhaitée *</label>
+            <label className={t.label}>Date souhaitée *</label>
             <input required type="date" value={form.date} onChange={e => set('date', e.target.value)}
               min={new Date().toISOString().split('T')[0]}
-              className="w-full bg-noir border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-braise" />
+              className={t.input} />
           </div>
           <div>
-            <label className="block text-sm text-white/50 mb-1">Nombre d'invités <span className="text-white/25">(estimation)</span></label>
+            <label className={t.label}>Nombre d'invités <span className={t.hint}>(estimation)</span></label>
             <input type="number" min="10" max="600" value={form.nb_invites}
               onChange={e => set('nb_invites', e.target.value)}
               placeholder="Ex : 80"
-              className="w-full bg-noir border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-braise" />
+              className={t.input} />
           </div>
         </div>
       </div>
 
       {/* Services */}
       <div>
-        <h4 className="text-sm font-semibold text-white/40 uppercase tracking-wider mb-3">Services souhaités</h4>
+        <h4 className={t.heading}>Services souhaités</h4>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {SERVICES.map(s => (
             <button key={s.id} type="button" onClick={() => toggleService(s.id)}
               className={`px-4 py-3 rounded-lg border text-sm font-medium transition-all text-left ${
-                form.services.includes(s.id)
-                  ? 'border-braise bg-braise/20 text-white'
-                  : 'border-white/10 bg-noir text-white/50 hover:border-white/30'
+                form.services.includes(s.id) ? t.chipOnService : t.chipOff
               }`}>
               <span className="inline-flex items-center gap-2">
                 {form.services.includes(s.id) && <IconCheck className="w-3.5 h-3.5 shrink-0" />}
@@ -143,14 +181,12 @@ export default function DevisForm() {
 
       {/* Budget */}
       <div>
-        <h4 className="text-sm font-semibold text-white/40 uppercase tracking-wider mb-3">Budget estimé</h4>
+        <h4 className={t.heading}>Budget estimé</h4>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {BUDGETS.map(b => (
             <button key={b} type="button" onClick={() => set('budget', b)}
               className={`px-4 py-3 rounded-lg border text-sm font-medium transition-all ${
-                form.budget === b
-                  ? 'border-or bg-or/20 text-or'
-                  : 'border-white/10 bg-noir text-white/50 hover:border-white/30'
+                form.budget === b ? t.chipOnBudget : t.chipOff
               }`}>
               {b}
             </button>
@@ -160,33 +196,33 @@ export default function DevisForm() {
 
       {/* Message */}
       <div>
-        <label className="block text-sm text-white/50 mb-1">Détails supplémentaires</label>
+        <label className={t.label}>Détails supplémentaires</label>
         <textarea value={form.message} onChange={e => set('message', e.target.value)} rows={4}
           placeholder="Thème souhaité, demandes particulières, questions..."
-          className="w-full bg-noir border border-white/10 rounded-lg px-4 py-3 text-white resize-none focus:outline-none focus:border-braise" />
+          className={`${t.input} resize-none`} />
       </div>
 
       {/* Notice personnel */}
-      <div className="bg-ambre/5 border border-ambre/20 rounded-xl p-4">
-        <p className="text-ambre text-xs font-semibold uppercase tracking-wider mb-1 inline-flex items-center gap-1.5">
+      <div className={`${t.noticeBox} rounded-xl p-4`}>
+        <p className={`${t.noticeTitle} text-xs font-semibold uppercase tracking-wider mb-1 inline-flex items-center gap-1.5`}>
           <IconAlert className="w-3.5 h-3.5" /> Personnel de service
         </p>
-        <p className="text-white/50 text-sm leading-relaxed">
-          Le personnel de service (serveurs, sécurité, hôtesses) est <strong className="text-white/70">obligatoirement fourni par L&apos;Infini</strong>.
+        <p className={`${t.noticeText} text-sm leading-relaxed`}>
+          Le personnel de service (serveurs, sécurité, hôtesses) est <strong className={t.noticeStrong}>obligatoirement fourni par L&apos;Infini</strong>.
           Si vous souhaitez faire intervenir votre propre personnel, vous devrez fournir pour chaque intervenant :
           DPAE, contrat de travail, pièce d&apos;identité et carte vitale.
         </p>
       </div>
 
       {status === 'error' && (
-        <p className="text-red-400 text-sm">Une erreur est survenue. Écrivez-nous directement à direction.infini971@gmail.com</p>
+        <p className={`${t.error} text-sm`}>Une erreur est survenue. Écrivez-nous directement à direction.infini971@gmail.com</p>
       )}
 
       <button type="submit" disabled={status === 'loading'}
         className="w-full bg-braise hover:bg-ambre disabled:opacity-50 text-white py-4 rounded-xl font-bold text-lg transition-colors">
         {status === 'loading' ? 'Envoi en cours...' : 'Envoyer ma demande de devis →'}
       </button>
-      <p className="text-center text-white/30 text-sm">Réponse sous 24h · Sans engagement</p>
+      <p className={`text-center text-sm ${t.footNote}`}>Réponse sous 24h · Sans engagement</p>
     </form>
   )
 }
