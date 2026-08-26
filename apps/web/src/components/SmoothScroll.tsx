@@ -71,6 +71,11 @@ export default function SmoothScroll() {
         const y = (target as HTMLElement).getBoundingClientRect().top + window.scrollY - 96
         window.scrollTo(0, y)
       }
+      // Après un saut d'ancre, l'IntersectionObserver de RevealInit ne se déclenche
+      // pas toujours : on révèle nous-mêmes les sections arrivées dans (ou au-dessus du) viewport.
+      document.querySelectorAll('.reveal:not(.reveal-in)').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('reveal-in')
+      })
     }
 
     // Deux passes (hydratation puis layout posé) + une après chargement complet des images
