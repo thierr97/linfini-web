@@ -40,7 +40,19 @@ const LINKS = [
   { href: '/#reservation', label: 'Réserver' },
 ]
 
-export default function Footer() {
+// Sur l'Espace Pro, la navigation reste dans l'univers pro (ancres internes) —
+// seule porte de sortie : Espace Événement.
+const LINKS_PRO = [
+  { href: '/pro#capacites', label: 'Capacités' },
+  { href: '/pro#formats', label: 'Formats' },
+  { href: '/pro#lieu', label: 'Le lieu' },
+  { href: '/pro#prestations', label: 'Prestations' },
+  { href: '/pro#devis-pro', label: 'Demander un devis' },
+  { href: '/', label: 'Espace Événement' },
+]
+
+export default function Footer({ variant = 'events' }: { variant?: 'events' | 'pro' }) {
+  const links = variant === 'pro' ? LINKS_PRO : LINKS
   return (
     <footer className="bg-charbon border-t border-white/5">
       {/* CTA band */}
@@ -90,7 +102,7 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-white/60 uppercase tracking-wider mb-5">Navigation</h4>
             <ul className="space-y-3">
-              {LINKS.map(l => (
+              {links.map(l => (
                 <li key={l.href}>
                   <Link href={l.href} className="text-sm text-white/40 hover:text-white transition-colors">
                     {l.label}

@@ -281,7 +281,7 @@ export default function ProPage() {
 
       </div>
 
-      <Footer />
+      <Footer variant="pro" />
     </main>
   )
 }
