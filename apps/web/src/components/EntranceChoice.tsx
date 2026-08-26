@@ -1,11 +1,11 @@
 'use client'
-import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { IconMartini, IconBriefcase } from '@/components/icons'
 
 // Portail d'entrée : le visiteur choisit son univers avant de voir le site.
 // Le choix est mémorisé pour la session (sessionStorage) — pas de re-gate en navigation interne.
+// Accueil animé : le ∞ (8 couché) se dessine, puis « Bienvenue à L'Infini » et les deux cartes.
 const KEY = 'infini-espace'
 
 export default function EntranceChoice() {
@@ -42,35 +42,82 @@ export default function EntranceChoice() {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] bg-noir flex flex-col items-center justify-center px-4 transition-opacity duration-[450ms] ${
+      className={`fixed inset-0 z-[100] bg-noir/80 backdrop-blur-xl flex flex-col items-center justify-center px-4 transition-opacity duration-[450ms] ${
         leaving ? 'opacity-0 pointer-events-none' : 'opacity-100'
       }`}
       role="dialog"
       aria-modal="true"
       aria-label="Choisissez votre espace"
     >
+      <style>{`
+        @keyframes infini-draw {
+          from { stroke-dashoffset: 1; }
+          to { stroke-dashoffset: 0; }
+        }
+        @keyframes infini-glow {
+          0%, 100% { filter: drop-shadow(0 0 6px rgba(212,168,83,0.35)); }
+          50% { filter: drop-shadow(0 0 18px rgba(212,168,83,0.75)); }
+        }
+        @keyframes infini-rise {
+          from { opacity: 0; transform: translateY(18px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .infini-path {
+          stroke-dasharray: 1;
+          stroke-dashoffset: 1;
+          animation: infini-draw 2.2s cubic-bezier(0.65, 0, 0.35, 1) 0.2s forwards;
+        }
+        .infini-symbol { animation: infini-glow 3s ease-in-out 2.4s infinite; }
+        .infini-rise { opacity: 0; animation: infini-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        @media (prefers-reduced-motion: reduce) {
+          .infini-path { animation: none; stroke-dashoffset: 0; }
+          .infini-symbol { animation: none; }
+          .infini-rise { animation: none; opacity: 1; }
+        }
+      `}</style>
+
       {/* Halo doré discret */}
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 60% 45% at 50% 38%, rgba(212,168,83,0.10), transparent 70%)' }} />
+        style={{ background: 'radial-gradient(ellipse 60% 45% at 50% 38%, rgba(212,168,83,0.12), transparent 70%)' }} />
 
       <div className="relative w-full max-w-3xl text-center">
-        <Image
-          src="/logos/infini-blanc.png"
-          alt="L'Infini Guadeloupe"
-          width={220}
-          height={88}
-          priority
-          className="h-16 md:h-20 w-auto object-contain mx-auto mb-6"
-        />
-        <p className="text-white/50 text-sm md:text-base mb-10">
-          Bienvenue. Choisissez votre espace pour continuer.
+        {/* ∞ — le 8 couché se dessine puis respire */}
+        <svg
+          viewBox="0 0 200 100"
+          className="infini-symbol w-40 md:w-52 h-auto mx-auto mb-4"
+          fill="none"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="infini-or" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#8A6B2B" />
+              <stop offset="50%" stopColor="#D4A853" />
+              <stop offset="100%" stopColor="#F5EDD8" />
+            </linearGradient>
+          </defs>
+          <path
+            className="infini-path"
+            pathLength={1}
+            d="M100 50 C 88 22, 38 22, 38 50 C 38 78, 88 78, 100 50 C 112 22, 162 22, 162 50 C 162 78, 112 78, 100 50 Z"
+            stroke="url(#infini-or)"
+            strokeWidth="7"
+            strokeLinecap="round"
+          />
+        </svg>
+
+        <h1 className="infini-rise font-display text-3xl md:text-5xl font-bold text-creme mb-3" style={{ animationDelay: '1.5s' }}>
+          Bienvenue à <span className="text-or">L&apos;Infini</span>
+        </h1>
+        <p className="infini-rise text-white/50 text-sm md:text-base mb-10" style={{ animationDelay: '1.8s' }}>
+          Choisissez votre espace pour continuer.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {/* Espace Événement — l'univers nocturne */}
           <button
             onClick={() => choose('events')}
-            className="group text-left rounded-3xl border border-white/10 bg-charbon p-8 md:p-10 transition-all duration-300 hover:border-braise/60 hover:shadow-[0_12px_50px_rgba(200,75,31,0.25)] cursor-pointer"
+            className="infini-rise group text-left rounded-3xl border border-white/10 bg-charbon/80 p-8 md:p-10 transition-all duration-300 hover:border-braise/60 hover:shadow-[0_12px_50px_rgba(200,75,31,0.25)] cursor-pointer"
+            style={{ animationDelay: '2.1s' }}
           >
             <div className="w-12 h-12 rounded-full bg-braise/15 border border-braise/30 flex items-center justify-center mb-5">
               <IconMartini className="w-6 h-6 text-braise" />
@@ -89,7 +136,8 @@ export default function EntranceChoice() {
           {/* Espace Pro — l'univers jour / entreprise */}
           <button
             onClick={() => choose('pro')}
-            className="group text-left rounded-3xl border border-or/20 bg-[#F7F4EC] p-8 md:p-10 transition-all duration-300 hover:border-or hover:shadow-[0_12px_50px_rgba(212,168,83,0.35)] cursor-pointer"
+            className="infini-rise group text-left rounded-3xl border border-or/20 bg-[#F7F4EC]/95 p-8 md:p-10 transition-all duration-300 hover:border-or hover:shadow-[0_12px_50px_rgba(212,168,83,0.35)] cursor-pointer"
+            style={{ animationDelay: '2.25s' }}
           >
             <div className="w-12 h-12 rounded-full bg-[#8A6B2B]/10 border border-[#8A6B2B]/30 flex items-center justify-center mb-5">
               <IconBriefcase className="w-6 h-6 text-[#8A6B2B]" />
@@ -106,7 +154,7 @@ export default function EntranceChoice() {
           </button>
         </div>
 
-        <p className="text-white/25 text-xs mt-8">Le Gosier · Guadeloupe</p>
+        <p className="infini-rise text-white/25 text-xs mt-8" style={{ animationDelay: '2.5s' }}>Le Gosier · Guadeloupe</p>
       </div>
     </div>
   )
