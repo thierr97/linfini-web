@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
-import { genererDevisPDF } from '@/lib/generer-devis-pdf'
+import { genererDevisPDF, getPrixSalle } from '@/lib/generer-devis-pdf'
 
 function numeroDevis(): string {
   const d = new Date()
@@ -94,8 +94,9 @@ async function syncOdoo(data: {
   }])
 
   // 4. Ajouter les lignes de devis
+  const salle = getPrixSalle(data.type_evenement)
   const lignes = [
-    { name: `Location salle — ${data.type_evenement}`, price_unit: 0, product_uom_qty: 1 },
+    { name: `Location salle — ${salle.package} — ${data.type_evenement}`, price_unit: salle.prix, product_uom_qty: 1 },
     ...data.services.filter(s => s !== 'salle').map(s => ({
       name: s === 'dj' ? 'DJ professionnel (4h)' : s.charAt(0).toUpperCase() + s.slice(1),
       price_unit: s === 'dj' ? 400 : 0,

@@ -8,11 +8,14 @@ import {
   IconUsers, IconUtensils, IconTicket, IconBriefcase, IconClipboard,
   IconLandmark, IconSun, IconMartini, IconMic, IconCheck, IconMail,
 } from '@/components/icons'
+import {
+  TARIFS_CRENEAUX, TARIFS_ESPACES, TARIFS_PROFILS, INCLUS_SALLE, NOTE_MOBILIER, fmtPrix,
+} from '@/lib/tarifs-salle'
 
 export const metadata: Metadata = {
   title: 'Espace Pro — Séminaires & événements d\'entreprise',
   description:
-    "Privatisez L'Infini au Gosier pour vos séminaires, soirées d'entreprise, lancements de produit et galas. Jusqu'à 600 personnes, prestations clé en main, devis sous 24h.",
+    "Privatisez L'Infini au Gosier pour vos séminaires, soirées d'entreprise, lancements de produit et galas. Location de salle dès 1 200 € HT, jusqu'à 600 personnes, restauration et prestations clé en main, devis sous 24h.",
 }
 
 // Palette jour : ivoire, encre, or brand — l'univers nocturne du site passé en négatif
@@ -70,9 +73,15 @@ const ESPACES = [
   { label: 'Scène & Podium', detail: 'Équipé son & lumière', Icon: IconMic },
 ]
 
+const GRILLES = [
+  { titre: 'Créneaux', tarifs: TARIFS_CRENEAUX },
+  { titre: 'Espaces', tarifs: TARIFS_ESPACES },
+  { titre: 'Profils', tarifs: TARIFS_PROFILS },
+]
+
 const PRESTATIONS = [
+  'Restauration — pauses, buffet, cocktail dînatoire, menu gastronomique',
   'Privatisation totale ou partielle du lieu',
-  'Restauration — pauses, buffet, menu gastronomique',
   'Bar & cocktails premium, open bar entreprise',
   'Régie son, lumière & vidéoprojection',
   'DJ, animations & artistes live',
@@ -102,7 +111,7 @@ const ETAPES = [
 
 const GARANTIES = [
   'Devis détaillé sous 24h, sans engagement',
-  'Facturation entreprise — TVA 8,5%',
+  'Tarifs HT — facturation entreprise, TVA 8,5%',
   'Acompte 30% · solde à l\'événement',
   'Annulation sans frais jusqu\'à 30 jours',
   'ERP type P · Licence IV · personnel déclaré',
@@ -240,12 +249,65 @@ export default function ProPage() {
           </div>
         </section>
 
+        {/* Tarifs location salle */}
+        <section id="tarifs" className="reveal scroll-mt-28">
+          <Eyebrow>Nos tarifs de location</Eyebrow>
+          <p className="text-center text-sm max-w-2xl mx-auto mb-8" style={{ color: '#6B675E' }}>
+            Une grille simple et transparente, hors taxes. La salle est le point de départ :
+            la restauration, le bar et les prestations viennent composer votre événement.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {GRILLES.map(({ titre, tarifs }) => (
+              <div key={titre} className="bg-white rounded-2xl p-6 border transition-shadow hover:shadow-[0_8px_30px_rgba(138,107,43,0.12)]"
+                style={{ borderColor: SABLE }}>
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] mb-4" style={{ color: OR_FONCE }}>{titre}</p>
+                <ul className="divide-y" style={{ borderColor: SABLE }}>
+                  {tarifs.map(t => (
+                    <li key={t.id} className="py-3 flex items-baseline justify-between gap-3" style={{ borderColor: SABLE }}>
+                      <div>
+                        <p className="font-semibold text-sm" style={{ color: ENCRE }}>{t.label}</p>
+                        <p className="text-xs" style={{ color: '#8B8677' }}>{t.detail}</p>
+                      </div>
+                      <p className="font-display text-xl font-bold text-or whitespace-nowrap">{fmtPrix(t)}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 bg-white rounded-2xl p-6 md:p-8 border grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-start" style={{ borderColor: SABLE }}>
+            <div>
+              <p className="font-semibold mb-3" style={{ color: ENCRE }}>Inclus dans le tarif de base</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
+                {INCLUS_SALLE.map(i => (
+                  <div key={i} className="flex items-center gap-3">
+                    <IconCheck className="w-4 h-4 shrink-0 text-[#8A6B2B]" />
+                    <span className="text-sm" style={{ color: '#44403A' }}>{i}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs mt-4" style={{ color: '#8B8677' }}>{NOTE_MOBILIER} Tarifs HT, TVA 8,5 % en sus.</p>
+            </div>
+            <div className="rounded-xl p-5 md:max-w-xs" style={{ backgroundColor: '#F3EFE5' }}>
+              <div className="flex items-center gap-2 mb-2">
+                <IconUtensils className="w-5 h-5 text-or" />
+                <p className="font-semibold text-sm" style={{ color: ENCRE }}>Et à table ?</p>
+              </div>
+              <p className="text-sm leading-relaxed mb-3" style={{ color: '#6B675E' }}>
+                Pauses, buffets, cocktails dînatoires ou menu gastronomique : notre cuisine
+                franco-créole s&apos;adapte à votre format et à votre effectif.
+              </p>
+              <a href="#devis-pro" className="text-sm font-semibold text-braise hover:underline">Composer mon événement →</a>
+            </div>
+          </div>
+        </section>
+
         {/* Garanties / conditions */}
         <section className="reveal rounded-3xl p-8 md:p-12 border" style={{ backgroundColor: '#F3EFE5', borderColor: SABLE }}>
-          <h3 className="font-display text-2xl font-bold mb-2" style={{ color: ENCRE }}>Tarification sur devis</h3>
+          <h3 className="font-display text-2xl font-bold mb-2" style={{ color: ENCRE }}>Un devis, ligne par ligne</h3>
           <p className="text-sm leading-relaxed max-w-2xl mb-6" style={{ color: '#6B675E' }}>
-            Chaque événement d&apos;entreprise est dimensionné sur mesure : durée, effectif,
-            technique et prestations. Nous construisons le devis avec vous, ligne par ligne.
+            Salle, restauration, bar, technique, personnel : chaque poste est chiffré selon
+            votre durée, votre effectif et vos envies. Aucun frais caché.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {GARANTIES.map(g => (

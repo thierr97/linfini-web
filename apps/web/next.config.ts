@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ['pdfkit', 'fontkit', 'iconv-lite'],
   async redirects() {
     return [
-      { source: '/tarifs', destination: '/pro', permanent: true },
+      { source: '/tarifs', destination: '/pro#tarifs', permanent: true },
     ]
   },
 }

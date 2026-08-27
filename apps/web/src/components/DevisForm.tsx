@@ -152,7 +152,7 @@ export default function DevisForm({ variant = 'dark' }: { variant?: 'dark' | 'li
               className={t.input} />
           </div>
           <div>
-            <label className={t.label}>Nombre d'invités <span className={t.hint}>(estimation)</span></label>
+            <label className={t.label}>Nombre d'invités <span className={t.hint}>(mobilier inclus jusqu'à 60)</span></label>
             <input type="number" min="10" max="600" value={form.nb_invites}
               onChange={e => set('nb_invites', e.target.value)}
               placeholder="Ex : 80"

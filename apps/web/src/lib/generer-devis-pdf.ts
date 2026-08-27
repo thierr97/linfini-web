@@ -1,38 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { formuleSalle, INCLUS_SALLE_TEXTE, MOBILIER_INCLUS_PERSONNES, NOTE_MOBILIER } from './tarifs-salle'
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const PDFDocument = require('pdfkit') as any
 
 // Formatage sans espace insécable (toLocaleString fr-FR → pdfkit affiche '/')
 function fmt(n: number): string {
   return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-}
-
-// Tarifs salle HT
-const TARIFS_SEMAINE: Record<string, number> = {
-  'Demi-Journée (4h)': 800,
-  'Journée (8h)': 1500,
-  'Soirée Int./Ext. (6h)': 4500,
-  'Soirée Événementiel (6h)': 5500,
-  'Week-end complet': 3500,
-}
-const TARIFS_WEEKEND: Record<string, number> = {
-  'Demi-Journée (4h)': 1200,
-  'Journée (8h)': 2200,
-  'Soirée Int./Ext. (6h)': 4500,
-  'Soirée Événementiel (6h)': 5500,
-  'Week-end complet': 5000,
-}
-
-// Type événement → package salle par défaut
-const EVENT_PACKAGE: Record<string, string> = {
-  'Mariage': 'Soirée Événementiel (6h)',
-  'Anniversaire': 'Soirée Int./Ext. (6h)',
-  "Soirée d'entreprise": 'Soirée Événementiel (6h)',
-  'Concert / Spectacle': 'Soirée Événementiel (6h)',
-  'Conférence / Séminaire': 'Journée (8h)',
-  'Cocktail': 'Demi-Journée (4h)',
-  'Événement privé': 'Soirée Int./Ext. (6h)',
-  'Autre': 'Soirée Int./Ext. (6h)',
 }
 
 // Services avec prix fixes HT
@@ -72,18 +45,9 @@ function formatDate(dateStr: string): string {
   return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
-function isWeekend(dateStr: string): boolean {
-  if (!dateStr) return false
-  const d = new Date(dateStr)
-  const day = d.getDay()
-  return day === 0 || day === 5 || day === 6 // vendredi, samedi, dimanche
-}
-
-function getPrixSalle(typeEvenement: string, dateStr: string): { package: string; prix: number } {
-  const pkg = EVENT_PACKAGE[typeEvenement] || 'Soirée Int./Ext. (6h)'
-  const tarifs = isWeekend(dateStr) ? TARIFS_WEEKEND : TARIFS_SEMAINE
-  const prix = tarifs[pkg] || 4500
-  return { package: pkg, prix }
+export function getPrixSalle(typeEvenement: string): { package: string; prix: number } {
+  const f = formuleSalle(typeEvenement)
+  return { package: `${f.label} (${f.detail})`, prix: f.prixRetenu }
 }
 
 export async function genererDevisPDF(data: DevisData): Promise<Buffer> {
@@ -101,8 +65,9 @@ export async function genererDevisPDF(data: DevisData): Promise<Buffer> {
     const VERT = '#2D6A4F'
     const num = data.numero_devis || `DEV-${Date.now()}`
 
-    const { package: pkgSalle, prix: prixSalle } = getPrixSalle(data.type_evenement, data.date)
-    const periodeLabel = isWeekend(data.date) ? 'Week-end / Férié' : 'Semaine (Lun-Jeu)'
+    const { package: pkgSalle, prix: prixSalle } = getPrixSalle(data.type_evenement)
+    const nbInvites = parseInt(data.nb_invites, 10) || 0
+    const mobilierSupplement = nbInvites > MOBILIER_INCLUS_PERSONNES
 
     // ─── EN-TÊTE ─────────────────────────────────────────────────────────────
     doc.rect(0, 0, doc.page.width, 120).fill(NOIR)
@@ -117,15 +82,15 @@ export async function genererDevisPDF(data: DevisData): Promise<Buffer> {
        .text(`Valide 30 jours`, 400, 60, { align: 'right', width: 150 })
 
     // ─── TITRE ───────────────────────────────────────────────────────────────
-    doc.moveDown(4)
-    doc.fontSize(20).font('Helvetica-Bold').fillColor(NOIR).text('DEVIS ESTIMATIF', { align: 'center' })
-    doc.fontSize(12).font('Helvetica').fillColor(GRIS).text(data.type_evenement, { align: 'center' })
+    const pageW = doc.page.width - 100
+    doc.fontSize(20).font('Helvetica-Bold').fillColor(NOIR).text('DEVIS ESTIMATIF', 50, 145, { align: 'center', width: pageW })
+    doc.fontSize(12).font('Helvetica').fillColor(GRIS).text(data.type_evenement, 50, doc.y, { align: 'center', width: pageW })
     doc.moveDown(0.5)
     doc.moveTo(50, doc.y).lineTo(doc.page.width - 50, doc.y).strokeColor(OR).lineWidth(1.5).stroke()
     doc.moveDown(1)
 
     // ─── INFORMATIONS CLIENT ─────────────────────────────────────────────────
-    doc.fontSize(11).font('Helvetica-Bold').fillColor(NOIR).text('INFORMATIONS CLIENT')
+    doc.fontSize(11).font('Helvetica-Bold').fillColor(NOIR).text('INFORMATIONS CLIENT', 50, doc.y)
     doc.moveDown(0.4)
 
     const infos: [string, string][] = [
@@ -134,7 +99,7 @@ export async function genererDevisPDF(data: DevisData): Promise<Buffer> {
       ['Téléphone', data.telephone],
       ["Type d'événement", data.type_evenement],
       ['Date souhaitée', formatDate(data.date)],
-      ['Période tarifaire', periodeLabel],
+      ['Formule salle', pkgSalle],
       ["Nombre d'invités", `${data.nb_invites} personnes`],
     ]
 
@@ -172,6 +137,21 @@ export async function genererDevisPDF(data: DevisData): Promise<Buffer> {
     doc.font('Helvetica-Bold').fillColor(VERT).text(`${fmt(prixSalle)} €`, colX[2], r1Y)
     totalHT += prixSalle
     doc.font('Helvetica').fillColor(NOIR).moveDown(1)
+
+    // Inclus dans le tarif de base
+    const rIncY = doc.y
+    doc.fontSize(8).font('Helvetica').fillColor(GRIS)
+       .text(`Inclus : ${INCLUS_SALLE_TEXTE}`, colX[0] + 5, rIncY, { width: colX[2] - colX[0] - 15 })
+    doc.fontSize(9).fillColor(NOIR).moveDown(0.9)
+
+    // Mobilier au-delà de 60 personnes
+    if (mobilierSupplement) {
+      const rMobY = doc.y
+      doc.fontSize(9).font('Helvetica').fillColor(NOIR).text(`Mobilier complémentaire (> ${MOBILIER_INCLUS_PERSONNES} pers.)`, colX[0] + 5, rMobY)
+      doc.text(`${nbInvites - MOBILIER_INCLUS_PERSONNES} places suppl.`, colX[1], rMobY)
+      doc.font('Helvetica-Bold').fillColor(OR).text('Sur devis', colX[2], rMobY)
+      doc.font('Helvetica').fillColor(NOIR).moveDown(0.9)
+    }
 
     // Autres services
     const services = (data.services || []).filter(s => s !== 'salle')
@@ -237,7 +217,7 @@ export async function genererDevisPDF(data: DevisData): Promise<Buffer> {
 
     // Note sur devis + majoration
     doc.fontSize(8).font('Helvetica').fillColor(GRIS)
-       .text('* Les prestations "Sur devis" (restauration, bar, décoration, sécurité) seront chiffrées selon le volume et vos besoins précis.', 50, doc.y, { width: doc.page.width - 100 })
+       .text(`* Les prestations "Sur devis" (restauration, bar, décoration, sécurité, mobilier) seront chiffrées selon le volume et vos besoins précis. ${NOTE_MOBILIER}`, 50, doc.y, { width: doc.page.width - 100 })
     doc.moveDown(0.5)
     doc.fontSize(8).font('Helvetica-Bold').fillColor('#8B0000')
        .text('⚠  Majoration automatique de 20 % si le nombre d\'invités réel dépasse le volume indiqué dans ce devis.', 50, doc.y, { width: doc.page.width - 100 })
